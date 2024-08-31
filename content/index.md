@@ -1,5 +1,5 @@
 ---
-title: Hi, I'm William! 👋
+title: Hey there 👋. My name is *William Bornet-Sédiey*.
 ---
 
 This is a blank Quartz installation.
