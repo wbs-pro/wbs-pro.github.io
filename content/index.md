@@ -1,5 +1,5 @@
 ---
-title: Welcome to Quartz
+title: Hi, I'm William! 👋
 ---
 
 This is a blank Quartz installation.
