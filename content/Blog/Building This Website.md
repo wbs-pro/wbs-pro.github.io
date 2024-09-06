@@ -1,10 +1,10 @@
 ---
-title: Building My Website
+title: Building This Website
 draft: false
 tags:
   - WebDevelopment
 ---
-### Lessons Learned While Creating My Website
+### Lessons Learned While Creating This Website
 
 After much contemplation about creating a website, I decided to embark on this project in a way that would be both engaging and educational. My goal was to share insights that reflect my unique perspective, allowing others to glimpse how I approach various topics.
 

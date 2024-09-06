@@ -19,8 +19,6 @@ I'm looking forward to connecting with professionals whose work I admire, regard
 
 > *“I’ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.”*
 
-
-[[knowledge base]]
 ## My Interests / Skills
 
 - 📸 Photography
@@ -32,6 +30,3 @@ I'm looking forward to connecting with professionals whose work I admire, regard
 -  [[ArchViz]]
 	- Projects
 - 💻 IT
-
-
-> Testing about a collapsible quote
