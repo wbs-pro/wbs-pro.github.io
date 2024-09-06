@@ -23,12 +23,12 @@ I'm looking forward to connecting with professionals whose work I admire, regard
 [[Knowledge Base]]
 ## My Interests / Skills
 
-	- 📸 Photography
-	- 🥗 Nutrition
-	- 💪 Workout
-	- 🛡️ Cybersecurity
-	- 🎮 Game-dev
-	- 🧰 Modding
+- 📸 Photography
+- 🥗 Nutrition
+- 💪 Workout
+- 🛡️ Cybersecurity
+- 🎮 Game-dev
+- 🧰 Modding
 -  [[🏡 Architecture Visualization (ArchViz)]]
 	- Projects
 - 💻 IT
