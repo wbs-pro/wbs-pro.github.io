@@ -23,14 +23,17 @@ aliases:
     - Tails
     - Zorin OS
 
+
 - **Arch-based:**
     - Arch
     - EndeavourOS
     - BlackArch
     - SteamOS
 
+
 - **Fedora-based:**
     - QubesOS
+
 
 - **Source-based:**
     - NixOS
