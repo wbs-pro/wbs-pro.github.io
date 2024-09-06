@@ -1,8 +1,7 @@
 ---
-title: Example Title
+title: 
 draft: true
 tags:
-  - example-tag
 ---
  
 
