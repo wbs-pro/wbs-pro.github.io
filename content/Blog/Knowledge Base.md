@@ -9,7 +9,7 @@ aliases:
 
 ## Operating Systems
 
-#### 🐧 Linux Distributions
+### 🐧 Linux Distributions
 
 - **Debian-based:**
     - Debian
@@ -35,7 +35,7 @@ aliases:
 - **Source-based:**
     - NixOS
 
-#### 👿 BSD Distributions
+### 👿 BSD Distributions
 
    - FreeBSD
    - GhostBSD
@@ -44,7 +44,7 @@ aliases:
    - TrueNAS
    - TrueOS
 
-#### 🪟 Windows Versions
+### 🪟 Windows Versions
 
 - Windows 95
 - Windows 98
@@ -64,7 +64,7 @@ Windows To Go
     - Rectify11
 - **Subsystem for Android**
 
-#### 🤖 Android
+### 🤖 Android
 
 - **Android Customization:**
     - Rooting:
@@ -86,7 +86,7 @@ Windows To Go
 	    - CopperheadOS
 	    - GrapheneOS
 
-#### 🗃️ Backup and Recovery
+## 🗃️ Backup and Recovery
 
 - Macrium Reflect
 - Duplicati
@@ -97,32 +97,32 @@ Windows To Go
 - EaseUS
 - MinTool
 
-#### 🛠️ Diagnostic Tools
+## 🛠️ Diagnostic Tools
 
 - Ultimate BootCD
 - MemTest86
 
-#### 🌐 Virtualization
+## 🌐 Virtualization
 
 - Hyper-V
 - VMware
 - VirtualBox
 
-#### 🖥️ Remote Access and Support
+## 🖥️ Remote Access and Support
 
 - RustDesk
 - TeamViewer
 - VNC
 - Microsoft Remote Desktop
 
-#### 🔒 Cybersecurity Solutions
+## 🔒 Cybersecurity Solutions
 
 - Nucleon Smart Endpoint
 - F-Secure
 - Sophos
 - ESET Endpoint Antivirus
 
-#### ⚙️ Hardware Proficiency
+## ⚙️ Hardware Proficiency
 
 ##### Motherboards
 
@@ -199,7 +199,7 @@ Windows To Go
 - RJ45 Cables
 - WiFi 6
 
-#### 🌍 Web Browsers
+## 🌍 Web Browsers
 
 - **Firefox-based:**
     - Zen
@@ -210,7 +210,7 @@ Windows To Go
     - Brave
     - Cosmic
 
-#### 💻 Software Proficiency
+## 💻 Software Proficiency
 
 - **Documentation and PKM Tools:**
     - Obsidian
@@ -250,7 +250,7 @@ Windows To Go
     - KeePass
     - Bitwarden
 
-#### 🎮 Game Modding
+## 🎮 Game Modding
 
 - **Games:**
     - Skyrim
