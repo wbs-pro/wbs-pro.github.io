@@ -312,11 +312,13 @@ Windows To Go
 
 
 <details open>
-<summary>## 💿 Operating Systems</summary>
+## <summary>💿 Operating Systems</summary>
 
 <details open>
-<summary>### 🐧 Linux Distributions</summary>
+### <summary>🐧 Linux Distributions</summary>
 
+<details open>
+#### <summary>Debian-based</summary>
 - **Debian-based:**
     - Debian
     - Devuan
@@ -332,7 +334,7 @@ Windows To Go
 </details>
 
 <details open>
-<summary>### Arch-based</summary>
+#### <summary>Arch-based</summary>
 
 - **Arch-based:**
     - Arch
@@ -343,7 +345,7 @@ Windows To Go
 </details>
 
 <details open>
-<summary>### Fedora-based</summary>
+#### <summary>Fedora-based</summary>
 
 - **Fedora-based:**
     - QubesOS
@@ -351,7 +353,7 @@ Windows To Go
 </details>
 
 <details open>
-<summary>### Source-based</summary>
+#### <summary>Source-based</summary>
 
 - **Source-based:**
     - NixOS
@@ -359,7 +361,7 @@ Windows To Go
 </details>
 
 <details open>
-<summary>### 👿 BSD Distributions</summary>
+### <summary>👿 BSD Distributions</summary>
 
 - FreeBSD
 - GhostBSD
@@ -371,7 +373,7 @@ Windows To Go
 </details>
 
 <details open>
-<summary>### 🪟 Windows Versions</summary>
+### <summary>🪟 Windows Versions</summary>
 
 - Windows 95
 - Windows 98
@@ -394,7 +396,7 @@ Windows To Go
 </details>
 
 <details open>
-<summary>### 🤖 Android</summary>
+### <summary>🤖 Android</summary>
 
 - **Android Customization:**
     - Rooting:
@@ -746,7 +748,7 @@ Windows To Go
 </details>
 
 <details open>
-<summary>## 🎮 Game Modding</summary>
+## <summary>🎮 Game Modding</summary>
 
 #### Games
 
