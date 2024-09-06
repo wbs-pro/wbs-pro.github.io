@@ -3,7 +3,7 @@ title: Home
 ---
 # Hey there 👋
 
-I'm William, a self-taught Digital Artist, and this is my digital garden. If you're here as a recruiter, here's a link to my most recent resume: [Reactive Resume](https://rxresu.me/william.bs.pro/en-curriculum-vitae)
+I'm William, a self-taught Digital Artist, and this is my digital garden. If you're here as a recruiter, here's a link to my most recent resume: [📄Reactive Resume](https://rxresu.me/william.bs.pro/en-curriculum-vitae)
 
 ## About Me
 
