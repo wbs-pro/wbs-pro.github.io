@@ -11,59 +11,6 @@ Welcome to my personal knowledge base!
 
 This is a curated collection of insights and information I've gathered in the realm of IT. Here, you'll find a comprehensive list of all the topics I've explored and tools I've used, primarily driven by my own research and curiosity. My goal is to share what I've learned and provide a valuable resource for anyone looking to expand their understanding of technology. Feel free to explore and discover the wealth of knowledge I've compiled!
 
-## `💿 Operating Systems`
-   `├── 🐧 Linux Distributions`
-   `│   ├── Debian-based`
-   `│   ├── Arch-based`
-   `│   ├── Fedora-based`
-   `│   └── Source-based`
-   `├── 👿 BSD Distributions`
-   `└── 🪟 Windows Versions`
-       `└── Windows To Go`
-   `└── 🤖 Android`
-       `└── Android Customization`
-
-## `🗃️ Backup and Recovery`
-
-## `🛠️ Diagnostic Tools`
-
-## `🌐 Virtualization`
-
-## `🖥️ Remote Access and Support`
-
-## `🔒 Cybersecurity Solutions`
-
-## `⚙️ Hardware Proficiency`
-   `├── Motherboards`
-   `├── Modern Storage Devices`
-   `├── Legacy Storage Devices`
-   `├── USB Protocols`
-   `├── CPUs`
-   `├── GPUs`
-   `├── RAM`
-   `├── Cooling Solutions`
-   `├── Power Supply`
-   `├── Systems`
-   `└── Networking`
-
-## `🌍 Web Browsers`
-   `├── Firefox-based`
-   `└── Chromium-based`
-
-## `📊 Software Proficiency`
-   `├── Documentation and PKM Tools`
-   `├── Integrated Development Environments (IDEs)`
-   `├── Creative Software`
-   `├── 3D Modeling and Animation`
-   `├── Game Engines`
-   `├── Local AI Tools`
-   `├── Messaging Applications`
-   `└── Password Management`
-
-## `🎮 Game Modding`
-   `├── Games`
-   `└── Tools`
-
 
 ## 💿 Operating Systems
 
