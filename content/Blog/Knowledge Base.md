@@ -311,12 +311,11 @@ Windows To Go
 
 
 
+<details open>
+<summary>## 💿 Operating Systems</summary>
 
-<details>
-<summary>💿 Operating Systems</summary>
-
-<details>
-<summary>🐧 Linux Distributions</summary>
+<details open>
+<summary>### 🐧 Linux Distributions</summary>
 
 - **Debian-based:**
     - Debian
@@ -330,34 +329,49 @@ Windows To Go
     - Tails
     - Zorin OS
 
+</details>
+
+<details open>
+<summary>### Arch-based</summary>
+
 - **Arch-based:**
     - Arch
     - EndeavourOS
     - BlackArch
     - SteamOS
 
+</details>
+
+<details open>
+<summary>### Fedora-based</summary>
+
 - **Fedora-based:**
     - QubesOS
+
+</details>
+
+<details open>
+<summary>### Source-based</summary>
 
 - **Source-based:**
     - NixOS
 
 </details>
 
-<details>
-<summary>👿 BSD Distributions</summary>
+<details open>
+<summary>### 👿 BSD Distributions</summary>
 
-   - FreeBSD
-   - GhostBSD
-   - NomadBSD
-   - pfSense
-   - TrueNAS
-   - TrueOS
+- FreeBSD
+- GhostBSD
+- NomadBSD
+- pfSense
+- TrueNAS
+- TrueOS
 
 </details>
 
-<details>
-<summary>🪟 Windows Versions</summary>
+<details open>
+<summary>### 🪟 Windows Versions</summary>
 
 - Windows 95
 - Windows 98
@@ -379,8 +393,8 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>🤖 Android</summary>
+<details open>
+<summary>### 🤖 Android</summary>
 
 - **Android Customization:**
     - Rooting:
@@ -406,8 +420,8 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>🗃️ Backup and Recovery</summary>
+<details open>
+<summary>## 🗃️ Backup and Recovery</summary>
 
 - Macrium Reflect
 - Duplicati
@@ -420,16 +434,16 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>🛠️ Diagnostic Tools</summary>
+<details open>
+<summary>## 🛠️ Diagnostic Tools</summary>
 
 - Ultimate BootCD
 - MemTest86
 
 </details>
 
-<details>
-<summary>🌐 Virtualization</summary>
+<details open>
+<summary>## 🌐 Virtualization</summary>
 
 - Hyper-V
 - VMware
@@ -437,8 +451,8 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>🖥️ Remote Access and Support</summary>
+<details open>
+<summary>## 🖥️ Remote Access and Support</summary>
 
 - RustDesk
 - TeamViewer
@@ -447,8 +461,8 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>🔒 Cybersecurity Solutions</summary>
+<details open>
+<summary>## 🔒 Cybersecurity Solutions</summary>
 
 - Nucleon Smart Endpoint
 - F-Secure
@@ -457,11 +471,13 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>⚙️ Hardware Proficiency</summary>
+<details open>
+<summary>## ⚙️ Hardware Proficiency</summary>
 
-<details>
-<summary>Motherboards</summary>
+#### Motherboards
+
+<details open>
+<summary>### Motherboards</summary>
 
 - CPU Sockets (PGA, LGA)
 - Power Delivery Cables
@@ -473,8 +489,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Modern Storage Devices</summary>
+#### Modern Storage Devices
+
+<details open>
+<summary>### Modern Storage Devices</summary>
 
 - **SSDs:**
     - SATA
@@ -486,8 +504,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Legacy Storage Devices</summary>
+#### Legacy Storage Devices
+
+<details open>
+<summary>### Legacy Storage Devices</summary>
 
 - **Floppy Disks:**
     - 3.5-inch and 5.25-inch floppy disks
@@ -497,8 +517,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>USB Protocols</summary>
+#### USB Protocols
+
+<details open>
+<summary>### USB Protocols</summary>
 
 - USB 2.0, 3.0, 3.1
 - USB Type-C
@@ -506,8 +528,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>CPUs</summary>
+#### CPUs
+
+<details open>
+<summary>### CPUs</summary>
 
 - Overclocking
 - Boost Clock
@@ -515,8 +539,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>GPUs</summary>
+#### GPUs
+
+<details open>
+<summary>### GPUs</summary>
 
 - Overclocking
 - Underclocking
@@ -527,8 +553,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>RAM</summary>
+#### RAM
+
+<details open>
+<summary>### RAM</summary>
 
 - DDR3, DDR4, DDR5
 - XMP
@@ -538,31 +566,39 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Cooling Solutions</summary>
+#### Cooling Solutions
+
+<details open>
+<summary>### Cooling Solutions</summary>
 
 - Water Cooling
 - Air Cooling
 
 </details>
 
-<details>
-<summary>Power Supply</summary>
+#### Power Supply
+
+<details open>
+<summary>### Power Supply</summary>
 
 - Knowledge of power supply units (PSUs) and their specifications
 
 </details>
 
-<details>
-<summary>Systems</summary>
+#### Systems
+
+<details open>
+<summary>### Systems</summary>
 
 - Workstations
 - Servers
 
 </details>
 
-<details>
-<summary>Networking</summary>
+#### Networking
+
+<details open>
+<summary>### Networking</summary>
 
 - Switches
 - RJ45 Cables
@@ -572,34 +608,28 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>🌍 Web Browsers</summary>
+<details open>
+<summary>## 🌍 Web Browsers</summary>
 
-<details>
-<summary>Firefox-based</summary>
+- **Firefox-based:**
+    - Zen
+    - LibreWolf
 
-- Zen
-- LibreWolf
-
-</details>
-
-<details>
-<summary>Chromium-based</summary>
-
-- Vivaldi
-- Arc
-- Brave
-- Cosmic
+- **Chromium-based:**
+    - Vivaldi
+    - Arc
+    - Brave
+    - Cosmic
 
 </details>
 
-</details>
+<details open>
+<summary>## 📊 Software Proficiency</summary>
 
-<details>
-<summary>📊 Software Proficiency</summary>
+#### Documentation and PKM Tools
 
-<details>
-<summary>Documentation and PKM Tools</summary>
+<details open>
+<summary>### Documentation and PKM Tools</summary>
 
 - Obsidian
 - Loqsec
@@ -610,8 +640,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Integrated Development Environments (IDEs)</summary>
+#### Integrated Development Environments (IDEs)
+
+<details open>
+<summary>### Integrated Development Environments (IDEs)</summary>
 
 - VSCode
 - VSCodium
@@ -620,8 +652,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Creative Software</summary>
+#### Creative Software
+
+<details open>
+<summary>### Creative Software</summary>
 
 - **Adobe Suite:**
     - Photoshop
@@ -642,8 +676,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>3D Modeling and Animation</summary>
+#### 3D Modeling and Animation
+
+<details open>
+<summary>### 3D Modeling and Animation</summary>
 
 - Blender
 - TwinMotion
@@ -658,8 +694,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Game Engines</summary>
+#### Game Engines
+
+<details open>
+<summary>### Game Engines</summary>
 
 - UDK
 - Unreal Engine 4
@@ -668,8 +706,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Local AI Tools</summary>
+#### Local AI Tools
+
+<details open>
+<summary>### Local AI Tools</summary>
 
 - **LLMs:**
     - LM Studio
@@ -681,8 +721,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Messaging Applications</summary>
+#### Messaging Applications
+
+<details open>
+<summary>### Messaging Applications</summary>
 
 - Slack
 - Teams
@@ -691,8 +733,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Password Management</summary>
+#### Password Management
+
+<details open>
+<summary>### Password Management</summary>
 
 - KeePass
 - Bitwarden
@@ -701,11 +745,13 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>🎮 Game Modding</summary>
+<details open>
+<summary>## 🎮 Game Modding</summary>
 
-<details>
-<summary>Games</summary>
+#### Games
+
+<details open>
+<summary>### Games</summary>
 
 - Skyrim
 - Fallout
@@ -714,8 +760,10 @@ Windows To Go
 
 </details>
 
-<details>
-<summary>Tools</summary>
+#### Tools
+
+<details open>
+<summary>### Tools</summary>
 
 - ModOrganizer
 - r2modman
