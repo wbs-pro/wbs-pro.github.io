@@ -2,7 +2,7 @@
 title: Knowledge Base
 draft: false
 tags:
-  - example-tag
+  - hard-skills
 ---
 
 ## Operating Systems
@@ -20,25 +20,28 @@ tags:
     - Kali Purple
     - Tails
     - Zorin OS
+
 - **Arch-based:**
     - Arch
     - EndeavourOS
     - BlackArch
     - SteamOS
-- **Source-based:**
-    - NixOS
+
 - **Fedora-based:**
     - QubesOS
 
+- **Source-based:**
+    - NixOS
+
 #### 👿 BSD Distributions
 
-- **BSD-based:**
-    - FreeBSD
-    - GhostBSD
-    - NomadBSD
-    - pfSense
-    - TrueNAS
-    - TrueOS
+   - FreeBSD
+   - GhostBSD
+   - NomadBSD
+   - pfSense
+   - TrueNAS
+   - TrueOS
+
 #### 🪟 Windows Versions
 
 - Windows 95
@@ -62,9 +65,24 @@ Windows To Go
 #### 🤖 Android
 
 - **Android Customization:**
-    - Rooting
-    - Magisk
-    - Custom ROMs
+    - Rooting:
+	    - Magisk (Alpha, Canary, Kitsune)
+	    - Sui
+	    - LSPosed
+	    - microG
+	    - F-Droid
+	    - Neo Store
+	    - Neo Backup
+	    - Titanium Backup
+	    - EX Kernel Manager
+	    - Advanced Charging Controller
+
+    - Custom ROMs: 
+	    - Lineage OS
+	    - Kali NetHunter
+	    - CalyxOS
+	    - CopperheadOS
+	    - GrapheneOS
 
 #### 🗃️ Backup and Recovery
 
@@ -82,7 +100,7 @@ Windows To Go
 - Ultimate BootCD
 - MemTest86
 
-#### Virtualization
+#### 🌐 Virtualization
 
 - Hyper-V
 - VMware
