@@ -7,6 +7,10 @@ aliases:
 ---
 # 🧰 Knowledge Base
 
+Welcome to my personal knowledge base!
+
+This is a curated collection of insights and information I've gathered in the realm of IT. Here, you'll find a comprehensive list of all the topics I've explored and tools I've used, primarily driven by my own research and curiosity. My goal is to share what I've learned and provide a valuable resource for anyone looking to expand their understanding of technology. Feel free to explore and discover the wealth of knowledge I've compiled!
+
 ## 💿 Operating Systems
 
 ### 🐧 Linux Distributions
