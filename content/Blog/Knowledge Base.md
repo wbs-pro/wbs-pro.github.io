@@ -124,7 +124,7 @@ Windows To Go
 
 ## ⚙️ Hardware Proficiency
 
-### Motherboards
+#### Motherboards
 
 - CPU Sockets (PGA, LGA)
 - Power Delivery Cables
@@ -134,7 +134,7 @@ Windows To Go
 - Fast Boot
 - Re-size BAR
 
-### Modern Storage Devices
+#### Modern Storage Devices
 
 - **SSDs:**
     - SATA
@@ -144,7 +144,7 @@ Windows To Go
     - SATA
     - RAID
 
-### Legacy Storage Devices
+#### Legacy Storage Devices
 
 - **Floppy Disks:**
     - 3.5-inch and 5.25-inch floppy disks
@@ -152,19 +152,19 @@ Windows To Go
 - **DAT Drives:**
     - Digital Audio Tape drives for data backup
 
-### USB Protocols
+#### USB Protocols
 
 - USB 2.0, 3.0, 3.1
 - USB Type-C
 - Thunderbolt
 
-### CPUs
+#### CPUs
 
 - Overclocking
 - Boost Clock
 - Base Clock
 
-### GPUs
+#### GPUs
 
 - Overclocking
 - Underclocking
@@ -173,7 +173,7 @@ Windows To Go
 - Voltage and Power Limit
 - Temperature Management (Fan Curves)
 
-### RAM
+#### RAM
 
 - DDR3, DDR4, DDR5
 - XMP
@@ -181,21 +181,21 @@ Windows To Go
 - Timings
 - Latency
 
-### Cooling Solutions
+#### Cooling Solutions
 
 - Water Cooling
 - Air Cooling
 
-### Power Supply
+#### Power Supply
 
 - Knowledge of power supply units (PSUs) and their specifications
 
-### Systems
+#### Systems
 
 - Workstations
 - Servers
 
-### Networking
+#### Networking
 
 - Switches
 - RJ45 Cables
@@ -215,50 +215,82 @@ Windows To Go
 
 ## 📊 Software Proficiency
 
-- **Documentation and PKM Tools:**
-    - Obsidian
-    - Loqsec
-    - Foam
-    - Notion
-    - Capacities
-    - BookStack
+#### Documentation and PKM Tools
 
-- **Integrated Development Environments (IDEs):**
-    - VSCode
-    - VSCodium
-    - Cursor
-    - Zed
+- Obsidian
+- Loqsec
+- Foam
+- Notion
+- Capacities
+- BookStack
 
-- **Creative Software:**
-    - Adobe Suite (Photoshop)
-    - Affinity Suite (Photo)
-    - NXStudio (Nikon)
-    - Davinci Resolve
+#### Integrated Development Environments (IDEs)
 
-- **3D Modeling and Animation:**
-    - Blender
-    - 3Ds Max
-    - Maya
-    - TwinMotion
+- VSCode
+- VSCodium
+- Cursor
+- Zed
 
-- **Game Engines:**
-    - UDK
-    - Unreal Engine 4
-    - UE5
+#### Creative Software
 
-- **Local AI Tools:**
-    - **LLMs:** LM Studio, Ollama, Jan.ai
-    - **Image Generators:** Stable Diffusion, Flux
+- **Adobe Suite:**
+    - Photoshop
+    - Camera Raw
+    - Lightroom
+    - Illustrator
+    - Premiere Pro
+    - After Effect
+    - InDesign
 
-- **Messaging Applications:**
-    - Slack
-    - Teams
-    - Signal
-    - Matrix
+- **Affinity Suite:**
+    - Photo
+    - Designer
+    - Publisher
 
-- **Password Management:**
-    - KeePass
-    - Bitwarden
+- NXStudio (Nikon)
+- Davinci Resolve
+
+#### 3D Modeling and Animation
+
+- Blender
+- TwinMotion
+- SketchUp
+- 3Ds Max
+- Maya
+- Fusion 360
+- Modo
+- SolidWorks
+- Mudbox
+- Cinema 4D
+
+#### Game Engines
+
+- UDK
+- Unreal Engine 4
+- UE5
+- Godot
+
+#### Local AI Tools
+
+- **LLMs:**
+    - LM Studio
+    - Ollama
+    - Jan.ai
+- **Image Generators:**
+    - Stable Diffusion
+    - Flux
+
+#### Messaging Applications
+
+- Slack
+- Teams
+- Signal
+- Matrix
+
+#### Password Management
+
+- KeePass
+- Bitwarden
 
 ## 🎮 Game Modding
 
