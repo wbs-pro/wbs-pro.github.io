@@ -122,7 +122,7 @@ Windows To Go
 
 #### ⚙️ Hardware Proficiency
 
-#### Motherboards
+##### Motherboards
 
 - CPU Sockets (PGA, LGA)
 - Power Delivery Cables
@@ -132,7 +132,7 @@ Windows To Go
 - Fast Boot
 - Re-size BAR
 
-#### Modern Storage Devices
+##### Modern Storage Devices
 
 - **SSDs:**
     - SATA
@@ -141,26 +141,26 @@ Windows To Go
     - SATA
     - RAID
 
-#### Legacy Storage Devices
+##### Legacy Storage Devices
 
 - **Floppy Disks:**
     - 3.5-inch and 5.25-inch floppy disks
 - **DAT Drives:**
     - Digital Audio Tape drives for data backup
 
-#### USB Protocols
+##### USB Protocols
 
 - USB 2.0, 3.0, 3.1
 - USB Type-C
 - Thunderbolt
 
-#### CPUs
+##### CPUs
 
 - Overclocking
 - Boost Clock
 - Base Clock
 
-#### GPUs
+##### GPUs
 
 - Overclocking
 - Underclocking
@@ -169,7 +169,7 @@ Windows To Go
 - Voltage and Power Limit
 - Temperature Management (Fan Curves)
 
-#### RAM
+##### RAM
 
 - DDR3, DDR4, DDR5
 - XMP
@@ -177,21 +177,21 @@ Windows To Go
 - Timings
 - Latency
 
-#### Cooling Solutions
+##### Cooling Solutions
 
 - Water Cooling
 - Air Cooling
 
-#### Power Supply
+##### Power Supply
 
 - Knowledge of power supply units (PSUs) and their specifications
 
-#### Systems
+##### Systems
 
 - Workstations
 - Servers
 
-#### Networking
+##### Networking
 
 - Switches
 - RJ45 Cables
