@@ -3,7 +3,9 @@ title: Knowledge Base
 draft: false
 tags:
   - hard-skills
+aliases:
 ---
+# 🧰 Knowledge Base
 
 ## Operating Systems
 

@@ -18,7 +18,7 @@ I'm looking forward to connecting with professionals whose work I admire, regard
 > *“I’ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.”*
 
 
-[[🧰 Knowledge Base]]
+[[Knowledge Base]]
 ## My Interests / Skills
 
 	- 📸 Photography
