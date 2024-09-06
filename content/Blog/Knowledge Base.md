@@ -213,7 +213,7 @@ Windows To Go
     - Brave
     - Cosmic
 
-## 💻 Software Proficiency
+## 📊 Software Proficiency
 
 - **Documentation and PKM Tools:**
     - Obsidian
