@@ -23,7 +23,7 @@ I also provided a screen recording of the issue to better illustrate the problem
 
 ![[NT2ScreenRecording.mp4]]
 
-#### Initial troubleshooting attempts
+### Initial troubleshooting attempts
 
 After several exchanges with various individuals who either didn’t fully grasp the issue or, to their credit, acknowledged the need to escalate it to someone more capable, I still found myself without a solution.
 
@@ -43,14 +43,14 @@ I also explored additional options:
 - Trying an alternative file manager called '[Files](https://github.com/files-community/Files)' to select the path, but this approach was ineffective, likely because it doesn’t integrate deeply enough into the system to influence the specific folder selection dialog window. This alternative simply adds a registry key to set it as the default file manager when some call is made to use the explorer, which can for instance redirect the 'Win + E' shortcut to open it instead of the standard explorer.
 
 
-#### Suggestion from support that I inadvertently overlooked 
+### Suggestion from support that I inadvertently overlooked 
 
 After following the support's suggestion to test the software on another computer and not encountering the issue, I realized that it was probably a problem unique to my machine.
 
 Despite this, I still couldn't identify the root cause of the problem, although I suspect it may be linked to my modifications of Windows .dll files through projects like '[Rectify11](https://github.com/Rectify11/Installer)'.
 
 
-#### Exploring an alternative approach to the issue
+### Exploring an alternative approach to the issue
 
 At that point, I considered whether there might be a different way to address my issue without relying on the software's interface.
 
@@ -66,7 +66,7 @@ I recognize that **these methods are quite unconventional**, but I am determined
 
 Ultimately, I decided to follow this approach to gain insight into what the process was doing.
 
-#### Putting the creative solution to the test
+### Putting the creative solution to the test
 
 The method was based on the idea of checking if the "path" was a value stored in a registry key and modifying it. To clarify, here’s what I did:
 
@@ -98,7 +98,7 @@ The method was based on the idea of checking if the "path" was a value stored in
 
 ![[NT2BackupPath.png]]
 
-#### Note on backup strategy
+### Note on backup strategy
 
 For the record, I am using a backup folder located on a **Storage Space** created with the Windows Storage Space utility in the control panel. This setup consists of a mirrored 1TB pool made up of two NVMe SSDs, providing both **speed and redundancy** as my primary backup layer:
 
