@@ -14,3 +14,8 @@ Trying to add a sticky header to the website so that:
 # Adding a button to scroll back to the top that dynamically appears
 
 Trying to add a button so that it's easier to go back to the top on long articles/pages
+
+
+Tools used: (not working)
+Flatten: https://github.com/TrelisResearch/flatten
+

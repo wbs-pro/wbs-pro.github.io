@@ -1,5 +1,5 @@
 ---
-title: Building This Website
+title: 🏗️ Building This Website
 draft: false
 date: 2024-09-08
 tags:
@@ -20,9 +20,9 @@ For instance, I explored how a particular font was configured for displaying dat
 ### Tools I Used
 
 - **[Cursor](https://www.cursor.com/) (IDE)**: For coding and linking to GitHub.
-- **ChatGPT**: To clarify specific contexts while setting up SSH keys and troubleshooting error codes that weren't covered in the setup instructions.
+- **ChatGPT (4o model)**: To clarify specific contexts while setting up SSH keys and troubleshooting error codes that weren't covered in the setup instructions.
 - **GitHub**: For hosting the website using GitHub Pages.
-- **Obsidian**: For drafting and organizing my content.
-- **Quartz**: For converting my Obsidian vault into a functional website.
+- **[Obsidian](https://github.com/obsidianmd)**: For drafting and organizing my content.
+- **[Quartz](https://github.com/jackyzha0/quartz)**: For converting my Obsidian vault into a functional website.
 
 This journey has not only been about building a website but also about enhancing my skills and understanding in the process. I hope to create a platform that resonates with others and showcases my approach to various ideas.

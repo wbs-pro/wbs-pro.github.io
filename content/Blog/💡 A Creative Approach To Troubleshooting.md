@@ -1,5 +1,5 @@
 ---
-title: A Creative Approach To Troubleshooting
+title: 💡 A Creative Approach To Troubleshooting
 draft: false
 date: 2024-09-21
 tags:
