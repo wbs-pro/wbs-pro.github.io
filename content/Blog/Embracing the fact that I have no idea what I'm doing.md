@@ -4,6 +4,31 @@ draft: true
 date: 2024-09-22
 tags:
 ---
+Learning to release the need to understand every detail, often tied to a desire for control to avoid mistakes and achieve perfection on the first attempt, is one of the most challenging and frustrating processes I've had to accept in any area I'm trying to master.
+
+Whether it's coding or drawing—two vastly different skills—the experience can be similarly daunting. In coding, beginners face a barrage of errors and logs after nearly every command, even when following step-by-step tutorials. Unexpected issues often arise, and tutorials may skip over what they assume is common knowledge, which can be frustrating for newcomers. Drawing, while it has a different learning curve, is equally challenging. Each pencil stroke provides immediate feedback, revealing mistakes directly, rather than through abstract errors like in coding. However, just as in coding, there are foundational skills that need to be developed, which often require practice and repetition rather than quick fixes.
+
+For someone accustomed to user-friendly tools, the lack of immediate results in more abstract skills can be particularly tough. To cope, I've found strategies that provide quick rewards and a sense of progress. While learning curves are rarely linear, recognizing past successes can help alleviate feelings of incompetence during tough times.
+
+It's important to acknowledge both failures and achievements, no matter how small, to maintain motivation and avoid feeling lost. Everyone starts somewhere, and it's easy to forget that even experts were once beginners. We often compare our starting point to their peak, overlooking the time and effort it took them to get there. It's much easier to read about a skill than to practice it, and I admit I don't always follow my own advice perfectly. However, maintaining momentum is crucial, even if it's the hardest part.
+
+I once explained it to a friend like this: making the first move requires significantly more energy than maintaining movement. Just as cars consume more fuel to accelerate from a standstill than to keep moving, starting a new habit or skill can feel daunting. Once you gain momentum, you still need to keep the energy up to avoid reverting to square one. Life can throw challenges your way, but even if you have to start over, you'll have the knowledge and experience to make it easier.
+
+In language learning, the same principle applies. Accepting that you won't understand everything right away is key. Initially, comprehension may be at 0%, but with practice and enjoyment, you'll find yourself progressing faster than you expected.
+
+In summary:
+- Keep moving and improving; stagnation leads to decline. Movement is essential for growth and learning.
+- The hardest part is getting started. Everyone knows this, but it often takes personal experience to truly understand.
+- Start small and find aspects of what you're learning that you enjoy. Overwhelm can lead to discouragement, so focus on what interests you.
+- It's okay to struggle when starting something new. Many give up because it's uncomfortable, but finding joy in the process, even if progress feels slow, is vital. Movement, even if imperfect, is better than inaction. The pursuit of perfection can hinder progress; remember that you're in it for the long haul. Reflecting on your journey can reveal how far you've come, so take the time to appreciate your progress, especially during frustrating moments.
+
+
+
+
+
+
+
+
 Learning to let go of having to understand everything down to the most minute detail, most likely linked to the willingness to have control over everything to be sure not to mess something up or break something and to aim to do things perfectly first try is one of the most unnerving and frustrating process I had to accept to go through in basically any domain that I am trying to learn.
 
 Whether it's learning how to code, or how to draw, even if those are vastly different things and while in code you are bombarded with errors, logs about things not working properly after basically every single command you type when you begin doing anything, even while following step by steps tutorials, unexpected issues are going to arise, or things that are assumed to be common or basic knowledge not being covered in the tutorial par volonté to shorten things will likely come and bite your beginner ass. 
