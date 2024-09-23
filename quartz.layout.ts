@@ -5,8 +5,6 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
- // afterBody: [Component.ScrollToTop()],
-  afterBody: [],
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/wbs-pro",
@@ -14,6 +12,8 @@ export const sharedPageComponents: SharedLayout = {
       Behance: "https://www.behance.net/williambornetsediey",
     },
   }),
+  beforeBody: [],
+  afterBody: [Component.ScrollToTop()],
 }
 
 // components for pages that display a single page (e.g. a single note)

@@ -4,6 +4,8 @@ draft: false
 date: 2024-09-08
 tags:
   - WebDevelopment
+  - AI
+  - LLM
 ---
 ### Lessons Learned While Creating This Website
 

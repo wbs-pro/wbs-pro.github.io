@@ -75,7 +75,13 @@ const config: QuartzConfig = {
     filters: [Plugin.RemoveDrafts()],
     emitters: [
       Plugin.AliasRedirects(),
-      Plugin.ComponentResources(),
+      Plugin.ComponentResources({
+        components: {
+          ScrollToTop: {
+            script: "quartz/components/scripts/scrollToTop.inline.ts",
+          },
+        },
+      }),
       Plugin.ContentPage(),
       Plugin.FolderPage(),
       Plugin.TagPage(),
@@ -87,6 +93,7 @@ const config: QuartzConfig = {
       Plugin.Static(),
       Plugin.NotFoundPage(),
     ],
+    // Remove the scripts section
   },
 }
 
