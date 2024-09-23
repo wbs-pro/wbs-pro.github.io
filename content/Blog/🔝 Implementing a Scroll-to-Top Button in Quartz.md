@@ -9,7 +9,13 @@ tags:
 ---
 ### Implementing a Scroll-to-Top Button in Quartz
 
-Integrating a scroll-to-top button into our Quartz-based website was a goal I had in mind, but I initially felt uncertain about where to begin or what knowledge I would need. However, by utilizing the [Cursor](https://www.cursor.com/) IDE and Claude 3.5, I was able to successfully implement the feature with minimal coding on my part, all while gaining insights into modern concepts that enhanced my understanding of HTML and CSS. Below is a brief overview of the process, the challenges faced, and the solutions I developed with the assistance of LLMs as my project copilot.
+Integrating a scroll-to-top button into our Quartz-based website was a goal I had in mind, but I initially felt uncertain about where to begin or what knowledge I would need. 
+
+However, by utilizing the [Cursor](https://www.cursor.com/) IDE and Claude 3.5, I was able to successfully implement the feature with minimal coding on my part, all while gaining insights into modern concepts that enhanced my understanding of HTML and CSS. 
+
+Below is a brief overview of the process, the challenges faced, and the solutions I developed with the assistance of LLMs as my project copilot.
+
+![[CursorAIComposer.png]]
 
 In fact, the following outline of the article was also written with the assistance of Claude after the feature was successfully implemented:
 
