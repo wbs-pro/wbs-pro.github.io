@@ -6,7 +6,7 @@ tags:
   - Psychology
   - Pseudoscience
 ---
-cf. https://en.wikipedia.org/wiki/Myers%E2%80%93Briggs_Type_Indicator
+cf. https://en.wikipedia.org/wiki/Myers-Briggs_Type_Indicator
 
 ![[Advocate (Turbulent) (Male) 1 of 1.png]]
 Source: https://www.16personalities.com/infj-personality

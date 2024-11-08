@@ -9,6 +9,7 @@ export const sharedPageComponents: SharedLayout = {
     Component.ScrollToTop(),
     Component.Footer({
       links: {
+        Contact: "/contact",
         GitHub: "https://github.com/wbs-pro",
         LinkedIn: "https://linkedin.com/in/williambornetsediey",
         Behance: "https://www.behance.net/williambornetsediey",

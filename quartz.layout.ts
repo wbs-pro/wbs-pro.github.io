@@ -7,6 +7,7 @@ export const sharedPageComponents: SharedLayout = {
   header: [],
   footer: Component.Footer({
     links: {
+      Contact: "/contact",
       GitHub: "https://github.com/wbs-pro",
       LinkedIn: "https://linkedin.com/in/williambornetsediey",
       Behance: "https://www.behance.net/williambornetsediey",

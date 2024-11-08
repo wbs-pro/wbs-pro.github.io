@@ -2,7 +2,8 @@
 title: 🧰 Knowledge Base
 draft: false
 tags:
-  - hard-skills
+  - HardSkills
+  - Keywords
 aliases:
 ---
 Welcome to my personal knowledge base!
