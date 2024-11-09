@@ -21,6 +21,9 @@ import RecentNotes from "./RecentNotes"
 import Breadcrumbs from "./Breadcrumbs"
 import Comments from "./Comments"
 import ScrollToTop from "./ScrollToTop"
+import Tutorial from "./Tutorial"
+import TutorialButton from "./TutorialButton"
+import ButtonGroup from "./ButtonGroup"
 
 export {
   ArticleTitle,
@@ -46,4 +49,7 @@ export {
   Breadcrumbs,
   Comments,
   ScrollToTop,
+  Tutorial,
+  TutorialButton,
+  ButtonGroup,
 }
