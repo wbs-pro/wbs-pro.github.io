@@ -11,9 +11,8 @@ Additionally, feel free to explore my [🧰 knowledge base](./knowledge-base), w
 
 You can also check out the [📝 blog](./Blog) section of this website, where I share practical insights into my work and skills that may provide a deeper understanding beyond what is available in the knowledge base or my resume.
 
+I speak FR 🇫🇷 & EN 🇬🇧 fluently.
 
-
-I speak FR (flag) & EN (flag) fluently.
 ## About Me
 
 I'm a 28-year-old French perpetual student and aspiring digital artist with a passion for [[ArchViz]] and Game Environment Art. After completing a 3-year Game Design program at SupinfoGame Rubika, I embarked on a journey of self-teaching and exploration.  

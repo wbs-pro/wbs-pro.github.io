@@ -1,5 +1,6 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
+import LanguageHandler from "./quartz/components/LanguageHandler"
 
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
@@ -15,7 +16,8 @@ export const sharedPageComponents: SharedLayout = {
   }),
   afterBody: [
     Component.ScrollToTop(),
-    Component.Tutorial()
+    Component.Tutorial(),
+    LanguageHandler(),
   ],
 }
 
@@ -32,7 +34,18 @@ export const defaultContentPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.ButtonGroup(),
-    Component.DesktopOnly(Component.Explorer()),
+    Component.DesktopOnly(Component.Explorer({
+      filterFn: (node) => {
+        // Add paths or titles you want to hide from the explorer
+        const hiddenPaths = new Set([
+          "contact",  // Will hide contact.md
+          // Add other paths you want to hide
+        ])
+        
+        // Return false for paths we want to hide, true for everything else
+        return !hiddenPaths.has(node.name.toLowerCase())
+      }
+    })),
   ],
   right: [
     Component.Graph(),
@@ -49,7 +62,18 @@ export const defaultListPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.ButtonGroup(),
-    Component.DesktopOnly(Component.Explorer()),
+    Component.DesktopOnly(Component.Explorer({
+      filterFn: (node) => {
+        // Add paths or titles you want to hide from the explorer
+        const hiddenPaths = new Set([
+          "contact",  // Will hide contact.md
+          // Add other paths you want to hide
+        ])
+        
+        // Return false for paths we want to hide, true for everything else
+        return !hiddenPaths.has(node.name.toLowerCase())
+      }
+    })),
   ],
   right: [],
 }
@@ -67,7 +91,18 @@ export const defaultLayout: PageLayout = {
     Component.Search(),
     Component.Darkmode(),
     Component.TutorialButton(),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: (node) => {
+        // Add paths or titles you want to hide from the explorer
+        const hiddenPaths = new Set([
+          "contact",  // Will hide contact.md
+          // Add other paths you want to hide
+        ])
+        
+        // Return false for paths we want to hide, true for everything else
+        return !hiddenPaths.has(node.name.toLowerCase())
+      }
+    }),
   ],
   right: [
     Component.Graph(),
