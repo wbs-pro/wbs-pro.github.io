@@ -10,37 +10,33 @@ interface IntroJs {
   setOptions: (options: IntroJsOptions) => IntroJs
   start: () => void
   onexit: (cb: () => void) => void
-  onbeforechange: (cb: () => void) => void
-  onchange: (cb: () => void) => void
   onafterchange: (cb: () => void) => void
+  previousStep: () => void
 }
 
 interface IntroJsOptions {
   steps: IntroStep[]
-  showProgress?: boolean
-  showBullets?: boolean
-  exitOnOverlayClick?: boolean
-  exitOnEsc?: boolean
-  disableInteraction?: boolean
-  helperElementPadding?: number
-  tooltipPosition?: string
-  positionPrecedence?: string[]
-  showStepNumbers?: boolean
-  keyboardNavigation?: boolean
-  showButtons?: boolean
-  doneLabel?: string
-  nextLabel?: string
-  prevLabel?: string
-  overlayOpacity?: number
-  scrollTo?: boolean | string
-  scrollToElement?: boolean
-  hideNext?: boolean
-  hidePrev?: boolean
+  showProgress: boolean
+  showBullets: boolean
+  exitOnOverlayClick: boolean
+  exitOnEsc: boolean
+  disableInteraction: boolean
+  helperElementPadding: number
+  tooltipPosition: string
+  positionPrecedence: string[]
+  showStepNumbers: boolean
+  keyboardNavigation: boolean
+  scrollTo: boolean | string
+  scrollToElement: boolean
+  doneLabel: string
+  nextLabel: string
+  prevLabel: string
+  overlayOpacity: number
 }
 
 interface IntroStep {
   title: string
-  intro?: string
+  intro: string
   element?: Element
   position?: string
 }
@@ -124,19 +120,21 @@ Tutorial.css = /* css */ `
 .introjs-button {
   font-family: var(--bodyFont);
   font-size: 0.9em;
-  background-color: var(--bg) !important;
-  color: var(--text) !important;
-  border: 1px solid var(--border);
+  background-color: var(--lightgray) !important;
+  color: var(--dark) !important;
+  border: 1px solid var(--lightgray) !important;
   border-radius: 4px;
   padding: 6px 12px;
   margin: 4px;
   text-shadow: none !important;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
 }
 
 .introjs-button:hover {
-  background-color: var(--hover) !important;
-  border-color: var(--secondary);
+  background-color: var(--secondary) !important;
+  color: var(--light) !important;
+  border-color: var(--secondary) !important;
 }
 
 .introjs-tooltipbuttons {
@@ -146,12 +144,10 @@ Tutorial.css = /* css */ `
   text-align: right;
 }
 
-/* Add these styles to prevent content scrolling */
 body.introjs-open {
   overflow: hidden;
 }
 
-/* Ensure tooltips stay above content */
 .introjs-overlay {
   z-index: 1000 !important;
 }
@@ -186,7 +182,6 @@ function loadResources() {
 function setupTutorial() {
   if (typeof window.introJs === 'undefined') return;
 
-  const intro = window.introJs();
   const elements = {
     searchButton: document.querySelector('#search-button'),
     explorer: document.querySelector('#explorer'),
@@ -204,6 +199,8 @@ function setupTutorial() {
   }
 
   function startTutorial() {
+    const intro = window.introJs();
+    
     const steps = [
       {
         title: '👋 Welcome',
@@ -261,15 +258,28 @@ function setupTutorial() {
       overlayOpacity: 0.5
     });
 
-    // Add class to body at start
     document.body.classList.add('introjs-open');
 
-    intro.onbeforechange(maintainTooltip);
-    intro.onchange(maintainTooltip);
-    intro.onafterchange(maintainTooltip);
+    intro.onafterchange(function() {
+      maintainTooltip();
+      
+      const prevButton = document.querySelector('.introjs-prevbutton');
+      if (!prevButton) return;
+
+      if (this._currentStep === 0) {
+        prevButton.textContent = 'Exit';
+        const newButton = prevButton.cloneNode(true);
+        prevButton.parentNode.replaceChild(newButton, prevButton);
+        newButton.addEventListener('click', () => intro.exit());
+      } else {
+        prevButton.textContent = '← Back';
+        const newButton = prevButton.cloneNode(true);
+        prevButton.parentNode.replaceChild(newButton, prevButton);
+        newButton.addEventListener('click', () => intro.previousStep());
+      }
+    });
 
     intro.onexit(() => {
-      // Remove class from body
       document.body.classList.remove('introjs-open');
       localStorage.setItem(TUTORIAL_STORAGE_KEY, 'true');
     });

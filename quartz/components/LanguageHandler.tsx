@@ -11,17 +11,15 @@ function LanguageHandler() {
 }
 
 LanguageHandler.afterDOMLoaded = `
-// Set the document language to English
-document.documentElement.lang = 'en';
+const lang = 'en';
+document.documentElement.lang = lang;
 
-// Add hreflang meta tag
 const hreflangMeta = document.createElement('meta');
 hreflangMeta.setAttribute('http-equiv', 'content-language');
-hreflangMeta.setAttribute('content', 'en');
+hreflangMeta.setAttribute('content', lang);
 document.head.appendChild(hreflangMeta);
 
-// Store language for other components to reference
-window.documentLanguage = 'en';
+window.documentLanguage = lang;
 `
 
 export default (() => {
