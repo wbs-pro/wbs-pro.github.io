@@ -261,6 +261,7 @@ function setupTutorial() {
 
     intro.onexit(() => {
       document.body.classList.remove('introjs-open');
+      localStorage.setItem('quartzTutorialShown', 'true');
     });
 
     intro.start();

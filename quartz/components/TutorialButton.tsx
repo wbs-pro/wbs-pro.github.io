@@ -2,50 +2,32 @@ import { QuartzComponentConstructor } from "./types"
 
 function TutorialButton() {
   return (
-    <button
-      id="start-tutorial"
-      aria-label="Start site tutorial"
-      className="tutorial-button"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+    <button id="start-tutorial" aria-label="Start tutorial" title="Start tutorial">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="16" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
       </svg>
     </button>
   )
 }
 
 TutorialButton.css = `
-.tutorial-button {
+#start-tutorial {
   padding: 0;
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.8;
-  transition: opacity 0.2s ease;
-  margin-left: 0.5rem;
+  margin: 0;
+  color: var(--gray);
+  transition: color 0.2s ease;
 }
 
-.tutorial-button:hover {
-  opacity: 1;
+#start-tutorial:hover {
+  color: var(--secondary);
 }
 `
 
 export default (() => {
   return TutorialButton
-}) satisfies QuartzComponentConstructor 
+}) satisfies QuartzComponentConstructor
