@@ -1,5 +1,6 @@
 import { QuartzConfig } from "./quartz/cfg"
 import * as Plugin from "./quartz/plugins"
+import { Sitemap, Robots } from "./quartz/plugins/emitters"
 
 /**
  * Quartz 4.0 Configuration
@@ -18,6 +19,7 @@ const config: QuartzConfig = {
     baseUrl: "quartz.jzhao.xyz",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "created",
+    author: "William Bornet-Sédiey",
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,
@@ -75,13 +77,7 @@ const config: QuartzConfig = {
     filters: [Plugin.RemoveDrafts()],
     emitters: [
       Plugin.AliasRedirects(),
-      Plugin.ComponentResources({
-        components: {
-          ScrollToTop: {
-            script: "quartz/components/scripts/scrollToTop.inline.ts",
-          },
-        },
-      }),
+      Plugin.ComponentResources(),
       Plugin.ContentPage(),
       Plugin.FolderPage(),
       Plugin.TagPage(),
@@ -92,8 +88,9 @@ const config: QuartzConfig = {
       Plugin.Assets(),
       Plugin.Static(),
       Plugin.NotFoundPage(),
+      Sitemap(),
+      Robots(),
     ],
-    // Remove the scripts section
   },
 }
 

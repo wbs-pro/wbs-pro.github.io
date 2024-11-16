@@ -153,6 +153,19 @@ export const CrawlLinks: QuartzTransformerPlugin<Partial<Options>> = (userOpts) 
                   )
                   node.properties.src = dest
                 }
+
+                // Add alt text for images if not present
+                if (node.tagName === "img" && !node.properties.alt) {
+                  // Try to generate alt text from filename or parent heading
+                  const fileName = node.properties.src?.split("/").pop()?.split(".")[0] ?? ""
+                  node.properties.alt = fileName.replace(/[-_]/g, " ").trim()
+                }
+
+                // Add width and height attributes if possible
+                if (node.tagName === "img") {
+                  node.properties.width = node.properties.width ?? "auto"
+                  node.properties.height = node.properties.height ?? "auto"
+                }
               }
             })
 

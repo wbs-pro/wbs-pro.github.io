@@ -44,6 +44,45 @@ export default (() => {
         {js
           .filter((resource) => resource.loadTime === "beforeDOMReady")
           .map((res) => JSResourceToScriptElement(res, true))}
+        <meta name="robots" content="index, follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content={cfg.baseUrl ?? "My Digital Garden"} />
+        <meta property="og:locale" content={cfg.locale} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        {cfg.baseUrl && <meta name="twitter:image" content={ogImagePath} />}
+        {cfg.baseUrl && (
+          <link 
+            rel="canonical" 
+            href={`https://${cfg.baseUrl}${fileData.slug === "index" ? "" : "/" + fileData.slug}`} 
+          />
+        )}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": title,
+            "description": description,
+            "image": cfg.baseUrl ? ogImagePath : undefined,
+            "author": [{
+              "@type": "Person",
+              "name": "William Bornet-Sédiey",
+              "alternateName": [
+                "William Bornet Sediey",
+                "William Bornet",
+                "William Bornet-Sediey"
+              ],
+              "sameAs": [
+                "https://github.com/wbs-pro",
+                "https://linkedin.com/in/williambornetsediey",
+                "https://www.behance.net/williambornetsediey"
+              ]
+            }],
+            "datePublished": fileData.frontmatter?.date,
+            "dateModified": fileData.frontmatter?.lastmod ?? fileData.frontmatter?.date
+          })}
+        </script>
       </head>
     )
   }
