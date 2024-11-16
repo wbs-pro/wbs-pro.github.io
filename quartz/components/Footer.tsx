@@ -46,6 +46,8 @@ export default ((opts?: Options) => {
 
   Footer.afterDOMLoaded = `
     let startTime;
+    let cachedPageSize;
+    let updateQueued = false;
     
     function startTimer() {
       startTime = performance.now();
@@ -54,6 +56,9 @@ export default ((opts?: Options) => {
     function formatLoadTime(timeInMs) {
       if (timeInMs >= 1000) {
         return \`\${(timeInMs / 1000).toFixed(1)}s\`;
+      }
+      if (timeInMs < 1) {
+        return \`\${Math.round(timeInMs * 1000)}µs\`;
       }
       return \`\${Math.round(timeInMs)}ms\`;
     }
@@ -66,15 +71,51 @@ export default ((opts?: Options) => {
       return \`\${parseFloat((bytes / Math.pow(k, i)).toFixed(1))}\${sizes[i]}\`;
     }
     
-    function updatePageStats() {
-      const endTime = performance.now();
-      const loadTime = endTime - startTime;
-      const pageSize = new Blob([document.documentElement.outerHTML]).size;
-      
-      const statsElement = document.querySelector('.stats');
-      if (statsElement) {
-        statsElement.textContent = \`\${formatBytes(pageSize)} · \${formatLoadTime(loadTime)}\`;
+    function calculatePageSize() {
+      if (cachedPageSize === undefined) {
+        // Get main content size instead of entire HTML
+        const mainContent = document.getElementById('quartz-body');
+        if (mainContent) {
+          // Calculate size of actual content without scripts and style elements
+          const contentClone = mainContent.cloneNode(true);
+          const scripts = contentClone.getElementsByTagName('script');
+          const styles = contentClone.getElementsByTagName('style');
+          
+          // Remove scripts and styles from size calculation
+          while (scripts.length > 0) scripts[0].remove();
+          while (styles.length > 0) styles[0].remove();
+          
+          cachedPageSize = new Blob([contentClone.innerHTML]).size;
+        } else {
+          // Fallback to a simpler calculation if main content not found
+          const content = document.body.innerText;
+          cachedPageSize = new Blob([content]).size;
+        }
       }
+      return cachedPageSize;
+    }
+    
+    function updatePageStats() {
+      if (updateQueued) return;
+      updateQueued = true;
+
+      requestAnimationFrame(() => {
+        const endTime = performance.now();
+        const loadTime = endTime - startTime;
+        const pageSize = calculatePageSize();
+        
+        const statsElement = document.querySelector('.stats');
+        if (statsElement) {
+          statsElement.textContent = \`\${formatBytes(pageSize)} · \${formatLoadTime(loadTime)}\`;
+        }
+        
+        updateQueued = false;
+      });
+    }
+
+    // Reset cache on navigation
+    function resetCache() {
+      cachedPageSize = undefined;
     }
 
     // Initial page load
@@ -83,8 +124,9 @@ export default ((opts?: Options) => {
 
     // For SPA navigation
     document.addEventListener('nav', () => {
+      resetCache();
       startTimer();
-      setTimeout(updatePageStats, 0);
+      updatePageStats();
     });
   `
 
