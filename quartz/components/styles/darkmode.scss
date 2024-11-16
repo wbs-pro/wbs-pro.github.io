@@ -1,3 +1,5 @@
+@use "../../styles/variables.scss" as *;
+
 .darkmode {
   cursor: pointer;
   padding: 0;
@@ -8,6 +10,13 @@
   height: 20px;
   margin: 0 10px;
   text-align: inherit;
+
+  @media all and (max-width: $fullPageWidth) {
+    margin: 0 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   & svg {
     position: absolute;

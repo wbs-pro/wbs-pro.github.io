@@ -85,7 +85,7 @@ export default ((userOpts?: Partial<Options>) => {
     }
 
     return (
-      <div class={classNames(displayClass, "explorer")}>
+      <div class={classNames(displayClass, "explorer", "mobile-slide")}>
         <button
           type="button"
           id="explorer"

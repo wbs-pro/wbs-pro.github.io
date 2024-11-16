@@ -32,6 +32,7 @@ interface IntroJsOptions {
   nextLabel: string
   prevLabel: string
   overlayOpacity: number
+  tooltipOffset: number
 }
 
 interface IntroStep {
@@ -182,126 +183,177 @@ function loadResources() {
 function setupTutorial() {
   if (typeof window.introJs === 'undefined') return;
 
+  const isMobile = window.innerWidth <= 768;
+  
   const elements = {
-    searchButton: document.querySelector('#search-button'),
+    searchButton: document.querySelector('.search-button'),
     explorer: document.querySelector('#explorer'),
     graphElement: document.querySelector('.graph'),
-    darkmodeButton: document.querySelector('[aria-label="Toggle theme"]'),
+    darkmodeButton: document.querySelector('.darkmode'),
     tutorialButton: document.querySelector('#start-tutorial')
   };
 
-  function maintainTooltip() {
-    const tooltip = document.querySelector('.introjs-tooltip');
-    if (tooltip) {
-      tooltip.style.opacity = '1';
-      tooltip.style.visibility = 'visible';
+  const desktopSteps = [
+    {
+      title: '👋 Welcome',
+      intro: 'Let me show you around this digital garden!',
+      position: 'center'
+    },
+    {
+      element: elements.searchButton,
+      title: '🔍 Search',
+      intro: 'Quickly find any content using the search feature',
+      position: 'bottom'
+    },
+    {
+      element: elements.explorer,
+      title: '📂 Explorer',
+      intro: 'Browse through all pages and folders here',
+      position: 'right'
+    },
+    {
+      element: elements.graphElement,
+      title: '📊 Graph View',
+      intro: 'Visualize how pages are connected to each other',
+      position: 'auto'
+    },
+    {
+      element: elements.darkmodeButton,
+      title: '💡 Theme',
+      intro: 'Toggle between light and dark themes',
+      position: 'bottom'
+    },
+    {
+      element: elements.tutorialButton,
+      title: '❓ Help',
+      intro: 'You can always click this button to revisit this tutorial!',
+      position: 'bottom'
     }
-  }
+  ].filter(step => step.element || !step.element);
 
-  function startTutorial() {
-    const intro = window.introJs();
+  const mobileSteps = [
+    {
+      title: '👋 Welcome',
+      intro: 'Let me show you around this digital garden!',
+      position: 'center'
+    },
+    {
+      element: elements.searchButton,
+      title: '🔍 Search',
+      intro: 'Quickly find any content using the search feature',
+      position: 'bottom'
+    },
+    {
+      element: elements.explorer,
+      title: '📂 Explorer',
+      intro: 'Tap here to open the navigation menu',
+      position: 'bottom'
+    },
+    {
+      element: elements.darkmodeButton,
+      title: '💡 Theme',
+      intro: 'Toggle between light and dark themes',
+      position: 'bottom'
+    },
+    {
+      element: elements.tutorialButton,
+      title: '❓ Help',
+      intro: 'Tap here to see this tutorial again',
+      position: 'bottom'
+    }
+  ].filter(step => step.element || !step.element);
+
+  const steps = isMobile ? mobileSteps : desktopSteps;
+  
+  const intro = window.introJs();
+  
+  intro.setOptions({
+    steps: steps.filter(step => !step.element || document.contains(step.element)),
+    showProgress: false,
+    showBullets: true,
+    exitOnOverlayClick: false,
+    exitOnEsc: true,
+    disableInteraction: true,
+    helperElementPadding: 8,
+    tooltipPosition: 'auto',
+    positionPrecedence: ['bottom', 'top', 'right', 'left'],
+    showStepNumbers: false,
+    keyboardNavigation: true,
+    scrollTo: false,
+    scrollToElement: false,
+    doneLabel: 'Got it!',
+    nextLabel: 'Next →',
+    prevLabel: '← Back',
+    overlayOpacity: 0.5,
+    tooltipOffset: 10
+  });
+
+  intro.onafterchange(function() {
+    const currentStep = this._currentStep;
+    const currentElement = this._introItems[currentStep].element;
     
-    const steps = [
-      {
-        title: '👋 Welcome',
-        intro: 'Let me show you around this digital garden!',
-        position: 'center'
-      },
-      {
-        element: elements.searchButton,
-        title: '🔍 Search',
-        intro: 'Quickly find any content using the search feature',
-        position: 'bottom'
-      },
-      {
-        element: elements.explorer,
-        title: '📁 Explorer',
-        intro: 'Browse through all pages and folders here'
-      },
-      {
-        element: elements.graphElement,
-        title: '⚛️ Graph View',
-        intro: 'Visualize how pages are connected to each other',
-        position: 'left'
-      },
-      {
-        element: elements.darkmodeButton,
-        title: '🌙 Dark Mode',
-        intro: 'Toggle between light and dark themes',
-        position: 'bottom'
-      },
-      {
-        element: elements.tutorialButton,
-        title: '🆘 Need Help?',
-        intro: 'You can always click this button to revisit this tutorial!',
-        position: 'bottom'
-      }
-    ].filter(step => !step.element || step.element instanceof Element);
-
-    intro.setOptions({
-      steps,
-      showProgress: false,
-      showBullets: true,
-      exitOnOverlayClick: false,
-      exitOnEsc: true,
-      disableInteraction: true,
-      helperElementPadding: 8,
-      tooltipPosition: 'auto',
-      positionPrecedence: ['bottom', 'top', 'right', 'left'],
-      showStepNumbers: false,
-      keyboardNavigation: true,
-      scrollTo: false,
-      scrollToElement: false,
-      doneLabel: 'Got it!',
-      nextLabel: 'Next →',
-      prevLabel: '← Back',
-      overlayOpacity: 0.5
-    });
-
-    document.body.classList.add('introjs-open');
-
-    intro.onafterchange(function() {
-      maintainTooltip();
+    if (currentElement) {
+      const rect = currentElement.getBoundingClientRect();
+      const isVisible = (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
       
-      const prevButton = document.querySelector('.introjs-prevbutton');
-      if (!prevButton) return;
-
-      if (this._currentStep === 0) {
-        prevButton.textContent = 'Exit';
-        const newButton = prevButton.cloneNode(true);
-        prevButton.parentNode.replaceChild(newButton, prevButton);
-        newButton.addEventListener('click', () => intro.exit());
-      } else {
-        prevButton.textContent = '← Back';
-        const newButton = prevButton.cloneNode(true);
-        prevButton.parentNode.replaceChild(newButton, prevButton);
-        newButton.addEventListener('click', () => intro.previousStep());
+      if (!isVisible) {
+        currentElement.scrollIntoView({
+          block: 'nearest',
+          inline: 'nearest',
+          behavior: 'smooth'
+        });
       }
-    });
+    }
+    
+    const prevButton = document.querySelector('.introjs-prevbutton');
+    if (!prevButton) return;
 
-    intro.onexit(() => {
-      document.body.classList.remove('introjs-open');
-      localStorage.setItem(TUTORIAL_STORAGE_KEY, 'true');
-    });
+    if (this._currentStep === 0) {
+      prevButton.textContent = 'Exit';
+      const newButton = prevButton.cloneNode(true);
+      prevButton.parentNode.replaceChild(newButton, prevButton);
+      newButton.addEventListener('click', () => intro.exit());
+    } else {
+      prevButton.textContent = '← Back';
+      const newButton = prevButton.cloneNode(true);
+      prevButton.parentNode.replaceChild(newButton, prevButton);
+      newButton.addEventListener('click', () => intro.previousStep());
+    }
+  });
 
-    intro.start();
-  }
-
-  if (!localStorage.getItem(TUTORIAL_STORAGE_KEY)) {
-    setTimeout(startTutorial, 500);
-  }
+  intro.onexit(() => {
+    localStorage.setItem(TUTORIAL_STORAGE_KEY, 'true');
+  });
 
   const tutorialButton = document.getElementById('start-tutorial');
   if (tutorialButton) {
     tutorialButton.addEventListener('click', (e) => {
       e.preventDefault();
-      startTutorial();
+      intro.start();
     });
+  }
+
+  // Only start automatically if tutorial hasn't been shown before
+  if (!localStorage.getItem(TUTORIAL_STORAGE_KEY)) {
+    intro.start();
   }
 }
 
-document.addEventListener('nav', loadResources);
-loadResources();
+document.addEventListener('nav', () => {
+  // Remove any existing tutorial resources
+  const existingStylesheet = document.querySelector('link[href="' + INTRO_CSS_URL + '"]');
+  if (existingStylesheet) existingStylesheet.remove();
+  
+  const existingScript = document.querySelector('script[src="' + INTRO_JS_URL + '"]');
+  if (existingScript) existingScript.remove();
+  
+  loadResources();
+});
 `
 
 export default (() => {

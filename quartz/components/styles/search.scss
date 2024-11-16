@@ -4,6 +4,17 @@
   min-width: fit-content;
   max-width: 14rem;
   flex-grow: 0.3;
+  margin: 0 1rem;
+
+  @media all and (max-width: $fullPageWidth) {
+    margin: 0 1rem;
+    display: flex;
+    align-items: center;
+    
+    & + .darkmode {
+      margin-left: 1rem;
+    }
+  }
 
   & > .search-button {
     background-color: var(--lightgray);
