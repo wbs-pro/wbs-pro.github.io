@@ -250,6 +250,12 @@ function setupTutorial() {
       position: 'bottom'
     },
     {
+      element: elements.graphElement,
+      title: '📊 Graph View',
+      intro: 'Visualize connections between pages',
+      position: 'bottom'
+    },
+    {
       element: elements.darkmodeButton,
       title: '💡 Theme',
       intro: 'Toggle between light and dark themes',
