@@ -30,12 +30,24 @@ const setupScrollToTop = () => {
   const scrollToTopButton = document.getElementById('scroll-to-top');
   if (scrollToTopButton) {
     console.log("Scroll to top button found");
-    scrollToTopButton.addEventListener('click', (e) => {
+    
+    // Create named handler functions so we can remove them later
+    const clickHandler = (e: Event) => {
       console.log("Button clicked");
       e.preventDefault();
       scrollToTop();
+    };
+    
+    const scrollHandler = () => handleScroll();
+    
+    scrollToTopButton.addEventListener('click', clickHandler);
+    window.addEventListener('scroll', scrollHandler);
+    
+    // Add cleanup function
+    window.addCleanup(() => {
+      scrollToTopButton.removeEventListener('click', clickHandler);
+      window.removeEventListener('scroll', scrollHandler);
     });
-    window.addEventListener('scroll', handleScroll);
     
     // Initial check for button visibility
     handleScroll();
@@ -44,11 +56,7 @@ const setupScrollToTop = () => {
   }
 };
 
-// Run setup immediately
-console.log("Running setupScrollToTop immediately");
-setupScrollToTop();
-
-// Also run setup on navigation events
+// Run setup on navigation events
 document.addEventListener('nav', () => {
   console.log("Navigation event detected, running setupScrollToTop");
   setupScrollToTop();
