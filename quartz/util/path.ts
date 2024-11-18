@@ -52,32 +52,36 @@ function sluggify(s: string): string {
     .split("/")
     .map((segment) =>
       segment
-        .replace(/\s/g, "-")
+        .toLowerCase()
+        .replace(/[\u{1F300}-\u{1F9FF}]|[\u{2700}-\u{27BF}]|[\u{FE00}-\u{FE0F}]/gu, '')
+        .replace(/️/g, '')
+        .trim()
+        .replace(/^[-_]+/, '')
+        .replace(/\s+/g, "-")
         .replace(/&/g, "-and-")
         .replace(/%/g, "-percent")
         .replace(/\?/g, "")
-        .replace(/#/g, ""),
+        .replace(/#/g, "")
+        .replace(/[^\w\-\/]/g, "")
+        .replace(/--+/g, "-")
+        .replace(/^-+|-+$/g, "")
     )
-    .join("/") // always use / as sep
-    .replace(/\/$/, "")
+    .filter(segment => segment.length > 0)
+    .join("/")
 }
 
 export function slugifyFilePath(fp: FilePath, excludeExt?: boolean): FullSlug {
   fp = stripSlashes(fp) as FilePath
-  let ext = _getFileExtension(fp)
+  let ext = _getFileExtension(fp) ?? ""
   const withoutFileExt = fp.replace(new RegExp(ext + "$"), "")
-  if (excludeExt || [".md", ".html", undefined].includes(ext)) {
-    ext = ""
-  }
 
   let slug = sluggify(withoutFileExt)
 
-  // treat _index as index
-  if (endsWith(slug, "_index")) {
-    slug = slug.replace(/_index$/, "index")
+  if (!excludeExt && ![".md", ".html", ""].includes(ext)) {
+    slug = slug + ext
   }
 
-  return (slug + ext) as FullSlug
+  return (slug.length === 0 ? "index" : slug) as FullSlug
 }
 
 export function simplifySlug(fp: FullSlug): SimpleSlug {
@@ -93,7 +97,6 @@ export function transformInternalLink(link: string): RelativeURL {
   let prefix = segments.filter(isRelativeSegment).join("/")
   let fp = segments.filter((seg) => !isRelativeSegment(seg) && seg !== "").join("/")
 
-  // manually add ext here as we want to not strip 'index' if it has an extension
   const simpleSlug = simplifySlug(slugifyFilePath(fp as FilePath))
   const joined = joinSegments(stripSlashes(prefix), stripSlashes(simpleSlug))
   const trail = folderPath ? "/" : ""
