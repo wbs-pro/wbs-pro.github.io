@@ -20,18 +20,24 @@
   justify-content: center;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
-  z-index: 1000;
+  transition: all 0.3s ease;
+  z-index: 9999;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  will-change: transform;
 
-  &:hover, &:focus {
+  &:hover {
     background-color: var(--tertiary);
     transform: translateY(-3px);
   }
 
-  &:focus {
+  &:focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px var(--tertiary);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    transition: all 0.1s ease;
   }
 
   &.visible {
@@ -48,10 +54,21 @@
     stroke: var(--light);
     stroke-width: 2px;
     transition: transform 0.3s ease;
+    will-change: transform;
+    transform: translateY(0);
   }
 
   &:hover svg {
     transform: translateY(-2px);
+  }
+
+  &:active svg {
+    transform: translateY(0);
+  }
+
+  // Force reset transform on touch end for mobile
+  &:not(:active) svg {
+    transform: translateY(0) !important;
   }
 }
 

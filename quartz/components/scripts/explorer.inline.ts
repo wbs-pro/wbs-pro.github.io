@@ -2,8 +2,14 @@ import { FolderState } from "../ExplorerNode"
 
 type MaybeHTMLElement = HTMLElement | undefined
 let currentExplorerState: FolderState[]
+
+// Store event handlers globally
+let currentToggleMenu: ((e?: Event) => void) | null = null
+let currentCloseMenu: (() => void) | null = null
+let currentEscHandler: ((e: KeyboardEvent) => void) | null = null
+let currentClickOutsideHandler: ((e: MouseEvent) => void) | null = null
+
 const observer = new IntersectionObserver((entries) => {
-  // If last element is observed, remove gradient of "overflow" class so element is visible
   const explorerUl = document.getElementById("explorer-ul")
   if (!explorerUl) return
   for (const entry of entries) {
@@ -69,7 +75,6 @@ function setupExplorer() {
   explorer.addEventListener("click", toggleExplorer)
   window.addCleanup(() => explorer.removeEventListener("click", toggleExplorer))
 
-  // Set up click handlers for each folder (click handler on folder "icon")
   for (const item of document.getElementsByClassName(
     "folder-icon",
   ) as HTMLCollectionOf<HTMLElement>) {
@@ -77,7 +82,6 @@ function setupExplorer() {
     window.addCleanup(() => item.removeEventListener("click", toggleFolder))
   }
 
-  // Get folder state from local storage
   const storageTree = localStorage.getItem("fileTree")
   const useSavedFolderState = explorer?.dataset.savestate === "true"
   const oldExplorerState: FolderState[] =
@@ -102,35 +106,109 @@ function setupExplorer() {
   })
 }
 
-window.addEventListener("resize", setupExplorer)
-document.addEventListener("nav", () => {
-  setupExplorer()
-  observer.disconnect()
-
-  // select pseudo element at end of list
-  const lastItem = document.getElementById("explorer-end")
-  if (lastItem) {
-    observer.observe(lastItem)
+function setupMobileMenu() {
+  const menuButton = document.querySelector('.mobile-explorer-trigger')
+  const explorer = document.querySelector('.explorer')
+  const overlay = document.querySelector('.explorer-overlay')
+  
+  // Clean up existing handlers if they exist
+  if (currentToggleMenu) {
+    menuButton?.removeEventListener('click', currentToggleMenu)
+    overlay?.removeEventListener('click', currentCloseMenu!)
+    document.removeEventListener('keydown', currentEscHandler!)
+    document.removeEventListener('click', currentClickOutsideHandler!)
   }
-})
+  
+  currentToggleMenu = (e?: Event) => {
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    if (explorer && overlay) {
+      explorer.classList.toggle('active')
+      overlay.classList.toggle('active')
+      menuButton?.classList.toggle('active')
+      document.body.style.overflow = explorer.classList.contains('active') ? 'hidden' : ''
+    }
+  }
 
-/**
- * Toggles the state of a given folder
- * @param folderElement <div class="folder-outer"> Element of folder (parent)
- * @param collapsed if folder should be set to collapsed or not
- */
+  currentCloseMenu = () => {
+    if (explorer && overlay) {
+      explorer.classList.remove('active')
+      overlay.classList.remove('active')
+      menuButton?.classList.remove('active')
+      document.body.style.overflow = ''
+    }
+  }
+
+  currentEscHandler = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      currentCloseMenu!()
+    }
+  }
+
+  currentClickOutsideHandler = (e: MouseEvent) => {
+    const target = e.target as HTMLElement
+    if (!target.closest('.explorer') && 
+        !target.closest('.menu-trigger') && 
+        explorer?.classList.contains('active')) {
+      currentCloseMenu!()
+    }
+  }
+
+  menuButton?.addEventListener('click', currentToggleMenu)
+  overlay?.addEventListener('click', currentCloseMenu)
+  document.addEventListener('keydown', currentEscHandler)
+  document.addEventListener('click', currentClickOutsideHandler)
+
+  window.addCleanup(() => {
+    if (currentToggleMenu) {
+      menuButton?.removeEventListener('click', currentToggleMenu)
+      overlay?.removeEventListener('click', currentCloseMenu!)
+      document.removeEventListener('keydown', currentEscHandler!)
+      document.removeEventListener('click', currentClickOutsideHandler!)
+    }
+  })
+}
+
 function setFolderState(folderElement: HTMLElement, collapsed: boolean) {
   return collapsed ? folderElement.classList.remove("open") : folderElement.classList.add("open")
 }
 
-/**
- * Toggles visibility of a folder
- * @param array array of FolderState (`fileTree`, either get from local storage or data attribute)
- * @param path path to folder (e.g. 'advanced/more/more2')
- */
 function toggleCollapsedByPath(array: FolderState[], path: string) {
   const entry = array.find((item) => item.path === path)
   if (entry) {
     entry.collapsed = !entry.collapsed
   }
 }
+
+// Initial setup
+document.addEventListener('DOMContentLoaded', () => {
+  setupExplorer()
+  setupMobileMenu()
+  
+  // Observe the last explorer item
+  const lastItem = document.getElementById("explorer-end")
+  if (lastItem) {
+    observer.observe(lastItem)
+  }
+})
+
+// Handle navigation events
+document.addEventListener('nav', () => {
+  observer.disconnect()
+  setupExplorer()
+  setupMobileMenu()
+  
+  // Reobserve the last item
+  const lastItem = document.getElementById("explorer-end")
+  if (lastItem) {
+    observer.observe(lastItem)
+  }
+})
+
+// Handle window resize
+window.addEventListener("resize", () => {
+  setupExplorer()
+  setupMobileMenu()
+})

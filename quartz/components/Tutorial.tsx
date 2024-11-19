@@ -187,13 +187,15 @@ function setupTutorial() {
   
   const elements = {
     searchButton: document.querySelector('.search-button'),
-    explorer: document.querySelector('#explorer'),
+    explorer: isMobile 
+      ? document.querySelector('.mobile-explorer-trigger')
+      : document.querySelector('#explorer'),
     graphElement: document.querySelector('.graph'),
     darkmodeButton: document.querySelector('.darkmode'),
     tutorialButton: document.querySelector('#start-tutorial')
   };
 
-  const desktopSteps = [
+  const steps = [
     {
       title: '👋 Welcome',
       intro: 'Let me show you around this digital garden!',
@@ -208,51 +210,17 @@ function setupTutorial() {
     {
       element: elements.explorer,
       title: '📂 Explorer',
-      intro: 'Browse through all pages and folders here',
-      position: 'right'
+      intro: isMobile 
+        ? 'Tap this menu button to browse through all pages and folders'
+        : 'Browse through all pages and folders here',
+      position: isMobile ? 'right' : 'bottom'
     },
     {
       element: elements.graphElement,
       title: '📊 Graph View',
-      intro: 'Visualize how pages are connected to each other',
-      position: 'auto'
-    },
-    {
-      element: elements.darkmodeButton,
-      title: '💡 Theme',
-      intro: 'Toggle between light and dark themes',
-      position: 'bottom'
-    },
-    {
-      element: elements.tutorialButton,
-      title: '❓ Help',
-      intro: 'You can always click this button to revisit this tutorial!',
-      position: 'bottom'
-    }
-  ].filter(step => step.element || !step.element);
-
-  const mobileSteps = [
-    {
-      title: '👋 Welcome',
-      intro: 'Let me show you around this digital garden!',
-      position: 'center'
-    },
-    {
-      element: elements.searchButton,
-      title: '🔍 Search',
-      intro: 'Quickly find any content using the search feature',
-      position: 'bottom'
-    },
-    {
-      element: elements.explorer,
-      title: '📂 Explorer',
-      intro: 'Tap here to open the navigation menu',
-      position: 'bottom'
-    },
-    {
-      element: elements.graphElement,
-      title: '📊 Graph View',
-      intro: 'Visualize connections between pages',
+      intro: isMobile 
+        ? 'Visualize connections between pages'
+        : 'Visualize how pages are connected to each other',
       position: 'bottom'
     },
     {
@@ -264,17 +232,15 @@ function setupTutorial() {
     {
       element: elements.tutorialButton,
       title: '❓ Help',
-      intro: 'Tap here to see this tutorial again',
+      intro: isMobile 
+        ? 'Tap here to see this tutorial again'
+        : 'You can always click this button to revisit this tutorial!',
       position: 'bottom'
     }
-  ].filter(step => step.element || !step.element);
+  ].filter(step => !step.element || document.contains(step.element));
 
-  const steps = isMobile ? mobileSteps : desktopSteps;
-  
-  const intro = window.introJs();
-  
-  intro.setOptions({
-    steps: steps.filter(step => !step.element || document.contains(step.element)),
+  const intro = window.introJs().setOptions({
+    steps,
     showProgress: false,
     showBullets: true,
     exitOnOverlayClick: false,
@@ -309,7 +275,7 @@ function setupTutorial() {
       
       if (!isVisible) {
         currentElement.scrollIntoView({
-          block: 'nearest',
+          block: 'center',
           inline: 'nearest',
           behavior: 'smooth'
         });
@@ -334,6 +300,13 @@ function setupTutorial() {
 
   intro.onexit(() => {
     localStorage.setItem(TUTORIAL_STORAGE_KEY, 'true');
+    
+    if (isMobile && window.scrollY > 0) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   });
 
   const tutorialButton = document.getElementById('start-tutorial');
@@ -344,19 +317,17 @@ function setupTutorial() {
     });
   }
 
-  // Only start automatically if tutorial hasn't been shown before
   if (!localStorage.getItem(TUTORIAL_STORAGE_KEY)) {
     intro.start();
   }
 }
 
 document.addEventListener('nav', () => {
-  // Remove any existing tutorial resources
-  const existingStylesheet = document.querySelector('link[href="' + INTRO_CSS_URL + '"]');
-  if (existingStylesheet) existingStylesheet.remove();
+  const existingStylesheet = document.querySelector(\`link[href="\${INTRO_CSS_URL}"]\`);
+  const existingScript = document.querySelector(\`script[src="\${INTRO_JS_URL}"]\`);
   
-  const existingScript = document.querySelector('script[src="' + INTRO_JS_URL + '"]');
-  if (existingScript) existingScript.remove();
+  existingStylesheet?.remove();
+  existingScript?.remove();
   
   loadResources();
 });

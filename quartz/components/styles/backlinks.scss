@@ -1,5 +1,6 @@
 .backlinks {
   position: relative;
+  z-index: 1;
 
   & > h3 {
     font-size: 1rem;
@@ -16,5 +17,10 @@
         background-color: transparent;
       }
     }
+  }
+
+  & > ul.overflow::after {
+    z-index: 2;
+    // ... rest of the existing gradient styles ...
   }
 }

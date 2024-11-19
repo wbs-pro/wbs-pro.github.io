@@ -1,0 +1,47 @@
+@use "../../styles/variables.scss" as *;
+
+.left.sidebar {
+  @media all and (max-width: $fullPageWidth) {
+    transform-origin: top;
+    transition: transform 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999999 !important;
+    background: var(--light);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    &.header-hidden {
+      transform: translateY(-100%);
+    }
+  }
+}
+
+// Ensure content doesn't hide behind the header on mobile
+@media all and (max-width: $fullPageWidth) {
+  #quartz-body {
+    padding-top: 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  // Fix graph positioning on mobile
+  .graph {
+    position: relative;
+    z-index: 1;
+    
+    & > #global-graph-outer {
+      z-index: 9998;
+      
+      &.active {
+        position: fixed;
+        top: 4rem;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--light);
+      }
+    }
+  }
+} 

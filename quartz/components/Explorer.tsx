@@ -7,6 +7,7 @@ import { ExplorerNode, FileNode, Options } from "./ExplorerNode"
 import { QuartzPluginData } from "../plugins/vfile"
 import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
+import { Menu } from "./icons"
 
 // Options interface defined in `ExplorerNode` to avoid circular dependency
 const defaultOptions = {
@@ -38,22 +39,16 @@ const defaultOptions = {
 } satisfies Options
 
 export default ((userOpts?: Partial<Options>) => {
-  // Parse config
   const opts: Options = { ...defaultOptions, ...userOpts }
-
-  // memoized
   let fileTree: FileNode
   let jsonTree: string
   let lastBuildId: string = ""
 
   function constructFileTree(allFiles: QuartzPluginData[]) {
-    // Construct tree from allFiles
     fileTree = new FileNode("")
     allFiles.forEach((file) => fileTree.add(file))
 
-    // Execute all functions (sort, filter, map) that were provided (if none were provided, only default "sort" is applied)
     if (opts.order) {
-      // Order is important, use loop with index instead of order.map()
       for (let i = 0; i < opts.order.length; i++) {
         const functionName = opts.order[i]
         if (functionName === "map") {
@@ -66,8 +61,6 @@ export default ((userOpts?: Partial<Options>) => {
       }
     }
 
-    // Get all folders of tree. Initialize with collapsed state
-    // Stringify to pass json tree as data attribute ([data-tree])
     const folders = fileTree.getFolderPaths(opts.folderDefaultState === "collapsed")
     jsonTree = JSON.stringify(folders)
   }
@@ -85,40 +78,43 @@ export default ((userOpts?: Partial<Options>) => {
     }
 
     return (
-      <div class={classNames(displayClass, "explorer", "mobile-slide")}>
-        <button
-          type="button"
-          id="explorer"
-          data-behavior={opts.folderClickBehavior}
-          data-collapsed={opts.folderDefaultState}
-          data-savestate={opts.useSavedState}
-          data-tree={jsonTree}
-          aria-controls="explorer-content"
-          aria-expanded={opts.folderDefaultState === "open"}
-        >
-          <h2>{opts.title ?? i18n(cfg.locale).components.explorer.title}</h2>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="5 8 14 8"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="fold"
+      <>
+        <div className={classNames(displayClass, "explorer", "mobile-slide")}>
+          <button
+            type="button"
+            id="explorer"
+            data-behavior={opts.folderClickBehavior}
+            data-collapsed={opts.folderDefaultState}
+            data-savestate={opts.useSavedState}
+            data-tree={jsonTree}
+            aria-controls="explorer-content"
+            aria-expanded={opts.folderDefaultState === "open"}
           >
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </button>
-        <div id="explorer-content">
-          <ul class="overflow" id="explorer-ul">
-            <ExplorerNode node={fileTree} opts={opts} fileData={fileData} />
-            <li id="explorer-end" />
-          </ul>
+            <h2>{opts.title ?? i18n(cfg.locale).components.explorer.title}</h2>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="5 8 14 8"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="fold"
+            >
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div id="explorer-content">
+            <ul class="overflow" id="explorer-ul">
+              <ExplorerNode node={fileTree} opts={opts} fileData={fileData} />
+              <li id="explorer-end" />
+            </ul>
+          </div>
         </div>
-      </div>
+        <div className="explorer-overlay"></div>
+      </>
     )
   }
 

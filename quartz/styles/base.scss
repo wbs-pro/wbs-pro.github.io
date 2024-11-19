@@ -124,7 +124,7 @@ a {
 .page {
   @media all and (max-width: $fullPageWidth) {
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 5rem 1rem 0;
     max-width: $pageWidth;
   }
 
@@ -173,11 +173,15 @@ a {
       padding: 0 4rem;
       position: fixed;
       @media all and (max-width: $fullPageWidth) {
-        position: initial;
+        position: fixed;
         flex-direction: row;
         padding: 0;
-        width: initial;
-        margin-top: 2rem;
+        width: 100%;
+        margin-top: 0;
+        background: var(--light);
+        z-index: 1000;
+        border-bottom: 1px solid var(--lightgray);
+        backdrop-filter: blur(8px);
       }
     }
 
@@ -185,18 +189,61 @@ a {
       z-index: 1;
       left: calc(calc(100vw - $pageWidth) / 2 - $sidePanelWidth);
       @media all and (max-width: $fullPageWidth) {
+        left: 0;
+        right: 0;
         gap: 0;
         align-items: center;
+        padding: 1rem;
+        height: auto;
       }
     }
 
     & .sidebar.right {
       right: calc(calc(100vw - $pageWidth) / 2 - $sidePanelWidth);
       flex-wrap: wrap;
-      & > * {
-        @media all and (max-width: $fullPageWidth) {
+      
+      @media all and (max-width: $fullPageWidth) {
+        position: static !important;
+        width: 100% !important;
+        padding: 1rem;
+        margin-top: 1rem;
+        border: none;
+        background: none;
+        backdrop-filter: none;
+        
+        & > * {
           flex: 1;
           min-width: 140px;
+          position: relative !important;
+          z-index: 1;
+        }
+
+        .graph {
+          position: relative;
+          
+          #global-graph-outer {
+            &.active {
+              position: fixed;
+              top: 4rem;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              width: 100vw !important;
+              height: calc(100vh - 4rem) !important;
+              margin: 0;
+              z-index: 10000;
+              background: var(--light);
+              
+              #global-graph-container {
+                position: absolute !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                width: 90% !important;
+                height: 80% !important;
+              }
+            }
+          }
         }
       }
     }
