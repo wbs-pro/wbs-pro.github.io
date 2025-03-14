@@ -24,6 +24,7 @@ This is a curated collection of insights and information I've gathered in the re
     - Parrot OS
     - Kali Linux
     - Kali Purple
+    - REMnux
     - Tails
     - Zorin OS
 
@@ -59,14 +60,22 @@ This is a curated collection of insights and information I've gathered in the re
 - Windows 10
 - Windows 11
 
-Registry Edits
-Hyper-V
+#### Windows Customization and Management
 
-Windows To Go
-**Tweaking Tools:**
+-  **Portable Windows Solutions:**
+    - Windows To Go
+
+- **Registry Edits**
+
+- **Tweaking Tools:**
+	- PowerToys
     - Windhawk
     - Rectify11
-- **Subsystem for Android**
+    - Rebound11
+    - MicaForEveryone
+
+- **Android Integration:**
+    - Subsystem for Android
 
 ### 🤖 Android
 
@@ -111,6 +120,8 @@ Windows To Go
 - Hyper-V
 - VMware
 - VirtualBox
+- QEMU
+- KVM
 
 ## 🖥️ Remote Access and Support
 
@@ -121,10 +132,21 @@ Windows To Go
 
 ## 🔒 Cybersecurity Solutions
 
+#### Endpoint Security Solutions:
+
 - Nucleon Smart Endpoint
 - F-Secure
 - Sophos
 - ESET Endpoint Antivirus
+
+#### VPN Protocols:
+
+- OpenVPN
+- WireGuard
+
+#### AI Safety and Evaluation:
+
+- HarmBench
 
 ## ⚙️ Hardware Proficiency
 
@@ -203,7 +225,23 @@ Windows To Go
 
 - Switches
 - RJ45 Cables
-- WiFi 6
+- WiFi 6, 7
+
+## 🛠️ Automation and Containerization
+
+#### Containerization:
+
+- Docker
+
+#### Workflow Automation:
+
+- n8n (self-hosted)
+
+#### Version Control:
+
+- Git
+- GitHub
+- GitLab
 
 ## 🌍 Web Browsers
 
@@ -216,6 +254,16 @@ Windows To Go
     - Arc
     - Brave
     - Cosmic
+    - SRWare Iron
+    - Edge ('New')
+
+- Legacy browsers:
+	- Edge ('Legacy')
+
+- Browser extensions:
+	- Tampermonkey
+	- Greasymonkey
+	- Violentmonkey
 
 ## 📊 Software Proficiency
 
@@ -281,6 +329,7 @@ Windows To Go
     - LM Studio
     - Ollama
     - Jan.ai
+
 - **Image Generators:**
     - Stable Diffusion
     - Flux

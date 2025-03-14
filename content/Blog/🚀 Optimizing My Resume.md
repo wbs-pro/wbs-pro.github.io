@@ -60,4 +60,11 @@ Tools used:
 - DuckDuckGO Chats AI for anonymization while keeping the latest models like GPT-4o
 - VSCode
 - GitHub for forking Resume Matcher
-- 
+
+
+UPDATE: 13-03-2025
+
+Abandonned the previous project since it hasn't been updated and isn't working and switched to 
+[Hunterdii/Smart-AI-Resume-Analyzer: 📄 Smart Resume AI is a powerful tool designed to revolutionize your job application process. With features like 📚 professional template building, 🔍 ATS-friendly analysis, and 🎯 AI-driven optimization, it ensures your resume stands out to recruiters. Smart Resume AI provides everything you need to craft a tailored, eye-catching resume. 🚀](https://github.com/Hunterdii/Smart-AI-Resume-Analyzer?tab=readme-ov-file#-setup-in-minutes)
+
+Setup within minutes

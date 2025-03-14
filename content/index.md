@@ -5,6 +5,8 @@ title: Welcome
 
 I'm William, a self-taught Digital Artist, and this is my digital garden. If you're a recruiter, you can find my most recent resume here: [📄 Reactive Resume](https://rxresu.me/william.bs.pro/en-curriculum-vitae)
 
+You can also check out my [[📜 Certifications]] to see the credentials that complement my skills and experience.
+
 Feel free to get in [📧 contact](./contact) with me if you’re interested in discussing job opportunities.
 
 Additionally, feel free to explore my [🧰 knowledge base](./knowledge-base), where I've compiled a range of skills and insights that may align with your search for a potential candidate. 

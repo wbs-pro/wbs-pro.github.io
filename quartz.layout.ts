@@ -39,6 +39,7 @@ export const defaultContentPageLayout: PageLayout = {
         // Add paths or titles you want to hide from the explorer
         const hiddenPaths = new Set([
           "contact",  // Will hide contact.md
+          "certifications", // Will hide 📜 Certifications.md
           // Add other paths you want to hide
         ])
         
@@ -67,6 +68,7 @@ export const defaultListPageLayout: PageLayout = {
         // Add paths or titles you want to hide from the explorer
         const hiddenPaths = new Set([
           "contact",  // Will hide contact.md
+          "certifications",
           // Add other paths you want to hide
         ])
         
@@ -96,6 +98,7 @@ export const defaultLayout: PageLayout = {
         // Add paths or titles you want to hide from the explorer
         const hiddenPaths = new Set([
           "contact",  // Will hide contact.md
+          "certifications",
           // Add other paths you want to hide
         ])
         
