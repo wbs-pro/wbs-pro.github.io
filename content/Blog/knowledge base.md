@@ -1,6 +1,8 @@
 ---
 title: 🧰 Knowledge Base
 draft: false
+created: 2024-09-23
+last-modified: 2025-03-14
 tags:
   - HardSkills
   - Keywords

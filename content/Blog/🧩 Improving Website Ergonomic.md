@@ -1,7 +1,7 @@
 ---
 title: 🧩 Improving Website Ergonomic
 draft: true
-date: 2024-09-23
+created: 2024-09-23
 tags:
 ---
 # Adding A Sticky Header To The Website

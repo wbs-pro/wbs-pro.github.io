@@ -1,7 +1,7 @@
 ---
 title: 🔝 Implementing a Scroll-to-Top Button in Quartz
 draft: false
-date: 2024-09-23
+created: 2024-09-23
 tags:
   - WebDevelopment
   - AI
