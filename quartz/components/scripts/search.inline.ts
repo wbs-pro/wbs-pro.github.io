@@ -44,6 +44,7 @@ const fetchContentCache: Map<FullSlug, Element[]> = new Map()
 const contextWindowWords = 30
 const numSearchResults = 8
 const numTagResults = 5
+const maxCacheSize = 20 // Limit cache size to prevent memory leaks
 
 const tokenizeTerm = (term: string) => {
   const tokens = term.split(/\s+/).filter((t) => t.trim() !== "")
@@ -378,6 +379,13 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
         return [...html.getElementsByClassName("popover-hint")]
       })
 
+    // Limit cache size for mobile devices
+    if (fetchContentCache.size >= maxCacheSize) {
+      // Remove oldest entry (first key in map)
+      const firstKey = fetchContentCache.keys().next().value
+      fetchContentCache.delete(firstKey)
+    }
+    
     fetchContentCache.set(slug, contents)
     return contents
   }
@@ -385,6 +393,8 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   async function displayPreview(el: HTMLElement | null) {
     if (!searchLayout || !enablePreview || !el || !preview) return
     const slug = el.id as FullSlug
+    if (!slug) return
+    
     const innerDiv = await fetchContent(slug).then((contents) =>
       contents.flatMap((el) => [...highlightHTML(currentSearchTerm, el as HTMLElement).children]),
     )
@@ -467,6 +477,11 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
 
   registerEscapeHandler(container, hideSearch)
   await fillDocument(data)
+
+  // Clear search cache on navigation to prevent memory leaks
+  if (fetchContentCache.size > 0) {
+    fetchContentCache.clear()
+  }
 })
 
 /**

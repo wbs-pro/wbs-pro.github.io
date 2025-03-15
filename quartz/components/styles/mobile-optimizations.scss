@@ -1,0 +1,60 @@
+/* Mobile optimizations to reduce CLS and improve INP */
+
+@media (max-width: 768px) {
+  /* Prevent layout shifts by setting explicit dimensions */
+  .graph-outer, #graph-container, #global-graph-container {
+    height: 300px !important;
+    max-height: 50vh !important;
+    contain: strict; /* Use CSS containment to improve performance */
+  }
+  
+  /* Optimize animations */
+  * {
+    transition-duration: 0.15s !important; /* Shorter transitions on mobile */
+  }
+  
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+  
+  /* Use hardware acceleration for smoother scrolling */
+  body {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+  
+  /* Improve touch targets for better mobile interaction */
+  button, a, .clickable {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px;
+    touch-action: manipulation;
+  }
+  
+  /* Prevent content jumping by reserving space */
+  .content img {
+    aspect-ratio: attr(width) / attr(height);
+    height: auto;
+  }
+  
+  /* Optimize font rendering */
+  body {
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Add will-change hints for elements that will animate */
+.graph-outer, .search-container, .mobile-menu {
+  will-change: transform, opacity;
+}
+
+/* Use content-visibility to improve rendering performance */
+.content:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+} 

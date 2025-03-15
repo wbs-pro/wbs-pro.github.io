@@ -8,6 +8,7 @@ let currentToggleMenu: ((e?: Event) => void) | null = null
 let currentCloseMenu: (() => void) | null = null
 let currentEscHandler: ((e: KeyboardEvent) => void) | null = null
 let currentClickOutsideHandler: ((e: MouseEvent) => void) | null = null
+let setupCompleted = false; // Track if setup has already been completed
 
 const observer = new IntersectionObserver((entries) => {
   const explorerUl = document.getElementById("explorer-ul")
@@ -117,7 +118,16 @@ function setupMobileMenu() {
     overlay?.removeEventListener('click', currentCloseMenu!)
     document.removeEventListener('keydown', currentEscHandler!)
     document.removeEventListener('click', currentClickOutsideHandler!)
+    
+    // Set all handlers to null after cleanup
+    currentToggleMenu = null;
+    currentCloseMenu = null;
+    currentEscHandler = null;
+    currentClickOutsideHandler = null;
   }
+  
+  // Don't set up new handlers if elements don't exist
+  if (!menuButton || !explorer || !overlay) return;
   
   currentToggleMenu = (e?: Event) => {
     if (e) {
@@ -159,7 +169,9 @@ function setupMobileMenu() {
   menuButton?.addEventListener('click', currentToggleMenu)
   overlay?.addEventListener('click', currentCloseMenu)
   document.addEventListener('keydown', currentEscHandler)
-  document.addEventListener('click', currentClickOutsideHandler)
+  
+  // Use passive event listeners for better performance on mobile
+  document.addEventListener('click', currentClickOutsideHandler, { passive: true })
 
   window.addCleanup(() => {
     if (currentToggleMenu) {
@@ -184,6 +196,9 @@ function toggleCollapsedByPath(array: FolderState[], path: string) {
 
 // Initial setup
 document.addEventListener('DOMContentLoaded', () => {
+  if (setupCompleted) return; // Prevent duplicate setup
+  setupCompleted = true;
+  
   setupExplorer()
   setupMobileMenu()
   
@@ -207,8 +222,16 @@ document.addEventListener('nav', () => {
   }
 })
 
-// Handle window resize
+// Handle window resize - use debouncing to prevent excessive calls
+let resizeTimeout: number | null = null;
 window.addEventListener("resize", () => {
-  setupExplorer()
-  setupMobileMenu()
+  if (resizeTimeout) {
+    window.clearTimeout(resizeTimeout);
+  }
+  
+  resizeTimeout = window.setTimeout(() => {
+    setupExplorer()
+    setupMobileMenu()
+    resizeTimeout = null;
+  }, 250); // 250ms debounce
 })

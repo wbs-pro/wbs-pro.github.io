@@ -1,0 +1,128 @@
+.mobile-nav-alternative {
+  display: none;
+  padding: 1rem;
+  contain: content; // Optimize layout containment
+  will-change: transform; // Hardware acceleration hint
+  
+  @media (max-width: 768px) {
+    display: block;
+  }
+
+  &.desktop-hidden {
+    display: none;
+  }
+
+  h3 {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+  }
+
+  // Optimize touch targets
+  .touch-optimized {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin: 0.5rem 0;
+      transform: translateZ(0); // Force GPU acceleration
+      
+      a.mobile-nav-link {
+        display: block;
+        padding: 12px; // Ensure minimum touch target size
+        min-height: 44px; // iOS minimum touch target height
+        touch-action: manipulation; // Optimize touch handling
+        position: relative;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+        border-radius: 8px;
+        
+        // Use transform for animations instead of layout properties
+        &:active {
+          transform: scale(0.98);
+        }
+        
+        // Prevent text selection during touch
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        
+        // Ensure sufficient color contrast
+        &:hover, &:focus {
+          background-color: var(--highlight);
+        }
+      }
+    }
+  }
+
+  .mobile-nav-tags {
+    contain: content; // Optimize layout containment
+    margin-top: 1rem;
+
+    .mobile-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+
+      .mobile-tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 16px;
+        background-color: var(--bg);
+        color: var(--text);
+        text-decoration: none;
+        font-size: 0.9rem;
+        min-height: 44px; // iOS minimum touch target height
+        touch-action: manipulation;
+        transform: translateZ(0); // Force GPU acceleration
+        transition: transform 0.2s ease;
+        
+        // Hardware acceleration class
+        &.hardware-accelerated {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+        }
+        
+        // Use transform for animations
+        &:active {
+          transform: scale(0.95);
+        }
+        
+        // Prevent text selection during touch
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+
+        .mobile-tag-count {
+          margin-left: 0.5rem;
+          opacity: 0.7;
+        }
+        
+        // Ensure sufficient color contrast
+        &:hover, &:focus {
+          background-color: var(--highlight);
+        }
+      }
+    }
+  }
+}
+
+// Add prefers-reduced-motion support
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-alternative {
+    .touch-optimized li a.mobile-nav-link,
+    .mobile-tag-list .mobile-tag {
+      transition: none;
+      transform: none;
+      
+      &:active {
+        transform: none;
+      }
+    }
+  }
+}
+
+.desktop-hidden {
+  display: none !important;
+}

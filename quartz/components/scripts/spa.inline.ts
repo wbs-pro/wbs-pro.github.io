@@ -5,6 +5,7 @@ import { FullSlug, RelativeURL, getFullSlug, normalizeRelativeURLs } from "../..
 // https://github.com/natemoo-re/micromorph
 const NODE_TYPE_ELEMENT = 1
 let announcer = document.createElement("route-announcer")
+let p: DOMParser | null = null // Initialize parser as null to create on demand
 const isElement = (target: EventTarget | null): target is Element =>
   (target as Node)?.nodeType === NODE_TYPE_ELEMENT
 const isLocalUrl = (href: string) => {
@@ -42,9 +43,12 @@ function notifyNav(url: FullSlug) {
 const cleanupFns: Set<(...args: any[]) => void> = new Set()
 window.addCleanup = (fn) => cleanupFns.add(fn)
 
-let p: DOMParser
 async function navigate(url: URL, isBack: boolean = false) {
-  p = p || new DOMParser()
+  // Create parser on demand
+  if (!p) {
+    p = new DOMParser()
+  }
+  
   const contents = await fetch(`${url}`)
     .then((res) => {
       const contentType = res.headers.get("content-type")
@@ -106,6 +110,10 @@ async function navigate(url: URL, isBack: boolean = false) {
   }
   notifyNav(getFullSlug(window))
   delete announcer.dataset.persist
+  
+  // Help garbage collection by clearing references
+  html.body.textContent = ''
+  html.head.textContent = ''
 }
 
 window.spaNavigate = navigate

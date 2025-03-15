@@ -1,0 +1,118 @@
+/**
+ * Mobile performance optimizations stylesheet
+ * Focuses on improving CLS and INP metrics
+ */
+/* Only apply these styles on mobile devices */
+@media screen and (max-width: 768px) {
+  /* ===== CLS Optimizations ===== */
+  /* Prevent layout shifts by setting explicit dimensions */
+  img {
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: attr(width)/attr(height);
+  }
+  /* Add space reservation for images without dimensions */
+  img:not([width]):not([height]) {
+    min-height: 150px;
+    background-color: #f0f0f0;
+  }
+  /* Improve font loading to prevent text reflow */
+  .fonts-optimized {
+    font-display: swap;
+  }
+  /* Reserve space for dynamic content */
+  .dynamic-content, [data-dynamic=true] {
+    min-height: 100px;
+    contain: layout style;
+  }
+  /* Specific containers that need space reservation */
+  #results-container {
+    min-height: 150px;
+  }
+  .explorer {
+    min-height: 200px;
+  }
+  /* ===== INP Optimizations ===== */
+  /* Improve touch targets for better interaction */
+  a, button, [role=button], .clickable, input[type=checkbox], input[type=radio] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 8px;
+    touch-action: manipulation;
+  }
+  /* Add visual feedback for interactions */
+  a:active, button:active, [role=button]:active, .clickable:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+  }
+  /* Optimize animations for mobile */
+  .reduce-motion * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  /* Reduce animation complexity */
+  .animation-reduced {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  /* Optimize scrolling performance */
+  body {
+    overscroll-behavior: contain;
+    scroll-behavior: auto;
+  }
+  /* Use content-visibility for off-screen content */
+  .content-block:not(:first-child) {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+  /* Optimize rendering performance */
+  .header, .footer, .sidebar {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  /* Container for image aspect ratio */
+  .image-aspect-ratio-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  .image-aspect-ratio-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  /* Memory optimization - help browser know when elements can be discarded */
+  .removed, .hidden {
+    display: none !important;
+    content-visibility: hidden;
+    contain: strict;
+  }
+  /* Fix for intro.js tutorial on mobile */
+  .introjs-tooltip {
+    max-width: 90% !important;
+    min-width: 250px !important;
+  }
+  .introjs-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 8px;
+    touch-action: manipulation;
+  }
+}
+/* Prevent FOUT (Flash of Unstyled Text) */
+@font-face {
+  font-family: "OptimizedFont";
+  src: local("Arial");
+  font-display: swap !important;
+}
+/* Preconnect to critical domains */
+:root::before {
+  display: none;
+  content: "preconnect";
+}

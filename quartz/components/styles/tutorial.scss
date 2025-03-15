@@ -1,0 +1,21 @@
+.mobile-tutorial-note {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #fff3cd;
+  border-left: 3px solid #ffc107;
+  font-size: 0.9rem;
+}
+
+.mobile-only-tutorial {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-only-tutorial {
+    display: block;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--lightgray);
+    border-radius: 0.5rem;
+  }
+} 
