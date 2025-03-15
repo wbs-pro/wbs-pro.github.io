@@ -13,11 +13,23 @@ import {
   drag,
   zoom,
 } from "d3"
-import { Text, Graphics, Application, Container, Circle } from "pixi.js"
+import { Text, Graphics, Application, Container, Circle, SCALE_MODES } from "pixi.js"
 import { Group as TweenGroup, Tween as Tweened } from "@tweenjs/tween.js"
 import { registerEscapeHandler, removeAllChildren } from "./util"
 import { FullSlug, SimpleSlug, getFullSlug, resolveRelative, simplifySlug } from "../../util/path"
 import { D3Config } from "../Graph"
+
+// Throttle function for performance
+function throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
+  let inThrottle: boolean;
+  return ((...args: any[]) => {
+    if (!inThrottle) {
+      func(...args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  }) as T;
+}
 
 type GraphicsInfo = {
   color: string
@@ -88,6 +100,14 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
     showTags,
     focusOnHover,
   } = JSON.parse(graph.dataset["cfg"]!) as D3Config
+
+  // Adjust forces for mobile
+  const isMobile = window.innerWidth < 768
+  if (isMobile) {
+    repelForce *= 0.7
+    linkDistance *= 0.8
+    scale *= 0.9
+  }
 
   const data: Map<SimpleSlug, ContentDetails> = new Map(
     Object.entries<ContentDetails>(await fetchData).map(([k, v]) => [
@@ -161,12 +181,20 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
       })),
   }
 
-  // we virtualize the simulation and use pixi to actually render it
+  // Initialize simulation with mobile optimizations
   const simulation: Simulation<NodeData, LinkData> = forceSimulation<NodeData>(graphData.nodes)
     .force("charge", forceManyBody().strength(-100 * repelForce))
     .force("center", forceCenter().strength(centerForce))
     .force("link", forceLink(graphData.links).distance(linkDistance))
     .force("collide", forceCollide<NodeData>((n) => nodeRadius(n)).iterations(3))
+
+  // Apply mobile-specific simulation settings
+  if (isMobile) {
+    simulation
+      .alphaDecay(0.02) // Faster convergence
+      .velocityDecay(0.3) // More damping
+      .alphaMin(0.1) // Stop at higher energy state
+  }
 
   const width = graph.offsetWidth
   const height = Math.max(graph.offsetHeight, 250)
@@ -246,6 +274,30 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
   let dragStartTime = 0
   let dragging = false
 
+  function renderNodes() {
+    tweens.get("hover")?.stop()
+
+    const tweenGroup = new TweenGroup()
+    for (const n of nodeRenderData) {
+      let alpha = 1
+
+      // if we are hovering over a node, we want to highlight the immediate neighbours
+      if (hoveredNodeId !== null && focusOnHover) {
+        alpha = n.active ? 1 : 0.2
+      }
+
+      tweenGroup.add(new Tweened<Graphics>(n.gfx, tweenGroup).to({ alpha }, 200))
+    }
+
+    tweenGroup.getAll().forEach((tw) => tw.start())
+    tweens.set("hover", {
+      update: tweenGroup.update.bind(tweenGroup),
+      stop() {
+        tweenGroup.getAll().forEach((tw) => tw.stop())
+      },
+    })
+  }
+
   function renderLinks() {
     tweens.get("link")?.stop()
     const tweenGroup = new TweenGroup()
@@ -254,13 +306,33 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
       let alpha = 1
 
       // if we are hovering over a node, we want to highlight the immediate neighbours
-      // with full alpha and the rest with default alpha
       if (hoveredNodeId) {
+        const source = l.simulationData.source as NodeData
+        const target = l.simulationData.target as NodeData
+        l.active = source.id === hoveredNodeId || target.id === hoveredNodeId
         alpha = l.active ? 1 : 0.2
+      } else {
+        l.active = false
       }
 
       l.color = l.active ? computedStyleMap["--gray"] : computedStyleMap["--lightgray"]
-      tweenGroup.add(new Tweened<LinkRenderData>(l).to({ alpha }, 200))
+      l.gfx.clear()
+      l.gfx.lineStyle(1, l.color, alpha)
+      
+      const source = l.simulationData.source as NodeData
+      const target = l.simulationData.target as NodeData
+      if (
+        source.x !== undefined &&
+        source.y !== undefined &&
+        target.x !== undefined &&
+        target.y !== undefined
+      ) {
+        l.gfx.moveTo(source.x + width / 2, source.y + height / 2)
+        l.gfx.lineTo(target.x + width / 2, target.y + height / 2)
+        l.gfx.stroke()
+      }
+
+      tweenGroup.add(new Tweened<Graphics>(l.gfx, tweenGroup).to({ alpha }, 200))
     }
 
     tweenGroup.getAll().forEach((tw) => tw.start())
@@ -313,30 +385,6 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
     })
   }
 
-  function renderNodes() {
-    tweens.get("hover")?.stop()
-
-    const tweenGroup = new TweenGroup()
-    for (const n of nodeRenderData) {
-      let alpha = 1
-
-      // if we are hovering over a node, we want to highlight the immediate neighbours
-      if (hoveredNodeId !== null && focusOnHover) {
-        alpha = n.active ? 1 : 0.2
-      }
-
-      tweenGroup.add(new Tweened<Graphics>(n.gfx, tweenGroup).to({ alpha }, 200))
-    }
-
-    tweenGroup.getAll().forEach((tw) => tw.start())
-    tweens.set("hover", {
-      update: tweenGroup.update.bind(tweenGroup),
-      stop() {
-        tweenGroup.getAll().forEach((tw) => tw.stop())
-      },
-    })
-  }
-
   function renderPixiFromD3() {
     renderNodes()
     renderLinks()
@@ -346,11 +394,21 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
   tweens.forEach((tween) => tween.stop())
   tweens.clear()
 
-  const app = new Application()
+  // Create PIXI application with mobile optimizations
+  const app = new Application({
+    resolution: window.devicePixelRatio || 1,
+    antialias: false,
+    autoDensity: true,
+    width,
+    height,
+    backgroundColor: 0x00000000,
+    powerPreference: 'low-power', // Prefer power efficiency on mobile
+  })
+
   await app.init({
     width,
     height,
-    antialias: true,
+    antialias: false,
     autoStart: false,
     autoDensity: true,
     backgroundAlpha: 0,
@@ -430,6 +488,7 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
 
   for (const l of graphData.links) {
     const gfx = new Graphics({ interactive: false, eventMode: "none" })
+    gfx.lineStyle(1, computedStyleMap["--lightgray"], 1)
     linkContainer.addChild(gfx)
 
     const linkRenderDatum: LinkRenderData = {
@@ -517,25 +576,49 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
     )
   }
 
-  function animate(time: number) {
-    for (const n of nodeRenderData) {
-      const { x, y } = n.simulationData
-      if (!x || !y) continue
-      n.gfx.position.set(x + width / 2, y + height / 2)
-      if (n.label) {
-        n.label.position.set(x + width / 2, y + height / 2)
+  // Throttle simulation ticks for better performance
+  const throttledTick = throttle(() => {
+    if (!container) return
+    
+    graphData.nodes.forEach((node) => {
+      const nodeRender = nodeRenderData.find((n) => n.simulationData.id === node.id)
+      if (!nodeRender) return
+      
+      if (node.x !== undefined && node.y !== undefined) {
+        nodeRender.gfx.position.x = node.x + width / 2
+        nodeRender.gfx.position.y = node.y + height / 2
+        if (nodeRender.label) {
+          nodeRender.label.position.x = node.x + width / 2
+          nodeRender.label.position.y = node.y + height / 2
+        }
       }
-    }
+    })
 
-    for (const l of linkRenderData) {
-      const linkData = l.simulationData
-      l.gfx.clear()
-      l.gfx.moveTo(linkData.source.x! + width / 2, linkData.source.y! + height / 2)
-      l.gfx
-        .lineTo(linkData.target.x! + width / 2, linkData.target.y! + height / 2)
-        .stroke({ alpha: l.alpha, width: 1, color: l.color })
-    }
+    graphData.links.forEach((link) => {
+      const linkRender = linkRenderData.find((l) => l.simulationData === link)
+      if (!linkRender) return
+      
+      const source = link.source as NodeData
+      const target = link.target as NodeData
+      if (
+        source.x !== undefined &&
+        source.y !== undefined &&
+        target.x !== undefined &&
+        target.y !== undefined
+      ) {
+        const path = linkRender.gfx
+        path.clear()
+        path.lineStyle(1, linkRender.color, linkRender.alpha)
+        path.moveTo(source.x + width / 2, source.y + height / 2)
+        path.lineTo(target.x + width / 2, target.y + height / 2)
+        path.stroke()
+      }
+    })
+  }, 16) // Limit to ~60fps
 
+  simulation.on("tick", throttledTick)
+
+  function animate(time: number) {
     tweens.forEach((t) => t.update(time))
     app.renderer.render(stage)
     requestAnimationFrame(animate)
@@ -543,6 +626,18 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
 
   const graphAnimationFrameHandle = requestAnimationFrame(animate)
   window.addCleanup(() => cancelAnimationFrame(graphAnimationFrameHandle))
+
+  // Cleanup resources properly
+  const cleanup = () => {
+    simulation.stop()
+    app.destroy(true, { children: true })
+    tweens.forEach((tween) => tween.stop())
+    tweens.clear()
+  }
+
+  window.addCleanup(cleanup)
+  
+  return cleanup
 }
 
 document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
