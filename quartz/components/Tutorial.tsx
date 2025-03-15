@@ -1,4 +1,5 @@
 import { QuartzComponentConstructor } from "./types"
+import { BuildCtx } from "../util/ctx"
 
 declare global {
   interface Window {
@@ -165,23 +166,59 @@ body.introjs-open {
 
 Tutorial.afterDOMLoaded = `
 const TUTORIAL_STORAGE_KEY = 'quartzTutorialShown';
-const INTRO_CSS_URL = 'https://unpkg.com/intro.js/minified/introjs.min.css';
-const INTRO_JS_URL = 'https://unpkg.com/intro.js/minified/intro.min.js';
 
-function loadResources() {
-  const styleSheet = document.createElement('link');
-  styleSheet.rel = 'stylesheet';
-  styleSheet.href = INTRO_CSS_URL;
-  document.head.appendChild(styleSheet);
+function loadScript(url) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(\`script[src="\${url}"]\`)) {
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = url;
+    script.onload = () => {
+      if (typeof window.introJs === 'undefined') {
+        reject(new Error('introJs not loaded correctly'));
+      } else {
+        resolve();
+      }
+    };
+    script.onerror = () => reject(new Error(\`Failed to load script: \${url}\`));
+    document.head.appendChild(script);
+  });
+}
 
-  const script = document.createElement('script');
-  script.src = INTRO_JS_URL;
-  script.onload = setupTutorial;
-  document.head.appendChild(script);
+function loadStyle(url) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(\`link[href="\${url}"]\`)) {
+      resolve();
+      return;
+    }
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = url;
+    link.onload = resolve;
+    link.onerror = () => reject(new Error(\`Failed to load stylesheet: \${url}\`));
+    document.head.appendChild(link);
+  });
+}
+
+async function loadResources() {
+  try {
+    await Promise.all([
+      loadStyle('https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/introjs.min.css'),
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js')
+    ]);
+    setupTutorial();
+  } catch (error) {
+    console.error('Failed to load tutorial resources:', error.message);
+  }
 }
 
 function setupTutorial() {
-  if (typeof window.introJs === 'undefined') return;
+  if (typeof window.introJs === 'undefined') {
+    setTimeout(setupTutorial, 100);
+    return;
+  }
 
   const isMobile = window.innerWidth <= 768;
   
@@ -322,16 +359,23 @@ function setupTutorial() {
   }
 }
 
-document.addEventListener('nav', () => {
-  const existingStylesheet = document.querySelector(\`link[href="\${INTRO_CSS_URL}"]\`);
-  const existingScript = document.querySelector(\`script[src="\${INTRO_JS_URL}"]\`);
-  
-  existingStylesheet?.remove();
-  existingScript?.remove();
-  
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadResources);
+} else {
   loadResources();
-});
+}
+
+document.addEventListener('nav', loadResources);
 `
+
+Tutorial.externalResources = (ctx: BuildCtx) => {
+  return {
+    css: [],
+    js: []
+  }
+}
+
+Tutorial.beforeDOMLoaded = ``
 
 export default (() => {
   return Tutorial

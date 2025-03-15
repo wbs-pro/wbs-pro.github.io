@@ -284,6 +284,7 @@ This is a curated collection of insights and information I've gathered in the re
 - VSCode
 - VSCodium
 - Cursor
+- Windsurf
 - Zed
 
 #### Creative Software

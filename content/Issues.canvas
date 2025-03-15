@@ -1,0 +1,19 @@
+{
+	"nodes":[
+		{"id":"42a0fa0e465eac65","x":40,"y":180,"width":290,"height":773,"color":"4","type":"group","label":"Mobile"},
+		{"id":"b88bc1daa21edd5a","type":"group","x":40,"y":-104,"width":650,"height":244,"color":"5","label":"Desktop"},
+		{"id":"280c1b125ad21b78","type":"text","text":"# ISSUES","x":-229,"y":-216,"width":189,"height":60},
+		{"id":"c09b08a060959335","type":"text","text":"- 'infinite loading' tab","x":60,"y":-82,"width":250,"height":60},
+		{"id":"83a61a460aff441c","type":"text","text":"- tutorial/onboarding and the dedicated button not working","x":60,"y":20,"width":250,"height":100},
+		{"id":"a3d781fae6eb101c","type":"text","text":"- page loading time (footer) doesn't display when the page is still loading","x":420,"y":-84,"width":250,"height":154},
+		{"id":"f16ed6e9a9f36a2f","type":"text","text":"- when scrolling down a page there's part of the page that aren't loading as fast as the scrolling happens, as if only what's displayed is loaded and when scrolling down the page the loading doesn't happen fast enough so the user sees blank before the page actually loads","x":60,"y":200,"width":250,"height":360},
+		{"id":"e979f5feca2d9c85","type":"text","text":"- sometimes the whole browser will freeze after using the site for a little bit, maybe the whole tab does it, not sure, but it would even make the whole phone freeze for some reason for a while, which is very concerning","x":60,"y":620,"width":250,"height":313}
+	],
+	"edges":[
+		{"id":"6052522f91fef5e7","fromNode":"280c1b125ad21b78","fromSide":"bottom","toNode":"c09b08a060959335","toSide":"left"},
+		{"id":"38f32eff112ecf7f","fromNode":"280c1b125ad21b78","fromSide":"bottom","toNode":"83a61a460aff441c","toSide":"left"},
+		{"id":"9e84e7d344dfc8b2","fromNode":"c09b08a060959335","fromSide":"right","toNode":"a3d781fae6eb101c","toSide":"left"},
+		{"id":"529bed6d0684b8c8","fromNode":"280c1b125ad21b78","fromSide":"bottom","toNode":"f16ed6e9a9f36a2f","toSide":"left"},
+		{"id":"fb01441a372490b3","fromNode":"280c1b125ad21b78","fromSide":"bottom","toNode":"e979f5feca2d9c85","toSide":"left"}
+	]
+}
