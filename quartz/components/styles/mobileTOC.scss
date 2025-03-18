@@ -1,0 +1,90 @@
+.mobile-toc-container {
+  display: none;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--light);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  contain: content;
+  transform: translateZ(0);
+  will-change: transform;
+  
+  @media (max-width: 768px) {
+    display: block;
+  }
+  
+  &.desktop-hidden {
+    display: none;
+  }
+  
+  &.hidden {
+    display: none;
+  }
+  
+  .mobile-toc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  }
+  
+  .mobile-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    contain: content;
+    
+    li {
+      margin: 0.25rem 0;
+      transform: translateZ(0);
+      contain: content;
+      font-size: 0.95rem;
+      
+      a.mobile-toc-link {
+        display: block;
+        padding: 8px 10px;
+        min-height: 44px;
+        touch-action: manipulation;
+        position: relative;
+        text-decoration: none;
+        transition: transform 0.2s ease;
+        border-radius: 6px;
+        transform: translateZ(0);
+        contain: content;
+        color: var(--darkgray);
+        
+        &:active {
+          transform: scale(0.98) translateZ(0);
+        }
+        
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        
+        &:hover, &:focus {
+          transform: translateY(-1px) translateZ(0);
+          background-color: var(--highlight);
+        }
+      }
+    }
+  }
+}
+
+// Add prefers-reduced-motion support
+@media (prefers-reduced-motion: reduce) {
+  .mobile-toc-container {
+    .mobile-toc-list li a.mobile-toc-link {
+      transition: none;
+      transform: none;
+      
+      &:active, &:hover, &:focus {
+        transform: none;
+      }
+    }
+  }
+}

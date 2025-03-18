@@ -4,6 +4,8 @@ draft: false
 date: ""
 tags:
 ---
-# Cybersecurity
+# IT & Cybersecurity Foundations
 
 ![[cybrary-cert-cybersecurity-fundamentals.png]]
+![[cybrary-cert-network-fundamentals-v2.png]]
+![[cybrary-cert-cryptography-basics.png]]

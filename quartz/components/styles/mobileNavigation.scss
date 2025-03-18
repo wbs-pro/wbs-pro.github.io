@@ -1,11 +1,27 @@
 .mobile-nav-alternative {
   display: none;
   padding: 1rem;
-  contain: content; // Optimize layout containment
-  will-change: transform; // Hardware acceleration hint
+  contain: content;
+  will-change: transform;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 85%;
+  max-width: 400px;
+  height: 100vh;
+  background: var(--light);
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  transform: translateZ(0);
   
   @media (max-width: 768px) {
     display: block;
+  }
+
+  &.active {
+    transform: translateX(-100%) translateZ(0);
   }
 
   &.desktop-hidden {
@@ -17,37 +33,86 @@
     font-size: 1.2rem;
   }
 
+  // Mobile Table of Contents
+  .mobile-toc {
+    margin-bottom: 1.5rem;
+    contain: content;
+    will-change: transform;
+    transform: translateZ(0);
+
+    .mobile-toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      contain: content;
+
+      li {
+        margin: 0.25rem 0;
+        transform: translateZ(0);
+        contain: content;
+        
+        a.mobile-nav-link {
+          display: block;
+          padding: 10px;
+          min-height: 44px;
+          touch-action: manipulation;
+          position: relative;
+          text-decoration: none;
+          transition: transform 0.2s ease;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          transform: translateZ(0);
+          contain: content;
+          
+          &:active {
+            transform: scale(0.98) translateZ(0);
+          }
+          
+          user-select: none;
+          -webkit-tap-highlight-color: transparent;
+          
+          &:hover, &:focus {
+            transform: translateY(-1px) translateZ(0);
+            background-color: var(--highlight);
+          }
+        }
+      }
+    }
+  }
+
   // Optimize touch targets
   .touch-optimized {
     list-style: none;
     padding: 0;
     margin: 0;
+    contain: content;
 
     li {
       margin: 0.5rem 0;
-      transform: translateZ(0); // Force GPU acceleration
+      transform: translateZ(0);
+      contain: content;
       
       a.mobile-nav-link {
         display: block;
-        padding: 12px; // Ensure minimum touch target size
-        min-height: 44px; // iOS minimum touch target height
-        touch-action: manipulation; // Optimize touch handling
+        padding: 12px;
+        min-height: 44px;
+        touch-action: manipulation;
         position: relative;
         text-decoration: none;
-        transition: background-color 0.2s ease;
+        transition: transform 0.2s ease;
         border-radius: 8px;
+        transform: translateZ(0);
+        contain: content;
         
-        // Use transform for animations instead of layout properties
         &:active {
-          transform: scale(0.98);
+          transform: scale(0.98) translateZ(0);
         }
         
-        // Prevent text selection during touch
         user-select: none;
         -webkit-tap-highlight-color: transparent;
         
-        // Ensure sufficient color contrast
         &:hover, &:focus {
+          transform: translateY(-1px) translateZ(0);
           background-color: var(--highlight);
         }
       }
@@ -55,14 +120,17 @@
   }
 
   .mobile-nav-tags {
-    contain: content; // Optimize layout containment
+    contain: content;
     margin-top: 1rem;
+    transform: translateZ(0);
+    will-change: transform;
 
     .mobile-tag-list {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
       padding: 0.5rem 0;
+      contain: content;
 
       .mobile-tag {
         display: inline-flex;
@@ -73,24 +141,22 @@
         color: var(--text);
         text-decoration: none;
         font-size: 0.9rem;
-        min-height: 44px; // iOS minimum touch target height
+        min-height: 44px;
         touch-action: manipulation;
-        transform: translateZ(0); // Force GPU acceleration
+        transform: translateZ(0);
         transition: transform 0.2s ease;
+        contain: content;
         
-        // Hardware acceleration class
         &.hardware-accelerated {
           transform: translateZ(0);
           backface-visibility: hidden;
           perspective: 1000px;
         }
         
-        // Use transform for animations
         &:active {
-          transform: scale(0.95);
+          transform: scale(0.95) translateZ(0);
         }
         
-        // Prevent text selection during touch
         user-select: none;
         -webkit-tap-highlight-color: transparent;
 
@@ -99,8 +165,8 @@
           opacity: 0.7;
         }
         
-        // Ensure sufficient color contrast
         &:hover, &:focus {
+          transform: translateY(-1px) translateZ(0);
           background-color: var(--highlight);
         }
       }
@@ -108,18 +174,73 @@
   }
 }
 
+// Mobile Navigation Toggle Button
+.mobile-nav-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1001;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  background: var(--light);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transform: translateZ(0);
+  contain: content;
+  touch-action: manipulation;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--darkgray);
+    transition: transform 0.3s ease;
+    transform-origin: 1px center;
+    contain: content;
+  }
+
+  &.active {
+    span:nth-child(1) {
+      transform: rotate(45deg) translateY(-2px);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: rotate(-45deg) translateY(2px);
+    }
+  }
+}
+
 // Add prefers-reduced-motion support
 @media (prefers-reduced-motion: reduce) {
   .mobile-nav-alternative {
+    transition: none;
+
     .touch-optimized li a.mobile-nav-link,
     .mobile-tag-list .mobile-tag {
       transition: none;
       transform: none;
       
-      &:active {
+      &:active, &:hover, &:focus {
         transform: none;
       }
     }
+  }
+
+  .mobile-nav-toggle span {
+    transition: none;
   }
 }
 

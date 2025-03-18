@@ -9,8 +9,8 @@ export type SortFn = (f1: QuartzPluginData, f2: QuartzPluginData) => number
 export function byDateAndAlphabetical(cfg: GlobalConfiguration): SortFn {
   return (f1, f2) => {
     if (f1.dates && f2.dates) {
-      // sort descending
-      return getDate(cfg, f2)!.getTime() - getDate(cfg, f1)!.getTime()
+      // sort descending by created date
+      return f2.dates.created.getTime() - f1.dates.created.getTime()
     } else if (f1.dates && !f2.dates) {
       // prioritize files with dates
       return -1
@@ -19,8 +19,55 @@ export function byDateAndAlphabetical(cfg: GlobalConfiguration): SortFn {
     }
 
     // otherwise, sort lexographically by title
-    const f1Title = f1.frontmatter?.title.toLowerCase() ?? ""
-    const f2Title = f2.frontmatter?.title.toLowerCase() ?? ""
+    const f1Title = f1.frontmatter?.title?.toLowerCase() ?? ""
+    const f2Title = f2.frontmatter?.title?.toLowerCase() ?? ""
+    return f1Title.localeCompare(f2Title)
+  }
+}
+
+export function byLastUpdatedDate(cfg: GlobalConfiguration): SortFn {
+  return (f1, f2) => {
+    // Get the modified date or fall back to created date if no modified date exists
+    const getLatestDate = (file: QuartzPluginData): Date | undefined => {
+      if (!file.dates) return undefined
+      return file.dates.modified || file.dates.created
+    }
+
+    const f1Date = getLatestDate(f1)
+    const f2Date = getLatestDate(f2)
+
+    if (f1Date && f2Date) {
+      // sort descending by last modified/created date
+      return f2Date.getTime() - f1Date.getTime()
+    } else if (f1Date && !f2Date) {
+      // prioritize files with dates
+      return -1
+    } else if (!f1Date && f2Date) {
+      return 1
+    }
+
+    // otherwise, sort lexographically by title
+    const f1Title = f1.frontmatter?.title?.toLowerCase() ?? ""
+    const f2Title = f2.frontmatter?.title?.toLowerCase() ?? ""
+    return f1Title.localeCompare(f2Title)
+  }
+}
+
+export function byCreationDate(cfg: GlobalConfiguration): SortFn {
+  return (f1, f2) => {
+    if (f1.dates?.created && f2.dates?.created) {
+      // sort descending by created date
+      return f2.dates.created.getTime() - f1.dates.created.getTime()
+    } else if (f1.dates?.created && !f2.dates?.created) {
+      // prioritize files with created dates
+      return -1
+    } else if (!f1.dates?.created && f2.dates?.created) {
+      return 1
+    }
+
+    // otherwise, sort lexographically by title
+    const f1Title = f1.frontmatter?.title?.toLowerCase() ?? ""
+    const f2Title = f2.frontmatter?.title?.toLowerCase() ?? ""
     return f1Title.localeCompare(f2Title)
   }
 }
@@ -49,7 +96,7 @@ export const PageList: QuartzComponent = ({ cfg, fileData, allFiles, limit, sort
               <div>
                 {page.dates && (
                   <p class="meta">
-                    <Date date={getDate(cfg, page)!} locale={cfg.locale} />
+                    <Date date={page.dates.created} locale={cfg.locale} />
                   </p>
                 )}
               </div>

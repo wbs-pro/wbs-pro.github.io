@@ -1,6 +1,9 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 import LanguageHandler from "./quartz/components/LanguageHandler"
+import BlogContent from "./quartz/components/pages/BlogContent"
+import { FolderContent } from "./quartz/components"
+import HeaderConstructor from "./quartz/components/Header"
 
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
@@ -115,4 +118,36 @@ export const defaultLayout: PageLayout = {
   afterBody: [
     Component.Tutorial(),
   ],
+}
+
+export const components: QuartzComponents = {
+  pageContent: {
+    BlogContent,
+  },
+  FolderContent: FolderContent({
+    showSortOptions: true,
+  }),
+}
+
+export const layout: QuartzLayout = {
+  pageLayout: (props) => {
+    const { slug } = props
+    
+    if (slug.startsWith("Blog/") && slug !== "Blog/index") {
+      // Individual blog post layout
+      return pageComponentList
+    } else if (slug === "Blog" || slug === "Blog/index") {
+      // Blog index with sorting
+      return [
+        Component.Head(),
+        Component.Header(),
+        Component.Search(),
+        Component.Content(),
+        Component.Footer,
+      ]
+    } else {
+      // Default layout for other pages
+      return pageComponentList
+    }
+  },
 }

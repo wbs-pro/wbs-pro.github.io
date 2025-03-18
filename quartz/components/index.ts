@@ -24,6 +24,7 @@ import ScrollToTop from "./ScrollToTop"
 import Tutorial from "./Tutorial"
 import TutorialButton from "./TutorialButton"
 import ButtonGroup from "./ButtonGroup"
+import HeaderConstructor from "./Header"
 
 export {
   ArticleTitle,
@@ -52,4 +53,5 @@ export {
   Tutorial,
   TutorialButton,
   ButtonGroup,
+  HeaderConstructor as Header,
 }

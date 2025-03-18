@@ -1,0 +1,30 @@
+.blog-sorter {
+  margin-bottom: 2rem;
+  
+  .sort-options {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    
+    button {
+      background-color: var(--lightgray);
+      border: 1px solid var(--darkgray);
+      border-radius: 4px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      
+      &:hover {
+        background-color: var(--gray);
+      }
+      
+      &.active {
+        background-color: var(--secondary);
+        color: white;
+        border-color: var(--secondary);
+      }
+    }
+  }
+} 
