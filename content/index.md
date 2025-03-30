@@ -1,40 +1,34 @@
 ---
 title: Welcome
+last-modified: 2025-03-30
 ---
-# Hey there 👋
+# Hello 👋
 
-I'm William, a self-taught Digital Artist, and this is my digital garden. If you're a recruiter, you can find my most recent resume here: [📄 Reactive Resume](https://rxresu.me/william.bs.pro/en-curriculum-vitae)
+I'm William, a self-taught IT enthusiast and aspiring Cybersecurity professional. 
 
-You can also check out my [[📜 Certifications]] to see the credentials that complement my skills and experience.
+This website serves as a platform to document my learning journey, share insights, and showcase my growing skillset across a diverse range of IT and cybersecurity-related topics.
 
-Feel free to get in [📧 contact](./contact) with me if you’re interested in discussing job opportunities.
 
-Additionally, feel free to explore my [🧰 knowledge base](./knowledge-base), where I've compiled a range of skills and insights that may align with your search for a potential candidate. 
-
-You can also check out the [📝 blog](./Blog) section of this website, where I share practical insights into my work and skills that may provide a deeper understanding beyond what is available in the knowledge base or my resume.
-
-I speak FR 🇫🇷 & EN 🇬🇧 fluently.
+> [!wip] **Website Status:**
+> Please be advised that this website is still under development, and the available content is limited at this time. I am actively working to expand its resources.
 
 ## About Me
 
-I'm a 28-year-old French perpetual student and aspiring digital artist with a passion for [[ArchViz]] and Game Environment Art. After completing a 3-year Game Design program at SupinfoGame Rubika, I embarked on a journey of self-teaching and exploration.  
-  
-My intellectual pursuits traverse a wide spectrum, aspiring to embrace a polymathic approach. Delving into the intricate depths and esoteric facets of diverse scientific and artistic domains—ranging from anatomy, biology, chemistry, and mathematics to nutrition, new technologies, philosophy, photography, music, and cinema. I find joy and purpose primarily through various forms of media that are able to convey emotions and ideas to a broad audience.  
-  
-Passionate and proficient in the realm of computer technology, I thrive on leveraging digital tools for creativity and take genuine pleasure in lending a helping hand whenever possible. Identifying as part of the [[🧙‍♂️ INFJ (MBTI)]] personality type, I value empathy and understanding in all interactions.  
-  
-I'm looking forward to connecting with professionals whose work I admire, regardless of their field or social standing. My guiding principle echoes Maya Angelou's wise words:
+As a lifelong learner my intellectual interests encompass a broad range of disciplines, reflecting a commitment to a polymathic approach. I engage deeply with the complexities and nuanced aspects of various scientific and artistic fields.
 
-> *“I’ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.”*
+I am a native French speaker (🇫🇷) and fluent in English (🇬🇧). I am also in the early stages of learning Japanese and an absolute beginner in both Russian and Ukrainian.
 
-## My Interests / Skills
+## For Recruiters
 
-- 📸 Photography
-- 🥗 Nutrition
-- 💪 Workout
-- 🛡️ Cybersecurity
-- 🎮 Game-dev
-- 🧰 Modding
--  [[ArchViz]]
-	- Projects
-- 💻 IT
+I am currently actively seeking entry-level or junior opportunities in the IT/Cybersecurity sector. Please feel free to [📧 contact](./contact) me to discuss potential roles.
+
+
+* **[🧰 Knowledge Base](./knowledge-base):** A detailed overview of my relevant IT and Cybersecurity skills can be found here, including an extensive list of proficiencies and tools.
+
+* **[[📜 Certifications]]:** My self-obtained online learning course certificates of completion are available here.
+
+* **[📄 Reactive Resume](https://rxresu.me/william.bs.pro/en-curriculum-vitae):** For a summary of my educational background and early work experience, please refer to my resume.
+
+## Discover More
+
+* **[📝 Blog](./Blog):** The purpose of this blog is to document my personal experiences in tackling tasks and challenges I encountered, along with the solutions and insights I discovered independently—insights that I often couldn’t find elsewhere on the internet. The blog entries are designed to showcase the real-world application of my soft skills, including creative problem-solving, analytical thinking, and troubleshooting.

@@ -2,7 +2,7 @@
 title: 🧰 Knowledge Base
 draft: false
 created: 2024-09-23
-last-modified: 2025-03-14
+last-modified: 2025-03-30
 tags:
   - HardSkills
   - Keywords
@@ -111,6 +111,7 @@ This is a curated collection of insights and information I've gathered in the re
 - Ghost
 - EaseUS
 - MinTool
+- Rescuezilla
 
 ## 🛠️ Diagnostic Tools
 
@@ -223,7 +224,7 @@ This is a curated collection of insights and information I've gathered in the re
 - Workstations
 - Servers
 
-#### Networking
+#### Networking Hardware
 
 - Switches
 - RJ45 Cables
@@ -235,15 +236,26 @@ This is a curated collection of insights and information I've gathered in the re
 
 - Docker
 
-#### Workflow Automation:
+#### Networking:
 
-- n8n (self-hosted)
+- Wireshark 
+- GNS3
 
 #### Version Control:
 
 - Git
 - GitHub
 - GitLab
+
+#### Workflow Automation:
+
+- n8n (self-hosted)
+
+#### Scripting
+
+- Bash
+- Powershell
+- Python
 
 ## 🌍 Web Browsers
 
