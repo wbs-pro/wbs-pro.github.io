@@ -1,23 +1,25 @@
 {
 	"nodes":[
-		{"id":"42a0fa0e465eac65","type":"group","x":-400,"y":160,"width":1300,"height":880,"color":"5","label":"Mobile"},
+		{"id":"42a0fa0e465eac65","type":"group","x":-400,"y":160,"width":1640,"height":880,"color":"5","label":"Mobile"},
+		{"id":"b88bc1daa21edd5a","type":"group","x":-400,"y":-320,"width":1640,"height":420,"color":"5","label":"Desktop"},
 		{"id":"d7cc270906e83513","type":"group","x":-380,"y":200,"width":589,"height":820,"color":"4","label":"Fixed?"},
-		{"id":"b88bc1daa21edd5a","type":"group","x":-400,"y":-320,"width":1090,"height":420,"color":"5","label":"Desktop"},
 		{"id":"65b3a65c613ed826","type":"group","x":-380,"y":-260,"width":750,"height":340,"color":"4","label":"Fixed?"},
-		{"id":"a6e0d88f8d9aa9ee","type":"text","text":"- Backlinks are on top of the graph when graph view is maximized","x":259,"y":200,"width":250,"height":140},
 		{"id":"280c1b125ad21b78","type":"text","text":"# ISSUES","x":16,"y":-480,"width":189,"height":60},
-		{"id":"7280d443aec7ec01","type":"text","text":"- The blog page has the same dates for all entries","x":600,"y":200,"width":250,"height":95,"color":"3"},
 		{"id":"c09b08a060959335","type":"text","text":"- 'infinite loading' tab","x":-360,"y":-240,"width":250,"height":60},
 		{"id":"a3d781fae6eb101c","type":"text","text":"- page loading time (footer) doesn't display when the page is still loading","x":80,"y":-240,"width":250,"height":154},
 		{"id":"83a61a460aff441c","type":"text","text":"- tutorial/onboarding and the dedicated button not working","x":-360,"y":-136,"width":250,"height":100},
+		{"id":"cb0ffce7d2e65b53","type":"text","text":"Might be related","x":-380,"y":563,"width":250,"height":60},
+		{"id":"f5589e9066c13fef","type":"text","text":"When clicking any link within the explorer, it shouldn't collapse back what was previously expanded. currently clicking any link collapses the menu, it might be related to something with one page load or whatever its called, because the graph flashes when clicking a link","x":384,"y":-260,"width":276,"height":340,"color":"2"},
+		{"id":"a6e0d88f8d9aa9ee","type":"text","text":"- Backlinks are on top of the graph when graph view is maximized","x":259,"y":200,"width":250,"height":140},
+		{"id":"7280d443aec7ec01","type":"text","text":"- The blog page has the same dates for all entries","x":600,"y":200,"width":250,"height":95,"color":"3"},
 		{"id":"588e96198f1d7146","type":"text","text":"- There's no minimize button for the graph when in full view","x":259,"y":380,"width":250,"height":92},
 		{"id":"f517bb463a4d2f63","type":"text","text":"- The navigation needs to be remade' have the graph visible from the expandable menu maybe","x":259,"y":520,"width":250,"height":145},
-		{"id":"cb0ffce7d2e65b53","type":"text","text":"Might be related","x":-380,"y":563,"width":250,"height":60},
 		{"id":"fe68d1c21372eac1","type":"text","text":"- Search doesn't blur the background, unlike the maximized graph view","x":259,"y":700,"width":250,"height":127},
 		{"id":"de5f0bb20b26c9c1","type":"text","text":"- Graph view from the tutorial is somehow highlighted at the top left on my phone","x":259,"y":860,"width":250,"height":120,"color":"3"},
 		{"id":"f16ed6e9a9f36a2f","type":"text","text":"- when scrolling down a page there's part of the page that aren't loading as fast as the scrolling happens, as if only what's displayed is loaded and when scrolling down the page the loading doesn't happen fast enough so the user sees blank before the page actually loads","x":-61,"y":233,"width":250,"height":360},
 		{"id":"e979f5feca2d9c85","type":"text","text":"- sometimes the whole browser will freeze after using the site for a little bit, maybe the whole tab does it, not sure, but it would even make the whole phone freeze for some reason for a while, which is very concerning","x":-61,"y":640,"width":250,"height":313,"color":"1"},
-		{"id":"f5589e9066c13fef","x":384,"y":-260,"width":276,"height":340,"color":"2","type":"text","text":"When clicking any link within the explorer, it shouldn't collapse back what was previously expanded. currently clicking any link collapses the menu, it might be related to something with one page load or whatever its called, because the graph flashes when clicking a link"}
+		{"id":"319e1a29ee28c325","x":600,"y":327,"width":250,"height":86,"color":"3","type":"text","text":"- The search bar is too close to the dark/light mode button"},
+		{"id":"84508358ad91b05e","x":920,"y":0,"width":260,"height":295,"color":"6","type":"text","text":"- Integrate https://github.com/feimosi/baguetteBox.js and make it so that pictures within @📜 Certifications.md are made into a gallery like in the demo site here: https://feimosi.github.io/baguetteBox.js/"}
 	],
 	"edges":[
 		{"id":"9e84e7d344dfc8b2","fromNode":"c09b08a060959335","fromSide":"right","toNode":"a3d781fae6eb101c","toSide":"left"},
