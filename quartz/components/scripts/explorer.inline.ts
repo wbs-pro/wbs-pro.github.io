@@ -194,12 +194,149 @@ function toggleCollapsedByPath(array: FolderState[], path: string) {
   }
 }
 
+// Store folder states before navigation
+function getFolderStates() {
+  const states = new Map<string, boolean>()
+  document.querySelectorAll('[data-folderpath]').forEach((folder) => {
+    const folderPath = folder.getAttribute('data-folderpath')
+    if (folderPath) {
+      const folderContainer = folder.parentElement?.nextElementSibling as HTMLElement
+      if (folderContainer) {
+        states.set(folderPath, folderContainer.classList.contains('open'))
+      }
+    }
+  })
+  return states
+}
+
+// Restore folder states after navigation
+function restoreFolderStates(states: Map<string, boolean>) {
+  states.forEach((isOpen, folderPath) => {
+    const folder = document.querySelector(`[data-folderpath='${folderPath}']`)
+    if (folder) {
+      const folderContainer = folder.parentElement?.nextElementSibling as HTMLElement
+      if (folderContainer) {
+        if (isOpen) {
+          folderContainer.classList.add('open')
+          // Update the currentExplorerState to match
+          const stateEntry = currentExplorerState.find(entry => entry.path === folderPath)
+          if (stateEntry) {
+            stateEntry.collapsed = false
+          }
+        } else {
+          folderContainer.classList.remove('open')
+          // Update the currentExplorerState to match
+          const stateEntry = currentExplorerState.find(entry => entry.path === folderPath)
+          if (stateEntry) {
+            stateEntry.collapsed = true
+          }
+        }
+      }
+    }
+  })
+  // Save the updated state to localStorage
+  localStorage.setItem("fileTree", JSON.stringify(currentExplorerState))
+}
+
 // Initial setup
 document.addEventListener('DOMContentLoaded', () => {
   if (setupCompleted) return; // Prevent duplicate setup
   setupCompleted = true;
   
+  // Set up explorer
   setupExplorer()
+  
+  // Handle explorer link clicks to prevent full page reload
+  const explorerContent = document.getElementById('explorer-content')
+  if (explorerContent) {
+    explorerContent.addEventListener('click', async (e) => {
+      const target = e.target as HTMLElement
+      const link = target.closest('a')
+      if (link && link.href) {
+        e.preventDefault()
+        
+        try {
+          // Store current folder states before navigation
+          const folderStates = getFolderStates()
+          
+          // Fetch the new page content
+          const response = await fetch(link.href)
+          if (!response.ok) throw new Error('Failed to fetch page content')
+          const html = await response.text()
+          
+          // Create a temporary element to parse the HTML
+          const parser = new DOMParser()
+          const doc = parser.parseFromString(html, 'text/html')
+          
+          // Find the article content in the new page
+          const newContent = doc.querySelector('article.popover-hint')
+          if (!newContent) throw new Error('Could not find article content')
+          
+          // Update the current page content
+          const currentContent = document.querySelector('article.popover-hint')
+          if (currentContent && newContent) {
+            currentContent.innerHTML = newContent.innerHTML
+            
+            // Update URL without page reload
+            history.pushState({
+              folderStates: Array.from(folderStates.entries())
+            }, '', link.href)
+            
+            // Update page title if available
+            const newTitle = doc.querySelector('title')
+            if (newTitle) {
+              document.title = newTitle.textContent || document.title
+            }
+            
+            // Important: Restore folder states AFTER content update
+            requestAnimationFrame(() => {
+              restoreFolderStates(folderStates)
+            })
+          }
+        } catch (error) {
+          console.error('Error during navigation:', error)
+          // Fallback to traditional navigation on error
+          window.location.href = link.href
+        }
+      }
+    })
+  }
+  
+  // Handle back/forward browser navigation
+  window.addEventListener('popstate', async (event) => {
+    try {
+      const response = await fetch(window.location.href)
+      if (!response.ok) throw new Error('Failed to fetch page content')
+      const html = await response.text()
+      
+      const parser = new DOMParser()
+      const doc = parser.parseFromString(html, 'text/html')
+      
+      const newContent = doc.querySelector('article.popover-hint')
+      const currentContent = document.querySelector('article.popover-hint')
+      
+      if (currentContent && newContent) {
+        currentContent.innerHTML = newContent.innerHTML
+        
+        const newTitle = doc.querySelector('title')
+        if (newTitle) {
+          document.title = newTitle.textContent || document.title
+        }
+        
+        // Important: Restore folder states AFTER content update
+        requestAnimationFrame(() => {
+          if (event.state?.folderStates) {
+            restoreFolderStates(new Map(event.state.folderStates))
+          }
+        })
+      }
+    } catch (error) {
+      console.error('Error during navigation:', error)
+      window.location.reload()
+    }
+  })
+
+  // Set up mobile menu
   setupMobileMenu()
   
   // Observe the last explorer item
