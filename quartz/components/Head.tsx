@@ -46,7 +46,6 @@ export default (() => {
         {js
           .filter((resource) => resource.loadTime === "beforeDOMReady")
           .map((res) => JSResourceToScriptElement(res, true))}
-        <script type="module" src="/scripts/interaction-optimizations.js" defer></script>
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content={cfg.baseUrl ?? "My Digital Garden"} />

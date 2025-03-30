@@ -13,7 +13,7 @@ import { Menu } from "./icons"
 const defaultOptions = {
   folderClickBehavior: "collapse",
   folderDefaultState: "collapsed",
-  useSavedState: true,
+  useSavedState: false,
   mapFn: (node) => {
     return node
   },
@@ -34,7 +34,16 @@ const defaultOptions = {
       return -1
     }
   },
-  filterFn: (node) => node.name !== "tags",
+  filterFn: (node) => {
+    // Exclude the tags folder
+    if (node.name === "tags") return false;
+    
+    // Exclude any folder with "Welcome" in its path or display name
+    if (node.displayName?.toLowerCase().includes("welcome")) return false;
+    if (node.name.toLowerCase().includes("welcome")) return false;
+    
+    return true;
+  },
   order: ["filter", "map", "sort"],
 } satisfies Options
 
