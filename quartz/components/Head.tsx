@@ -78,7 +78,6 @@ export default (() => {
               "sameAs": [
                 "https://github.com/wbs-pro",
                 "https://linkedin.com/in/williambornetsediey",
-                "https://www.behance.net/williambornetsediey"
               ]
             }],
             "datePublished": fileData.frontmatter?.date,

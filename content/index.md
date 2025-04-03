@@ -1,6 +1,6 @@
 ---
 title: Welcome
-last-modified: 2025-03-30
+last-modified: 2025-04-03
 ---
 # Hello 👋
 
@@ -16,7 +16,7 @@ This website serves as a platform to document my learning journey, share insight
 
 As a lifelong learner my intellectual interests encompass a broad range of disciplines, reflecting a commitment to a polymathic approach. I engage deeply with the complexities and nuanced aspects of various scientific and artistic fields.
 
-I am a native French speaker (🇫🇷) and fluent in English (🇬🇧). I am also in the early stages of learning Japanese and an absolute beginner in both Russian and Ukrainian.
+I am a native French speaker and fluent in English. I am also in the early stages of learning Japanese and an absolute beginner in both Russian and Ukrainian.
 
 ## For Recruiters
 

@@ -14,7 +14,6 @@ export const sharedPageComponents: SharedLayout = {
       Contact: "/contact",
       GitHub: "https://github.com/wbs-pro",
       LinkedIn: "https://linkedin.com/in/williambornetsediey",
-      Behance: "https://www.behance.net/williambornetsediey",
     },
   }),
   afterBody: [
