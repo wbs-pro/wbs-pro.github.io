@@ -142,6 +142,22 @@ This is a curated collection of insights and information I've gathered in the re
 - Sophos
 - ESET Endpoint Antivirus
 
+#### SIRP<span class="tooltip-question">?</span><span class="tooltip-text">Security Incident Response Platforms</span> Solutions:
+
+- TheHive
+
+#### SIEM<span class="tooltip-question">?</span><span class="tooltip-text">Security Information and Event Management</span> Solutions:
+
+- Wazuh
+
+#### IPS Solutions:
+
+- Snort
+
+#### Vulnerability Scanners:
+
+- OpenVAS
+
 #### VPN Protocols:
 
 - OpenVPN
@@ -360,3 +376,60 @@ This is a curated collection of insights and information I've gathered in the re
 
 - KeePass
 - Bitwarden
+
+
+<style>
+.tooltip-question {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  color: var(--light);
+  font-size: 10px;
+  font-weight: bold;
+  margin-left: 4px;
+  cursor: help;
+  transition: all 0.2s ease;
+  vertical-align: super;
+}
+
+.tooltip-question:hover {
+  background-color: var(--tertiary);
+  transform: scale(1.1);
+}
+
+.tooltip-text {
+  display: none;
+  position: absolute;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  color: var(--dark);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 200px;
+  max-width: 300px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.tooltip-question:hover + .tooltip-text {
+  display: block;
+}
+
+[saved-theme="dark"] .tooltip-text {
+  background: var(--dark);
+  border-color: var(--lightgray);
+  color: var(--light);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+</style>

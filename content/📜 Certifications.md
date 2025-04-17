@@ -4,7 +4,7 @@ draft: false
 date: ""
 tags:
 ---
-	# [Cybrary](https://app.cybrary.it/profile/WilliamBS)
+# [Cybrary](https://app.cybrary.it/profile/WilliamBS)
 
 ## IT and Cybersecurity Foundations
 
