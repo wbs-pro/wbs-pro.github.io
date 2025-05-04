@@ -2,31 +2,41 @@
 title: Certifications
 draft: false
 date: 2025-03-18
-last-modified: 2025-05-04
+last-modified: 2025-05-05
 tags:
 ---
 # [Cybrary](https://app.cybrary.it/profile/WilliamBS)
 
 ## IT and Cybersecurity Foundations
 
-- **Operating System Fundamentals:** Reinforced foundational knowledge of Windows and Linux operating systems, focusing on command line interfaces, file systems, Windows services, Active Directory, and Group Policy. 
-- **Network Fundamentals:** Acquired essential understanding of communications and networking principles, encompassing the OSI and TCP/IP reference models, IP addressing, network devices, and tools such as Wireshark and Nmap, as well as VPNs and network troubleshooting techniques. 
-- **Cybersecurity Fundamentals:** Strengthened core comprehension of key cybersecurity concepts and technologies, including cryptography, access control, backup and recovery strategies, patch management, antivirus solutions, firewalls, intrusion detection systems, and vulnerability scanning tools. 
-- **Scripting and Programming Fundamentals:** Learned the basics of popular scripting and programming languages, including BASH, PowerShell, and Python.
+I have been working intensively and diligently, spending hours on self-directed learning every day for multiple weeks on end to enhance my skills and address my potential gaps; here’s a high-level overview of what I learned:
+
+- **OPERATING SYSTEM FUNDAMENTALS:** <br>
+  Reinforced foundational knowledge of Windows and Linux operating systems, focusing on command line interfaces, file systems, Windows services, Active Directory, and Group Policy.
+<br><br>
+- **NETWORK FUNDAMENTALS:** <br>
+  Acquired essential understanding of communications and networking principles, encompassing the OSI and TCP/IP reference models, IP addressing, network devices, and tools such as Wireshark and Nmap, as well as VPNs and network troubleshooting techniques. 
+<br><br>
+- **CYBERSECURITY FUNDAMENTALS:** <br>
+  Strengthened core comprehension of key cybersecurity concepts and technologies, including cryptography, access control, backup and recovery strategies, patch management, antivirus solutions, firewalls, intrusion detection systems, and vulnerability scanning tools.
+<br><br>
+- **SCRIPTING AND PROGRAMMING FUNDAMENTALS:** <br>
+  Learned the basics of popular scripting and programming languages, including BASH, PowerShell, and Python.
+<br><br>
 
 ## Certificates of Completion
 
 ### Courses
 
 <div class="gallery">
-  <a href="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-the-cyber-kill-chain.png" data-caption="The Cyber Kill Chain" data-no-popover="true">
-    <img src="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-the-cyber-kill-chain.png" alt="The Cyber Kill Chain" title="The Cyber Kill Chain">
+  <a href="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-the-cyber-kill-chain.png" data-caption="Cyber Kill Chain" data-no-popover="true">
+    <img src="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-the-cyber-kill-chain.png" alt="Cyber Kill Chain" title="Cyber Kill Chain">
   </a>
   <a href="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-offensive-security-operations.png" data-caption="Offensive Security Operations" data-no-popover="true">
     <img src="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-offensive-security-operations.png" alt="Offensive Security Operations" title="Offensive Security Operations">
   </a>
-  <a href="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-network-fundamentals-v2.png" data-caption="Network Fundamentals V2" data-no-popover="true">
-    <img src="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-network-fundamentals-v2.png" alt="Network Fundamentals V2" title="Network Fundamentals V2">
+  <a href="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-network-fundamentals-v2.png" data-caption="Network Fundamentals" data-no-popover="true">
+    <img src="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-network-fundamentals-v2.png" alt="Network Fundamentals" title="Network Fundamentals">
   </a>
   <a href="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-it-fundamentals-security.png" data-caption="IT Fundamentals Security" data-no-popover="true">
     <img src="/Blog/Media/Certifications/Cybrary/Courses/cybrary-cert-it-fundamentals-security.png" alt="IT Fundamentals Security" title="IT Fundamentals Security">
