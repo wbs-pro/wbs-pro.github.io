@@ -10,7 +10,7 @@
 .gallery a {
   display: block; /* Ensure links behave like blocks */
   flex: 0 0 auto; /* Prevent items from growing or shrinking, based on content size */
-  margin: 0 5px; /* Add small horizontal spacing between images */
+  margin: 10px 5px; /* Add 10px top/bottom margin, keep 5px left/right margin */
 }
 
 .gallery img {
