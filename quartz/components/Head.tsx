@@ -1,5 +1,5 @@
 import { i18n } from "../i18n"
-import { FullSlug, joinSegments, pathToRoot } from "../util/path"
+import { FullSlug, stripSlashes, joinSegments, pathToRoot } from "../util/path"
 import { JSResourceToScriptElement } from "../util/resources"
 import { googleFontHref } from "../util/theme"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
@@ -14,7 +14,7 @@ export default (() => {
     const { css, js } = externalResources
 
     const url = new URL(`https://${cfg.baseUrl ?? "example.com"}`)
-    const path = url.pathname as FullSlug
+    const path = url.pathname !== "/" ? `/${stripSlashes(joinSegments(url.pathname, fileData.slug!))}` : `/${fileData.slug}`
     const baseDir = fileData.slug === "404" ? path : pathToRoot(fileData.slug!)
 
     const iconPath = joinSegments(baseDir, "static/icon.png")
@@ -78,6 +78,7 @@ export default (() => {
               "sameAs": [
                 "https://github.com/wbs-pro",
                 "https://linkedin.com/in/williambornetsediey",
+                "https://www.behance.net/williambornetsediey"
               ]
             }],
             "datePublished": fileData.frontmatter?.date,

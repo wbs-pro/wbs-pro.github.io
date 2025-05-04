@@ -1,5 +1,36 @@
 @use "./base.scss";
 
+// Place any CSS overrides or custom theme variables here.
+
+// Import BaguetteBox styles
+@import "../static/styles/baguetteBox.scss";
+
+// Import Custom Gallery thumbnail styles
+@import "../static/styles/custom-gallery.scss";
+
+/* Example overrides:
+:root {
+  --pageWidth: 80ch;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.footer {
+  color: green;
+}
+
+.search > #search-icon {
+  border: 1px solid var(--gray);
+  border-radius: 50%;
+}
+
+#explorer > ul > li > ul {
+  display: none;
+} 
+*/
+
 // put your custom CSS here!
 
 pre.poetry {

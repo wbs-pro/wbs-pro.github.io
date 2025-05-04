@@ -1,0 +1,36 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 0; /* Remove space between images */
+  justify-content: center; /* Center images horizontally */
+  margin-top: 0; /* Remove potential top margin */
+  margin-bottom: 0; /* Remove potential bottom margin */
+}
+
+.gallery a {
+  display: block; /* Ensure links behave like blocks */
+  flex: 0 0 auto; /* Prevent items from growing or shrinking, based on content size */
+  margin: 0 5px; /* Add small horizontal spacing between images */
+}
+
+.gallery img {
+  display: block;
+  max-width: 150px; /* Limit thumbnail width */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 4px; /* Slightly rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: none !important; /* Remove all transitions */
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.gallery img:hover {
+  transform: none !important; /* Explicitly prevent any transform on hover */
+}
+
+/* Remove the hover effect entirely */
+/*
+.gallery img:hover {
+  transform: scale(1.05); 
+}
+*/ 

@@ -13,7 +13,15 @@ tags:
 - **Cybersecurity Fundamentals:** Strengthened core comprehension of key cybersecurity concepts and technologies, including cryptography, access control, backup and recovery strategies, patch management, antivirus solutions, firewalls, intrusion detection systems, and vulnerability scanning tools. 
 - **Scripting and Programming Fundamentals:** Learned the basics of popular scripting and programming languages, including BASH, PowerShell, and Python.
 
-![[cybrary-cert-cybersecurity-fundamentals.png]]
-![[cybrary-cert-network-fundamentals-v2.png]]
-![[cybrary-cert-cryptography-basics.png]]
+<div class="gallery">
+  <a href="/Blog/Media/Certifications/cybrary-cert-cybersecurity-fundamentals.png" data-caption="Cybersecurity Fundamentals Certification" data-no-popover="true">
+    <img src="/Blog/Media/Certifications/cybrary-cert-cybersecurity-fundamentals.png" alt="Cybersecurity Fundamentals Certification" title="Cybersecurity Fundamentals Certification">
+  </a>
+  <a href="/Blog/Media/Certifications/cybrary-cert-network-fundamentals-v2.png" data-caption="Network Fundamentals Certification" data-no-popover="true">
+    <img src="/Blog/Media/Certifications/cybrary-cert-network-fundamentals-v2.png" alt="Network Fundamentals Certification" title="Network Fundamentals Certification">
+  </a>
+  <a href="/Blog/Media/Certifications/cybrary-cert-cryptography-basics.png" data-caption="Cryptography Basics Certification" data-no-popover="true">
+    <img src="/Blog/Media/Certifications/cybrary-cert-cryptography-basics.png" alt="Cryptography Basics Certification" title="Cryptography Basics Certification">
+  </a>
+</div>
 

@@ -10,12 +10,14 @@ interface Options {
 export default ((opts?: Options) => {
   const Footer: QuartzComponent = ({ displayClass, cfg }: QuartzComponentProps) => {
     const year = new Date().getFullYear()
-    const links = opts?.links ?? []
+    const links = opts?.links ?? {}
+
     return (
       <footer class={`${displayClass ?? ""}`}>
+        <hr />
         <p class="flex">
           <span>
-            {i18n(cfg.locale).components.footer.createdWith}{" "}
+            {i18n(cfg.locale).components.footer.createdWith} {"' "}
             <a href="https://quartz.jzhao.xyz/">Quartz v{version}</a> © {year}
           </span>
           <span class="stats"></span>
@@ -27,6 +29,8 @@ export default ((opts?: Options) => {
             </li>
           ))}
         </ul>
+        <script src="/static/scripts/baguetteBox.js"></script>
+        <script src="/static/scripts/gallery-init.js"></script>
       </footer>
     )
   }
@@ -73,21 +77,15 @@ export default ((opts?: Options) => {
     
     function calculatePageSize() {
       if (cachedPageSize === undefined) {
-        // Get main content size instead of entire HTML
         const mainContent = document.getElementById('quartz-body');
         if (mainContent) {
-          // Calculate size of actual content without scripts and style elements
           const contentClone = mainContent.cloneNode(true);
           const scripts = contentClone.getElementsByTagName('script');
           const styles = contentClone.getElementsByTagName('style');
-          
-          // Remove scripts and styles from size calculation
           while (scripts.length > 0) scripts[0].remove();
           while (styles.length > 0) styles[0].remove();
-          
           cachedPageSize = new Blob([contentClone.innerHTML]).size;
         } else {
-          // Fallback to a simpler calculation if main content not found
           const content = document.body.innerText;
           cachedPageSize = new Blob([content]).size;
         }
@@ -113,20 +111,16 @@ export default ((opts?: Options) => {
       });
     }
 
-    // Reset cache on navigation
     function resetCache() {
       cachedPageSize = undefined;
     }
 
-    // Initial page load
     startTimer();
     window.addEventListener('load', updatePageStats);
-
-    // For SPA navigation
     document.addEventListener('nav', () => {
       resetCache();
       startTimer();
-      updatePageStats();
+      requestAnimationFrame(() => { setTimeout(updatePageStats, 0); });
     });
   `
 
