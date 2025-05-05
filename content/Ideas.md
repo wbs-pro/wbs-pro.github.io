@@ -15,3 +15,8 @@ tags:
 
 
 
+Alright, I adjusted the scrolling speed, but now there's a few adjustements i would like to be made:  
+- For 'Courses' and 'Virtual Labs' I want the number of pictures of the carousel to be displayed in the title and be automatically updated if I add another, it should looke something like 'Courses (12)' and 'Virtual Labs (34)'  
+- it seems that the animation isn't looping properly and stops abruptly and restarts, I want the images to go from right to left and loop back to the right once they are no longer visible on the left  
+- You can add a little bit of margin between each thumbnail  
+- I want the animation to pause when a thumbnail has been clicked to display its full size version until the user is back to the page again, basically as long as the animation isn't visible, it should be paused

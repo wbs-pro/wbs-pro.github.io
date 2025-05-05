@@ -2,12 +2,23 @@
 
 window.baguetteBoxInitialized = false;
 window.baguetteBoxGalleriesData = [];
+window.galleryAnimationStates = {}; // Store { galleryElement: { rafId: null, isPaused: false, scrollPos: 0, track: null, contentWidth: 0 } }
+
+const PIXELS_PER_SECOND = 50;
+
+function cleanupGalleryAnimations() {
+  Object.values(window.galleryAnimationStates).forEach(state => {
+    if (state.rafId) {
+      cancelAnimationFrame(state.rafId);
+    }
+  });
+  window.galleryAnimationStates = {};
+  // Also reset any cloned content if needed, though destroying/re-running setup handles this
+}
 
 function setupBaguetteBox() {
-  // Ensure BaguetteBox library is loaded
   if (typeof baguetteBox === 'undefined') {
     console.warn('BaguetteBox library not loaded yet. Retrying in 100ms...');
-    // Optional: retry if library loads asynchronously
     setTimeout(setupBaguetteBox, 100);
     return;
   }
@@ -16,101 +27,174 @@ function setupBaguetteBox() {
 
   // --- Cleanup Phase ---
   if (window.baguetteBoxInitialized) {
-    console.log('Destroying previous BaguetteBox instance...');
     try {
-      // Clear custom listener flags before destroying
-      document.querySelectorAll('[data-custom-baguettebox-listener-attached=\"true\"]').forEach(el => {
+      document.querySelectorAll('[data-custom-baguettebox-listener-attached="true"]').forEach(el => {
         delete el.dataset.customBaguetteboxListenerAttached;
       });
-      baguetteBox.destroy(); // Should remove overlay and listeners added by run()
+      cleanupGalleryAnimations(); // Cleanup animations
+      baguetteBox.destroy();
       window.baguetteBoxInitialized = false;
-      window.baguetteBoxGalleriesData = []; // Clear stored data
+      window.baguetteBoxGalleriesData = [];
     } catch (e) {
       console.error('BaguetteBox destroy failed:', e);
-      // Force clear flags even if destroy fails
       window.baguetteBoxInitialized = false;
       window.baguetteBoxGalleriesData = [];
     }
   }
 
-  // --- Initialization and Listener Replacement Phase ---
+  // --- Initialization, Listener Replacement, and Animation Setup Phase ---
   if (galleryElements.length > 0) {
-    console.log('Found galleries, initializing BaguetteBox...');
     try {
-      // Initialize BaguetteBox - creates overlay, structures, attaches default listeners
-      window.baguetteBoxGalleriesData = baguetteBox.run('.gallery', {
-        // Add any desired options here, e.g., animation: 'fadeIn'
-      });
-      window.baguetteBoxInitialized = true;
-      console.log('BaguetteBox run() complete. Galleries data count:', window.baguetteBoxGalleriesData.length);
-
-      // --- Replace Event Listeners ---
-      window.baguetteBoxGalleriesData.forEach((galleryArray, galleryIndex) => {
-        console.log(`Processing gallery index ${galleryIndex}`);
-        if (!Array.isArray(galleryArray)) {
-          console.warn(`Gallery data at index ${galleryIndex} is not an array:`, galleryArray);
-          return;
+      // --- PRE-CLEANUP: Remove existing clones before BaguetteBox runs ---
+      galleryElements.forEach((gallery, index) => {
+        const track = gallery.querySelector('.gallery-track');
+        if (track && track.dataset.cloned === 'true') {
+          console.log(`Gallery ${index}: Removing pre-existing clones.`);
+          const totalChildren = track.children.length;
+          const originalCount = totalChildren / 2;
+          if (Number.isInteger(originalCount)) { // Make sure it's an even number
+            // Remove children from the end backwards
+            for (let i = totalChildren - 1; i >= originalCount; i--) {
+              if (track.children[i]) {
+                track.removeChild(track.children[i]);
+              }
+            }
+          } else {
+            console.warn(`Gallery ${index}: Track had odd number of children (${totalChildren}), cannot reliably remove clones.`);
+            // Maybe try removing all children and letting markdown be source?
+            // For now, just log and proceed.
+          }
+          delete track.dataset.cloned; // Reset cloned flag
         }
+      });
+      // --- End PRE-CLEANUP ---
 
-        galleryArray.forEach((imageItem, imageIndex) => {
-          if (!imageItem || !imageItem.imageElement || !imageItem.eventHandler) {
-            console.warn(`Invalid imageItem at [gallery:${galleryIndex}, image:${imageIndex}]:`, imageItem);
-            return;
+      // --- Initialize BaguetteBox FIRST ---
+      window.baguetteBoxGalleriesData = baguetteBox.run('.gallery', {});
+      window.baguetteBoxInitialized = true;
+
+      // --- Replace Event Listeners SECOND ---
+      window.baguetteBoxGalleriesData.forEach((galleryArray, galleryIndex) => {
+         if (!Array.isArray(galleryArray)) { return; }
+         const galleryElement = galleryElements[galleryIndex]; // Get the actual DOM element for this gallery
+
+         galleryArray.forEach((imageItem, imageIndex) => {
+           if (!imageItem || !imageItem.imageElement || !imageItem.eventHandler) { return; }
+           const linkElement = imageItem.imageElement;
+           const originalHandler = imageItem.eventHandler;
+           linkElement.removeEventListener('click', originalHandler);
+           
+           // Capture original index and the specific gallery element for the handler
+           const originalImageIndex = imageIndex;
+           const originalGalleryIndex = galleryIndex; // Keep track of which gallery data array to use
+
+           const customClickHandler = (event) => {
+             event.preventDefault(); event.stopPropagation();
+             if (typeof baguetteBox === 'undefined') return;
+             try {
+               // Use the captured original index and the corresponding gallery data array captured before cloning
+               const currentGalleryData = window.baguetteBoxGalleriesData[originalGalleryIndex];
+               if (currentGalleryData) {
+                 baguetteBox.show(originalImageIndex, currentGalleryData);
+               } else {
+                 console.warn(`BaguetteBox: Gallery data not found for index ${originalGalleryIndex}`);
+               }
+             } catch(e) { console.error(`Error calling baguetteBox.show(${originalImageIndex}):`, e); }
+           };
+           if (!linkElement.dataset.customBaguetteboxListenerAttached) {
+             linkElement.addEventListener('click', customClickHandler);
+             linkElement.dataset.customBaguetteboxListenerAttached = 'true';
+           }
+         });
+      });
+      // --- End Listener Replacement ---
+
+      // --- Setup JS Animation and Cloning THIRD ---
+      galleryElements.forEach((gallery, index) => {
+          const track = gallery.querySelector('.gallery-track');
+          if (!track || track.children.length === 0) {
+              console.warn(`Gallery ${index} has no track or no children.`);
+              return;
           }
 
-          const linkElement = imageItem.imageElement;
-          const originalHandler = imageItem.eventHandler;
+          // Ensure we don't re-clone if setup is run multiple times without full cleanup
+          if (!track.dataset.cloned) {
+              const originalChildren = Array.from(track.children);
+              originalChildren.forEach(child => {
+                  const clone = child.cloneNode(true);
+                  track.appendChild(clone);
+              });
+              track.dataset.cloned = 'true';
+          }
 
-          // Remove the default listener added by baguetteBox.run()
-          linkElement.removeEventListener('click', originalHandler);
-          console.log(`Removed default listener for image ${imageIndex} in gallery ${galleryIndex}`);
-
-          // Define our custom listener
-          const customClickHandler = (event) => {
-            event.preventDefault();
-            event.stopPropagation(); // Crucial to stop SPA router
-
-            console.log(`Custom click handler fired for image ${imageIndex} in gallery ${galleryIndex}`);
-
-            if (typeof baguetteBox === 'undefined') {
-              console.error('BaguetteBox disappeared before show() could be called.');
+          const originalContentWidth = track.scrollWidth / 2;
+          if (originalContentWidth <= 0 || !Number.isFinite(originalContentWidth)) {
+              console.warn(`Gallery ${index} track width calculation failed.`);
               return;
-            }
+          }
 
-            // Call baguetteBox.show() with the correct index and the specific gallery array
-            try {
-              // Find the *current* gallery array in the stored data just in case
-              const currentGalleryData = window.baguetteBoxGalleriesData[galleryIndex];
-              if (currentGalleryData) {
-                baguetteBox.show(imageIndex, currentGalleryData);
-                console.log(`baguetteBox.show(${imageIndex}) called successfully.`);
-              } else {
-                console.error('Could not find gallery data for index', galleryIndex);
+          const animationState = {
+              rafId: null,
+              isPaused: false,
+              isHoverPaused: false,
+              isLightboxPaused: false,
+              scrollPos: 0,
+              lastTimestamp: 0,
+              track: track,
+              contentWidth: originalContentWidth
+          };
+          window.galleryAnimationStates[index] = animationState; // Use index as key for simplicity
+
+          const animateScroll = (timestamp) => {
+              if (!animationState.track) return; // Guard against edge cases during cleanup
+
+              if (!animationState.lastTimestamp) animationState.lastTimestamp = timestamp;
+              const deltaTime = (timestamp - animationState.lastTimestamp) / 1000; // seconds
+              animationState.lastTimestamp = timestamp;
+
+              // Check pause states
+              animationState.isPaused = animationState.isHoverPaused || animationState.isLightboxPaused;
+
+              if (!animationState.isPaused && deltaTime > 0) {
+                  animationState.scrollPos += PIXELS_PER_SECOND * deltaTime;
+                  // Wrap around seamlessly
+                  if (animationState.scrollPos >= animationState.contentWidth) {
+                      animationState.scrollPos -= animationState.contentWidth;
+                  }
+                  animationState.track.style.transform = `translateX(-${animationState.scrollPos}px)`;
               }
-            } catch (e) {
-              console.error(`Error calling baguetteBox.show(${imageIndex}):`, e);
-            }
+
+              // Request next frame only if not fully cleaned up
+              if (window.galleryAnimationStates[index]) {
+                 animationState.rafId = requestAnimationFrame(animateScroll);
+              }
           };
 
-          // Add the custom handler only if not already marked
-          if (!linkElement.dataset.customBaguetteboxListenerAttached) {
-            linkElement.addEventListener('click', customClickHandler);
-            linkElement.dataset.customBaguetteboxListenerAttached = 'true'; // Mark as attached
-            console.log(`Added custom listener for image ${imageIndex} in gallery ${galleryIndex}`);
-          } else {
-            console.log(`Custom listener already attached for image ${imageIndex} in gallery ${galleryIndex}`);
-          }
-        });
+          gallery.addEventListener('mouseenter', () => {
+              if (window.galleryAnimationStates[index]) {
+                  window.galleryAnimationStates[index].isHoverPaused = true;
+              }
+          });
+
+          gallery.addEventListener('mouseleave', () => {
+              if (window.galleryAnimationStates[index]) {
+                  window.galleryAnimationStates[index].isHoverPaused = false;
+                  // Reset timestamp to avoid jump after pause
+                  window.galleryAnimationStates[index].lastTimestamp = 0;
+              }
+          });
+
+          // Initial call
+          animationState.rafId = requestAnimationFrame(animateScroll);
       });
+      // --- End JS Animation Setup ---
 
     } catch (e) {
-      console.error('BaguetteBox run() or listener setup failed:', e);
+      console.error('BaguetteBox run() or listener/animation setup failed:', e);
       window.baguetteBoxInitialized = false;
       window.baguetteBoxGalleriesData = [];
     }
   } else {
-    console.log('No .gallery elements found on this page.');
-    // Cleanup handled by destroy() call at the beginning if needed
   }
 }
 
@@ -121,11 +205,31 @@ function setupBaguetteBox() {
 
 // Use requestAnimationFrame for potentially smoother DOM interaction after nav
 function runSetupSafely() {
-  // Add a small delay with RAF to further ensure DOM is settled after nav event
   requestAnimationFrame(() => {
-     setTimeout(setupBaguetteBox, 0); // Execute in next event loop tick after paint
+     setTimeout(setupBaguetteBox, 0);
   });
 }
 
 window.addEventListener('load', runSetupSafely);
-document.addEventListener('nav', runSetupSafely); 
+document.addEventListener('nav', runSetupSafely);
+
+// --- Observer for Lightbox Pause ---
+const lightboxObserver = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const isLightboxOpen = document.body.classList.contains('baguetteBox-open');
+            Object.values(window.galleryAnimationStates).forEach(state => {
+                if (state) {
+                    state.isLightboxPaused = isLightboxOpen;
+                    if (!isLightboxOpen) {
+                        // Reset timestamp to avoid jump after pause
+                        state.lastTimestamp = 0;
+                    }
+                }
+            });
+        }
+    }
+});
+
+lightboxObserver.observe(document.body, { attributes: true });
+// --- End Observer --- 

@@ -1,36 +1,93 @@
+@keyframes autoScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Revert to -50% for duplicated content */
+  }
+}
+
 .gallery {
-  display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
-  gap: 0; /* Remove space between images */
-  justify-content: center; /* Center images horizontally */
-  margin-top: 0; /* Remove potential top margin */
-  margin-bottom: 0; /* Remove potential bottom margin */
+  display: flex; 
+  overflow: hidden; 
+  width: 100%;
+  padding: 10px 0;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+
+.gallery-track {
+  display: flex; 
+  flex-wrap: nowrap;
+  gap: 20px; 
+  /* Animation properties removed - now handled by JS */
 }
 
 .gallery a {
-  display: block; /* Ensure links behave like blocks */
-  flex: 0 0 auto; /* Prevent items from growing or shrinking, based on content size */
-  margin: 10px 5px; /* Add 10px top/bottom margin, keep 5px left/right margin */
+  display: block;
+  flex-shrink: 0; 
+  margin: 0; 
 }
 
 .gallery img {
   display: block;
-  max-width: 150px; /* Limit thumbnail width */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 4px; /* Slightly rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: none !important; /* Remove all transitions */
+  max-width: 150px; 
+  height: auto; 
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: none !important;
+  margin: 0; 
+}
+
+.gallery img:hover {
+  transform: none !important;
+}
+
+/* --- Commented out old base gallery styles --- */
+/*
+.gallery {
+  display: flex;
+  flex-wrap: nowrap; 
+  overflow-x: hidden; 
+  overflow-y: hidden; 
+  width: 100%; 
+  gap: 10px; 
+  padding: 10px 0; 
+
+   & > * { 
+     display: flex; 
+     animation: autoScroll 5s linear infinite; 
+     -webkit-animation: autoScroll 5s linear infinite;
+   }
+}
+
+.gallery:hover > * {
+   animation-play-state: paused;
+   -webkit-animation-play-state: paused;
+}
+*/
+
+/* Commented out old styles */
+/*
+.gallery {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 0; 
+  justify-content: center; 
+  margin-top: 0; 
+  margin-bottom: 0; 
+}
+
+.gallery a {
+  display: block; 
+  flex: 0 0 auto; 
+  margin: 10px 5px; 
+}
+
+.gallery img {
+  ...
   margin-top: 0;
   margin-bottom: 0;
-}
-
-.gallery img:hover {
-  transform: none !important; /* Explicitly prevent any transform on hover */
-}
-
-/* Remove the hover effect entirely */
-/*
-.gallery img:hover {
-  transform: scale(1.05); 
 }
 */ 
