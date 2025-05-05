@@ -4,7 +4,7 @@ window.baguetteBoxInitialized = false;
 window.baguetteBoxGalleriesData = [];
 window.galleryAnimationStates = {}; // Store { galleryElement: { rafId: null, isPaused: false, scrollPos: 0, track: null, contentWidth: 0 } }
 
-const PIXELS_PER_SECOND = 50;
+const PIXELS_PER_SECOND = 25;
 
 function cleanupGalleryAnimations() {
   Object.values(window.galleryAnimationStates).forEach(state => {
