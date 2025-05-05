@@ -55,15 +55,37 @@ function toggleFolder(evt: MouseEvent) {
   const isCollapsed = childFolderContainer.classList.contains("open")
   setFolderState(childFolderContainer, !isCollapsed)
   const fullFolderPath = currentFolderParent.dataset.folderpath as string
-  toggleCollapsedByPath(currentExplorerState, fullFolderPath)
+  
+  // Ensure path is lowercase for consistency
+  const normalizedPath = fullFolderPath.toLowerCase();
+  
+  toggleCollapsedByPath(currentExplorerState, normalizedPath) // Use normalized path
   const stringifiedFileTree = JSON.stringify(currentExplorerState)
+  
+  // DEBUGGING: Log state before saving in toggleFolder
+  // console.log("toggleFolder: currentExplorerState before save:", currentExplorerState);
+  // console.log("toggleFolder: localStorage BEFORE setItem:", localStorage.getItem("fileTree"));
+  
   localStorage.setItem("fileTree", stringifiedFileTree)
+  
+  // console.log("toggleFolder: localStorage AFTER setItem:", localStorage.getItem("fileTree"));
 }
 
 function setupExplorer() {
   const explorer = document.getElementById("explorer")
   if (!explorer) return
 
+  // Cleanup previous listeners before adding new ones
+  // (This assumes setupExplorer might be called multiple times, e.g., on 'nav' event)
+  document.querySelectorAll('a.folder-title').forEach(link => {
+    // A way to check if our specific listener was already added
+    if ((link as any).__folderClickListenerAttached) {
+       link.removeEventListener('click', handleFolderLinkClick);
+       (link as any).__folderClickListenerAttached = false;
+    }
+  });
+
+  // Add listeners for collapsing behavior (if applicable)
   if (explorer.dataset.behavior === "collapse") {
     for (const item of document.getElementsByClassName(
       "folder-button",
@@ -72,31 +94,67 @@ function setupExplorer() {
       window.addCleanup(() => item.removeEventListener("click", toggleFolder))
     }
   }
-
+  // Add listener for the main explorer toggle
   explorer.addEventListener("click", toggleExplorer)
   window.addCleanup(() => explorer.removeEventListener("click", toggleExplorer))
-
+  // Add listeners for folder icons (always toggle)
   for (const item of document.getElementsByClassName(
     "folder-icon",
   ) as HTMLCollectionOf<HTMLElement>) {
     item.addEventListener("click", toggleFolder)
     window.addCleanup(() => item.removeEventListener("click", toggleFolder))
   }
+  
+  // *** Add NEW listener specifically for folder links when behavior is 'link' ***
+  if (explorer.dataset.behavior === "link") {
+    document.querySelectorAll('a.folder-title').forEach(link => {
+      // Check if the link is within a folder container and has an href
+      const folderContainer = link.closest('.folder-container')
+      const href = link.getAttribute('href')
+      if (folderContainer && href) {
+         link.addEventListener('click', handleFolderLinkClick);
+         (link as any).__folderClickListenerAttached = true; // Mark as attached
+         window.addCleanup(() => {
+            link.removeEventListener('click', handleFolderLinkClick);
+            (link as any).__folderClickListenerAttached = false;
+         });
+      }
+    });
+  }
 
   const storageTree = localStorage.getItem("fileTree")
   const useSavedFolderState = explorer?.dataset.savestate === "true"
   const oldExplorerState: FolderState[] =
     storageTree && useSavedFolderState ? JSON.parse(storageTree) : []
-  const oldIndex = new Map(oldExplorerState.map((entry) => [entry.path, entry.collapsed]))
+  
+  // Normalize paths to lowercase when creating the lookup map
+  const oldIndex = new Map(oldExplorerState.map((entry) => [entry.path.toLowerCase(), entry.collapsed]))
+  
   const newExplorerState: FolderState[] = explorer.dataset.tree
     ? JSON.parse(explorer.dataset.tree)
     : []
+  
+  // DEBUGGING: Log the states before merging
+  // console.log("--- setupExplorer --- ")
+  // console.log("State from localStorage (oldIndex):", oldIndex);
+  // console.log("Default state from HTML (newExplorerState):", newExplorerState);
+  
   currentExplorerState = []
   for (const { path, collapsed } of newExplorerState) {
-    currentExplorerState.push({ path, collapsed: oldIndex.get(path) ?? collapsed })
+    const savedState = oldIndex.get(path.toLowerCase());
+    const finalCollapsed = savedState ?? collapsed;
+    
+    // DEBUGGING: Log each merge decision
+    // console.log(`Merging path: ${path}. Default: ${collapsed}, Saved: ${savedState}, Final: ${finalCollapsed}`);
+
+    currentExplorerState.push({ path: path.toLowerCase(), collapsed: finalCollapsed })
   }
+  
+  // DEBUGGING: Log the final merged state
+  // console.log("Final merged state (currentExplorerState):", currentExplorerState);
 
   currentExplorerState.map((folderState) => {
+    // Ensure lookup path is lowercase
     const folderLi = document.querySelector(
       `[data-folderpath='${folderState.path}']`,
     ) as MaybeHTMLElement
@@ -188,9 +246,12 @@ function setFolderState(folderElement: HTMLElement, collapsed: boolean) {
 }
 
 function toggleCollapsedByPath(array: FolderState[], path: string) {
-  const entry = array.find((item) => item.path === path)
+  // Ensure path comparison is case-insensitive
+  const normalizedPath = path.toLowerCase();
+  const entry = array.find((item) => item.path.toLowerCase() === normalizedPath)
   if (entry) {
     entry.collapsed = !entry.collapsed
+    entry.path = normalizedPath; // Store normalized path in state
   }
 }
 
@@ -238,6 +299,69 @@ function restoreFolderStates(states: Map<string, boolean>) {
   localStorage.setItem("fileTree", JSON.stringify(currentExplorerState))
 }
 
+// *** Define the handler function for folder link clicks ***
+function handleFolderLinkClick(e: Event) {
+  // We know this event comes from an anchor link click in this context
+  const link = e.currentTarget as HTMLAnchorElement;
+  const href = link.getAttribute('href');
+  
+  // Prevent the global SPA handler from immediately navigating
+  e.preventDefault();
+  e.stopPropagation();
+
+  const folderContainerDiv = link.closest('div[data-folderpath]');
+  const folderOuterDiv = folderContainerDiv?.parentElement?.nextElementSibling as MaybeHTMLElement;
+  const folderPath = folderContainerDiv?.getAttribute('data-folderpath');
+  
+  // Ensure path is lowercase for consistency
+  const normalizedPath = folderPath?.toLowerCase();
+
+  let stateChanged = false;
+  if (folderOuterDiv && normalizedPath && currentExplorerState) {
+    // Find the state entry using lowercase path
+    const stateEntry = currentExplorerState.find(entry => entry.path.toLowerCase() === normalizedPath);
+    
+    // Check if it needs expanding
+    if (!folderOuterDiv.classList.contains('open')) {
+      // 1. Visually expand
+      folderOuterDiv.classList.add("open");
+      // 2. Update state array entry if found
+      if (stateEntry) {
+        stateEntry.collapsed = false; // Mark as open
+        stateEntry.path = normalizedPath; // Store normalized path
+      }
+      stateChanged = true;
+    } else {
+      // Ensure state array reflects it's open even if visually it already was
+      if (stateEntry && stateEntry.collapsed === true) {
+         stateEntry.collapsed = false;
+         stateEntry.path = normalizedPath; // Store normalized path
+         stateChanged = true;
+      }
+    }
+  }
+  
+  // Always save the potentially updated state before navigating
+  if (currentExplorerState) {
+    // DEBUGGING: Log state before saving in handleFolderLinkClick
+    // console.log("handleFolderLinkClick: currentExplorerState before save:", currentExplorerState);
+    // console.log("handleFolderLinkClick: localStorage BEFORE setItem:", localStorage.getItem("fileTree"));
+    
+    localStorage.setItem("fileTree", JSON.stringify(currentExplorerState));
+    
+    // console.log("handleFolderLinkClick: localStorage AFTER setItem:", localStorage.getItem("fileTree"));
+  }
+
+  // Trigger SPA navigation
+  if (href) {
+     // Use a small timeout if we just expanded to allow UI to update slightly
+     // Might help avoid visual glitches, but can be removed if unnecessary.
+     // setTimeout(() => {
+       window.spaNavigate?.(new URL(href, window.location.origin));
+     // }, didExpand ? 10 : 0);
+  }
+}
+
 // Initial setup
 document.addEventListener('DOMContentLoaded', () => {
   if (setupCompleted) return; // Prevent duplicate setup
@@ -245,62 +369,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Set up explorer
   setupExplorer()
-  
-  // Handle explorer link clicks to prevent full page reload
-  const explorerContent = document.getElementById('explorer-content')
-  if (explorerContent) {
-    explorerContent.addEventListener('click', async (e) => {
-      const target = e.target as HTMLElement
-      const link = target.closest('a')
-      if (link && link.href) {
-        e.preventDefault()
-        
-        try {
-          // Store current folder states before navigation
-          const folderStates = getFolderStates()
-          
-          // Fetch the new page content
-          const response = await fetch(link.href)
-          if (!response.ok) throw new Error('Failed to fetch page content')
-          const html = await response.text()
-          
-          // Create a temporary element to parse the HTML
-          const parser = new DOMParser()
-          const doc = parser.parseFromString(html, 'text/html')
-          
-          // Find the article content in the new page
-          const newContent = doc.querySelector('article.popover-hint')
-          if (!newContent) throw new Error('Could not find article content')
-          
-          // Update the current page content
-          const currentContent = document.querySelector('article.popover-hint')
-          if (currentContent && newContent) {
-            currentContent.innerHTML = newContent.innerHTML
-            
-            // Update URL without page reload
-            history.pushState({
-              folderStates: Array.from(folderStates.entries())
-            }, '', link.href)
-            
-            // Update page title if available
-            const newTitle = doc.querySelector('title')
-            if (newTitle) {
-              document.title = newTitle.textContent || document.title
-            }
-            
-            // Important: Restore folder states AFTER content update
-            requestAnimationFrame(() => {
-              restoreFolderStates(folderStates)
-            })
-          }
-        } catch (error) {
-          console.error('Error during navigation:', error)
-          // Fallback to traditional navigation on error
-          window.location.href = link.href
-        }
-      }
-    })
-  }
   
   // Handle back/forward browser navigation
   window.addEventListener('popstate', async (event) => {
@@ -349,10 +417,30 @@ document.addEventListener('DOMContentLoaded', () => {
 // Handle navigation events
 document.addEventListener('nav', () => {
   observer.disconnect()
-  setupExplorer()
-  setupMobileMenu()
   
-  // Reobserve the last item
+  // --- Apply state directly from memory --- 
+  if (currentExplorerState) {
+    currentExplorerState.forEach((folderState) => {
+      // Find the potentially new DOM element for this folder path (using lowercase)
+      const folderLi = document.querySelector(
+        `[data-folderpath='${folderState.path}']`,
+      ) as MaybeHTMLElement
+      const folderUl = folderLi?.parentElement?.nextElementSibling as MaybeHTMLElement
+      if (folderUl) {
+        // Apply the state stored in memory
+        setFolderState(folderUl, folderState.collapsed)
+      }
+    })
+  } else {
+    // Fallback if state is somehow lost (shouldn't happen ideally)
+    // If this happens, the state *was* lost before the nav event ran.
+    console.warn("Explorer state missing on nav event, running full setup as fallback.")
+    setupExplorer() 
+  }
+  // --- END APPLY STATE --- 
+
+  // Still need to setup mobile menu and re-observe last item
+  setupMobileMenu()
   const lastItem = document.getElementById("explorer-end")
   if (lastItem) {
     observer.observe(lastItem)

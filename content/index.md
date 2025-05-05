@@ -1,7 +1,7 @@
 ---
 title: Welcome
 date: 2024-08-31
-last-modified: 2025-04-03
+last-modified: 2025-05-05
 ---
 # Hello 👋
 
@@ -21,14 +21,16 @@ I am a native French speaker and fluent in English. I am also in the early stage
 
 ## For Recruiters
 
-I am currently actively seeking entry-level or junior opportunities in the IT/Cybersecurity sector. Please feel free to [📧 contact](./contact) me to discuss potential roles.
 
+> [!info] **Open To Work:**
+> I am currently actively seeking entry-level or junior opportunities in the IT/Cybersecurity sector, more specifically in a Security Analyst role. Please feel free to [📧 contact](./contact) me to discuss potential roles.
 
-* **[🧰 Knowledge Base](./knowledge-base):** A detailed overview of my relevant IT and Cybersecurity skills can be found here, including an extensive list of proficiencies and tools.
+* **[🧰 Knowledge Base](./knowledge-base):** A detailed overview of my relevant IT and Cybersecurity knowledge can be found here, including an extensive list of proficiencies and tools I have experience with.
+<br><br>
+* **[[📜 Certifications]]:** A collection of my certificates of completion for courses and virtual labs is available here, along with links to public profiles on related websites and details about the skills I learned.
+<br><br>
+* **[📄 Reactive Resume](https://rxresu.me/william.bs.pro/soc-analyst-public):** For an up-to-date summary of my relevant education and early work experience, please refer to my resume.
 
-* **[[📜 Certifications]]:** My self-obtained online learning course certificates of completion are available here.
-
-* **[📄 Reactive Resume](https://rxresu.me/william.bs.pro/en-curriculum-vitae):** For a summary of my educational background and early work experience, please refer to my resume.
 
 ## Discover More
 

@@ -108,12 +108,9 @@ async function navigate(url: URL, isBack: boolean = false) {
   if (!isBack) {
     history.pushState({}, "", url)
   }
+  
   notifyNav(getFullSlug(window))
   delete announcer.dataset.persist
-  
-  // Help garbage collection by clearing references
-  html.body.textContent = ''
-  html.head.textContent = ''
 }
 
 window.spaNavigate = navigate
