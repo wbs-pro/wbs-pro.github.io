@@ -18,5 +18,16 @@ tags:
 
 # [CyberDefenders](https://cyberdefenders.org/p/WilliamBS)
 
+## SOC Analyst Tier 1
+
+# [TryHackMe](https://tryhackme.com/p/WilliamBS)
+
+## SOC Level 1
+
+
 # HackTheBox
+
+## SOC Analyst
+
+
 

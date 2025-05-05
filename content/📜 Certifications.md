@@ -178,3 +178,34 @@ I have been working intensively and diligently, spending hours on self-directed 
   </div>
 </div>
 
+
+
+
+
+
+<hr />
+
+# [LetsDefend](https://app.letsdefend.io/user/WilliamBS)
+
+## SOC Analyst Learning Path
+
+I am building upon my foundational knowledge through hands-on practice and targeted learning, focusing on acquiring the essential skills required for the role of SOC Analyst; here’s an overview of the objectives guiding my learning process:
+
+- **PROFICIENCY IN SOC TOOLS AND TECHNOLOGIES:** <br>
+  Gain hands-on experience with essential tools, including Security Information and Event Management (SIEM) systems, endpoint detection and response (EDR) platforms, malware analysis tools, cyber threat intelligence tools, and advanced network monitoring software.
+<br><br>
+- **ADVANCED THREAT DETECTION AND INCIDENT RESPONSE:** <br>
+  Develop the skills needed to effectively monitor, detect, and respond to a variety of cyber threats, enhancing my ability to protect organizational assets.
+<br><br>
+- **VULNERABILITY MANAGEMENT:** <br>
+  Learn how to identify and mitigate vulnerabilities within a network, ensuring robust security measures are in place.
+<br><br>
+- **CERTIFICATION PREPARATION:** <br>
+  Be well-prepared to pursue industry-recognized certifications such as Certified SOC Analyst (CSA), CompTIA Security+, and other cybersecurity certifications, boosting my professional credentials.
+<br><br>
+- **REAL-WORLD SIMULATIONS:** <br>
+  Engage in practical, real-world simulations to apply my knowledge and hone my skills in a controlled, risk-free environment.
+<br><br>
+- **SOFT SKILLS ENHANCEMENT:** <br>
+  Improve critical soft skills such as analytical thinking, problem-solving, effective communication, and the ability to work under pressure, which are essential for incident response and threat mitigation.
+<br><br>
