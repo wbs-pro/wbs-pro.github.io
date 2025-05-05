@@ -38,6 +38,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.ButtonGroup(),
     Component.DesktopOnly(Component.Explorer({
       folderClickBehavior: "link",
+      useSavedState: true,
       filterFn: (node) => {
         // Add paths or titles you want to hide from the explorer
         const hiddenPaths = new Set([
@@ -68,6 +69,7 @@ export const defaultListPageLayout: PageLayout = {
     Component.ButtonGroup(),
     Component.DesktopOnly(Component.Explorer({
       folderClickBehavior: "link",
+      useSavedState: true,
       filterFn: (node) => {
         // Add paths or titles you want to hide from the explorer
         const hiddenPaths = new Set([
@@ -99,6 +101,7 @@ export const defaultLayout: PageLayout = {
     Component.TutorialButton(),
     Component.Explorer({
       folderClickBehavior: "link",
+      useSavedState: true,
       filterFn: (node) => {
         // Add paths or titles you want to hide from the explorer
         const hiddenPaths = new Set([

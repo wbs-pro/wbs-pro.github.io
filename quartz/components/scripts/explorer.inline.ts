@@ -51,9 +51,14 @@ function toggleFolder(evt: MouseEvent) {
   ) as MaybeHTMLElement
   if (!(childFolderContainer && currentFolderParent)) return
 
+  // Toggle the class visually
   childFolderContainer.classList.toggle("open")
-  const isCollapsed = childFolderContainer.classList.contains("open")
-  setFolderState(childFolderContainer, !isCollapsed)
+  
+  // Determine the new state *after* toggling
+  const isCollapsed = !childFolderContainer.classList.contains("open") 
+  setFolderState(childFolderContainer, isCollapsed)
+
+  // Update the state array
   const fullFolderPath = currentFolderParent.dataset.folderpath as string
   
   // Ensure path is lowercase for consistency
@@ -71,93 +76,80 @@ function toggleFolder(evt: MouseEvent) {
   // console.log("toggleFolder: localStorage AFTER setItem:", localStorage.getItem("fileTree"));
 }
 
+// Modified setupExplorer to accept optional initial state
 function setupExplorer() {
   const explorer = document.getElementById("explorer")
   if (!explorer) return
 
-  // Cleanup previous listeners before adding new ones
-  // (This assumes setupExplorer might be called multiple times, e.g., on 'nav' event)
+  // Standard path: read from localStorage 
+  // console.log("setupExplorer: Reading from localStorage");
+  const storageTree = localStorage.getItem("fileTree")
+  // console.log(`setupExplorer: Value read from localStorage ('fileTree'):`, storageTree); // Log raw value
+  const useSavedState = explorer?.dataset.savestate === "true" // Check if saving state is enabled
+  // console.log(`setupExplorer: Checking useSavedState setting:`, useSavedState);
+  
+  const oldExplorerState: FolderState[] =
+    storageTree && useSavedState ? JSON.parse(storageTree) : []
+  const stateMap = new Map(oldExplorerState.map((entry) => [entry.path.toLowerCase(), entry.collapsed]))
+  
+  // Get default structure from HTML
+  const defaultExplorerState: FolderState[] = explorer.dataset.tree
+    ? JSON.parse(explorer.dataset.tree)
+    : []
+
+  // Add necessary event listeners here again
+  // Cleanup previous listeners first
   document.querySelectorAll('a.folder-title').forEach(link => {
-    // A way to check if our specific listener was already added
     if ((link as any).__folderClickListenerAttached) {
-       link.removeEventListener('click', handleFolderLinkClick);
-       (link as any).__folderClickListenerAttached = false;
+      link.removeEventListener('click', handleFolderLinkClick);
+      (link as any).__folderClickListenerAttached = false;
     }
   });
 
-  // Add listeners for collapsing behavior (if applicable)
+  // Re-add listeners for behaviour
   if (explorer.dataset.behavior === "collapse") {
-    for (const item of document.getElementsByClassName(
-      "folder-button",
-    ) as HTMLCollectionOf<HTMLElement>) {
+    for (const item of document.getElementsByClassName("folder-button") as HTMLCollectionOf<HTMLElement>) {
       item.addEventListener("click", toggleFolder)
       window.addCleanup(() => item.removeEventListener("click", toggleFolder))
     }
   }
-  // Add listener for the main explorer toggle
   explorer.addEventListener("click", toggleExplorer)
   window.addCleanup(() => explorer.removeEventListener("click", toggleExplorer))
-  // Add listeners for folder icons (always toggle)
-  for (const item of document.getElementsByClassName(
-    "folder-icon",
-  ) as HTMLCollectionOf<HTMLElement>) {
+  for (const item of document.getElementsByClassName("folder-icon") as HTMLCollectionOf<HTMLElement>) {
     item.addEventListener("click", toggleFolder)
     window.addCleanup(() => item.removeEventListener("click", toggleFolder))
   }
-  
-  // *** Add NEW listener specifically for folder links when behavior is 'link' ***
   if (explorer.dataset.behavior === "link") {
     document.querySelectorAll('a.folder-title').forEach(link => {
-      // Check if the link is within a folder container and has an href
       const folderContainer = link.closest('.folder-container')
       const href = link.getAttribute('href')
       if (folderContainer && href) {
-         link.addEventListener('click', handleFolderLinkClick);
-         (link as any).__folderClickListenerAttached = true; // Mark as attached
-         window.addCleanup(() => {
-            link.removeEventListener('click', handleFolderLinkClick);
-            (link as any).__folderClickListenerAttached = false;
-         });
+        link.addEventListener('click', handleFolderLinkClick);
+        (link as any).__folderClickListenerAttached = true;
+        window.addCleanup(() => {
+          link.removeEventListener('click', handleFolderLinkClick);
+          (link as any).__folderClickListenerAttached = false;
+        });
       }
     });
   }
 
-  const storageTree = localStorage.getItem("fileTree")
-  const useSavedFolderState = explorer?.dataset.savestate === "true"
-  const oldExplorerState: FolderState[] =
-    storageTree && useSavedFolderState ? JSON.parse(storageTree) : []
-  
-  // Normalize paths to lowercase when creating the lookup map
-  const oldIndex = new Map(oldExplorerState.map((entry) => [entry.path.toLowerCase(), entry.collapsed]))
-  
-  const newExplorerState: FolderState[] = explorer.dataset.tree
-    ? JSON.parse(explorer.dataset.tree)
-    : []
-  
-  // DEBUGGING: Log the states before merging
-  // console.log("--- setupExplorer --- ")
-  // console.log("State from localStorage (oldIndex):", oldIndex);
-  // console.log("Default state from HTML (newExplorerState):", newExplorerState);
-  
-  currentExplorerState = []
-  for (const { path, collapsed } of newExplorerState) {
-    const savedState = oldIndex.get(path.toLowerCase());
-    const finalCollapsed = savedState ?? collapsed;
-    
-    // DEBUGGING: Log each merge decision
-    // console.log(`Merging path: ${path}. Default: ${collapsed}, Saved: ${savedState}, Final: ${finalCollapsed}`);
-
-    currentExplorerState.push({ path: path.toLowerCase(), collapsed: finalCollapsed })
+  // Merge default structure with the determined stateMap
+  currentExplorerState = [] // Reset global state variable
+  for (const { path, collapsed: defaultCollapsed } of defaultExplorerState) {
+    const normalizedPath = path.toLowerCase();
+    // Use state from stateMap if present, otherwise use default
+    const finalCollapsed = stateMap.get(normalizedPath) ?? defaultCollapsed;
+    currentExplorerState.push({ path: normalizedPath, collapsed: finalCollapsed })
   }
-  
-  // DEBUGGING: Log the final merged state
-  // console.log("Final merged state (currentExplorerState):", currentExplorerState);
 
+  // console.log("setupExplorer: Final currentExplorerState:", currentExplorerState);
+
+  // Apply the final state visually
   currentExplorerState.map((folderState) => {
-    // Ensure lookup path is lowercase
     const folderLi = document.querySelector(
       `[data-folderpath='${folderState.path}']`,
-    ) as MaybeHTMLElement
+    ) as MaybeHTMLElement 
     const folderUl = folderLi?.parentElement?.nextElementSibling as MaybeHTMLElement
     if (folderUl) {
       setFolderState(folderUl, folderState.collapsed)
@@ -417,27 +409,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // Handle navigation events
 document.addEventListener('nav', () => {
   observer.disconnect()
-  
-  // --- Apply state directly from memory --- 
-  if (currentExplorerState) {
-    currentExplorerState.forEach((folderState) => {
-      // Find the potentially new DOM element for this folder path (using lowercase)
-      const folderLi = document.querySelector(
-        `[data-folderpath='${folderState.path}']`,
-      ) as MaybeHTMLElement
-      const folderUl = folderLi?.parentElement?.nextElementSibling as MaybeHTMLElement
-      if (folderUl) {
-        // Apply the state stored in memory
-        setFolderState(folderUl, folderState.collapsed)
-      }
-    })
-  } else {
-    // Fallback if state is somehow lost (shouldn't happen ideally)
-    // If this happens, the state *was* lost before the nav event ran.
-    console.warn("Explorer state missing on nav event, running full setup as fallback.")
-    setupExplorer() 
-  }
-  // --- END APPLY STATE --- 
+
+  // Revert to just calling setupExplorer
+  // console.log("NAV event: Calling setupExplorer");
+  setupExplorer();
 
   // Still need to setup mobile menu and re-observe last item
   setupMobileMenu()
